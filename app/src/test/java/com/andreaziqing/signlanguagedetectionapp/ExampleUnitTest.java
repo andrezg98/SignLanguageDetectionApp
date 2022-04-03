@@ -1,4 +1,4 @@
-package com.example.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp;
 
 import org.junit.Test;
 

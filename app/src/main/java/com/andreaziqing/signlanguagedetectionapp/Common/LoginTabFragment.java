@@ -1,4 +1,4 @@
-package com.example.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.Common;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class LoginTabFragment extends Fragment {
 

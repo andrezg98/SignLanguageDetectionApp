@@ -1,4 +1,4 @@
-package com.example.signlanguagedetectionapp.Common;
+package com.andreaziqing.signlanguagedetectionapp.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -14,10 +14,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.signlanguagedetectionapp.HelperClasses.SliderAdapter;
-import com.example.signlanguagedetectionapp.LoginActivity;
-import com.example.signlanguagedetectionapp.MainActivity;
-import com.example.signlanguagedetectionapp.R;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.SliderAdapter;
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class OnBoarding extends AppCompatActivity {
 

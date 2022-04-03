@@ -1,8 +1,10 @@
-package com.example.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

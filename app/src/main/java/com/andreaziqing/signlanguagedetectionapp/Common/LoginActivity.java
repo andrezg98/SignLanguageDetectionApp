@@ -1,10 +1,12 @@
-package com.example.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.LoginAdapter;
+import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 

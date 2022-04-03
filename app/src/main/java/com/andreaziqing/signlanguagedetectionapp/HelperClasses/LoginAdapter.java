@@ -1,10 +1,13 @@
-package com.example.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.HelperClasses;
 
 import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.andreaziqing.signlanguagedetectionapp.Common.LoginTabFragment;
+import com.andreaziqing.signlanguagedetectionapp.Common.SignupTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
 

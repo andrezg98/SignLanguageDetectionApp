@@ -1,4 +1,4 @@
-package com.example.signlanguagedetectionapp.HelperClasses;
+package com.andreaziqing.signlanguagedetectionapp.HelperClasses;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.example.signlanguagedetectionapp.R;
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class SliderAdapter extends PagerAdapter {
 
