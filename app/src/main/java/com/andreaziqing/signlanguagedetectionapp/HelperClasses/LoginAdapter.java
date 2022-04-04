@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.andreaziqing.signlanguagedetectionapp.Common.LoginTabFragment;
-import com.andreaziqing.signlanguagedetectionapp.Common.SignupTabFragment;
+import com.andreaziqing.signlanguagedetectionapp.Common.SignUpTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
 
@@ -31,7 +31,7 @@ public class LoginAdapter extends FragmentPagerAdapter {
                 LoginTabFragment loginTabFragment = new LoginTabFragment();
                 return loginTabFragment;
             case 1:
-                SignupTabFragment signupTabFragment = new SignupTabFragment();
+                SignUpTabFragment signupTabFragment = new SignUpTabFragment();
                 return signupTabFragment;
             default:
                 return null;

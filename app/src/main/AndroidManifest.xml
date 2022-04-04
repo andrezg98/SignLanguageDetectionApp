@@ -11,7 +11,7 @@
         android:theme="@style/Theme.SignLanguageDetectionApp">
         <activity
             android:name="com.andreaziqing.signlanguagedetectionapp.Common.LoginActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name="com.andreaziqing.signlanguagedetectionapp.Common.SplashActivity"
             android:exported="true">
