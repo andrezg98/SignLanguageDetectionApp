@@ -40,7 +40,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/email"
+                    android:id="@+id/email_signup"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                     android:padding="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editEmail"
+                        android:id="@+id/editEmailSignup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"/>
@@ -70,7 +70,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/password"
+                    android:id="@+id/password_login"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,10 +79,10 @@
                     android:padding="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editPassword"
+                        android:id="@+id/editPasswordLogin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:inputType="text|textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 

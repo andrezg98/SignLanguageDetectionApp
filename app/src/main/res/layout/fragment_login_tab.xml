@@ -24,23 +24,23 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/username"
+                    android:id="@+id/email_login"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="Email"
                     android:padding="5dp"
                     app:counterMaxLength="15">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editEmail"
+                        android:id="@+id/editEmailLogin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/password"
+                    android:id="@+id/password_login"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,13 +49,24 @@
                     android:padding="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editPassword"
+                        android:id="@+id/editPasswordLogin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:inputType="text|textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/remember_me"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear_fields"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="30dp"
+                android:layout_toEndOf="@id/forget_password"
+                android:text="Remember me"
+                android:buttonTint="@color/neon_pink"/>
 
             <TextView
                 android:id="@+id/forget_password"

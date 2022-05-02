@@ -301,8 +301,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="google" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../images/icons/google.svg" />
+                            <entry key="outputName" value="ic_logout_48px" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../images/icons/logout-48px.xml" />
                           </map>
                         </option>
                       </PersistentState>

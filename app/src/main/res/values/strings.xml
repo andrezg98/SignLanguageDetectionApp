@@ -19,4 +19,13 @@
     <string name="skip_button">Skip</string>
     <string name="next_button">Next</string>
     <string name="lets_start_button">Let\'s Get Started</string>
+
+    <!-- Home -->
+    <string name="all_lessons_desc">The lessons are divided into three sections. First we will study the signs associated with the first letters of the alphabet and then we will add the other letters. Let\'s get started! </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    
+    <string name="tfe_od_app_name" translation_description="Object Detection demo app [CHAR_LIMIT=40]">TFL Detect</string>
+    <string name="tfe_od_camera_error" translation_description="Error regarding camera support[CHAR_LIMIT=40]">This device doesn\'t support Camera2 API.</string>
 </resources>
