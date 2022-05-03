@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.andreaziqing.signlanguagedetectionapp.MainActivity;
+import com.andreaziqing.signlanguagedetectionapp.UserTabs.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,7 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.auth.internal.RecaptchaActivity;
 
 public class SignUpTabFragment extends Fragment {
 
@@ -114,7 +113,7 @@ public class SignUpTabFragment extends Fragment {
                         });
 
                 // Open Home Activity
-                startActivity(new Intent(getContext(), MainActivity.class));
+                startActivity(new Intent(getContext(), NavigationTabsController.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.andreaziqing.signlanguagedetectionapp.Common.LoginActivity;
-import com.andreaziqing.signlanguagedetectionapp.Databases.SessionManager;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter.FeaturedAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter.FeaturedHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.R;
@@ -24,7 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeFragment extends Fragment {
 
@@ -46,12 +44,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(HOME_FRAGMENT, "Starting Home Fragment");
-
-        SessionManager sessionManager = new SessionManager(getContext(), SessionManager.SESSION_USERSESSION);
-        HashMap<String, String> userDetails = sessionManager.getUsersDetailFromSession();
-
-        String username = userDetails.get(SessionManager.KEY_USERNAME);
-        Log.d("Username: ", username);
     }
 
     @Override
@@ -111,7 +103,5 @@ public class HomeFragment extends Fragment {
 
         adapter = new FeaturedAdapter(featuredLevels);
         featuredRecycler.setAdapter(adapter);
-
-        //GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0x404B69, 0xF73859});
     }
 }

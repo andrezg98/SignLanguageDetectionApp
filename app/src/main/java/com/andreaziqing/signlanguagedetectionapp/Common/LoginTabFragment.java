@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.andreaziqing.signlanguagedetectionapp.Databases.SessionManager;
-import com.andreaziqing.signlanguagedetectionapp.MainActivity;
+import com.andreaziqing.signlanguagedetectionapp.UserTabs.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -131,7 +131,7 @@ public class LoginTabFragment extends Fragment {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
             // User is already logged in
-            startActivity(new Intent(getContext(), MainActivity.class));
+            startActivity(new Intent(getContext(), NavigationTabsController.class));
         }
     }
 
@@ -151,7 +151,7 @@ public class LoginTabFragment extends Fragment {
                 Toast.makeText(getContext(), "Logged In\n" + email, Toast.LENGTH_SHORT).show();
 
                 // Open Home Activity
-                startActivity(new Intent(getContext(), MainActivity.class));
+                startActivity(new Intent(getContext(), NavigationTabsController.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -192,52 +192,4 @@ public class LoginTabFragment extends Fragment {
             return true;
         }
     }
-
-//    private void isUser() {
-//        String userEnteredUsername = mEmail.getEditText().getText().toString().trim();
-//        String userEnteredPassword = mPassword.getEditText().getText().toString().trim();
-//
-//        rootNode = FirebaseDatabase.getInstance("https://signlanguagedetectionapp-default-rtdb.europe-west1.firebasedatabase.app/");
-//        reference = rootNode.getReference("Users");
-//        Query checkUser = reference.orderByChild("username").equalTo(userEnteredUsername);
-//
-//        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//
-//                    mEmail.setError(null);
-//                    mEmail.setErrorEnabled(false);
-//
-//                    String passwordFromDB = snapshot.child(userEnteredUsername).child("password").getValue(String.class);
-//
-//                    if (passwordFromDB.equals(userEnteredPassword)) {
-//                        mEmail.setError(null);
-//                        mEmail.setErrorEnabled(false);
-//
-//                        String usernameFromDB = snapshot.child(userEnteredUsername).child("username").getValue(String.class);
-//                        String emailFromDB = snapshot.child(userEnteredUsername).child("email").getValue(String.class);
-//                        String phoneNumberFromDB = snapshot.child(userEnteredUsername).child("phoneNumber").getValue(String.class);
-//
-//                        // Create Session
-//                        SessionManager sessionManager = new SessionManager(getContext(), SessionManager.SESSION_USERSESSION);
-//                        sessionManager.createLoginSession(usernameFromDB, emailFromDB, phoneNumberFromDB, passwordFromDB);
-//
-//                        Intent intent = new Intent(getContext(), MainActivity.class);
-//                        startActivity(intent);
-//                    } else {
-//                        mPassword.setError("Wrong password");
-//                    }
-//                } else {
-//                    mEmail.setError("No such user exist");
-//                    mEmail.requestFocus();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 }

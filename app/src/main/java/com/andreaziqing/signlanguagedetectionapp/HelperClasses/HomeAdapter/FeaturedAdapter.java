@@ -1,6 +1,5 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter;
-import com.andreaziqing.signlanguagedetectionapp.CameraActivity;
-import com.andreaziqing.signlanguagedetectionapp.DetectorActivity;
+import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FirstGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import android.content.Context;
@@ -47,7 +46,7 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetectorActivity.class);
+                Intent intent = new Intent(context, FirstGame.class);
                 context.startActivity(intent);
             }
         });
