@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PracticeGames.SecondGame"
+    android:background="@color/dark_gray_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/camera"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            layout="@layout/activity_camera"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/first_card_letter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_border"
+                android:backgroundTint="@color/white"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/first_letter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="A"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/dark_gray_blue"
+                    android:textSize="60sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/second_card_letter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_border"
+                android:backgroundTint="@color/white"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/second_letter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="B"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/dark_gray_blue"
+                    android:textSize="60sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/third_card_letter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/round_border"
+                android:backgroundTint="@color/white"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/third_letter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="C"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/dark_gray_blue"
+                    android:textSize="60sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

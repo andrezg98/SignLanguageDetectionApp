@@ -25,6 +25,7 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/first_card_letter"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -54,6 +55,7 @@
                     android:src="@drawable/hands_spelling_word_vote_in_sign_language" />
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/second_card_letter"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -83,6 +85,7 @@
                     android:src="@drawable/hands_spelling_word_vote_in_sign_language" />
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/third_card_letter"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

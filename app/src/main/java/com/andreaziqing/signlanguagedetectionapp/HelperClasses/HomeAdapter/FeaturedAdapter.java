@@ -47,6 +47,7 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedAdapter.Featur
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, FirstGame.class);
+                intent.putExtra("position", holder.getAdapterPosition());
                 context.startActivity(intent);
             }
         });

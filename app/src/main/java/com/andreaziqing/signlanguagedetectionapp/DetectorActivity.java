@@ -1,5 +1,7 @@
 package com.andreaziqing.signlanguagedetectionapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -10,6 +12,7 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
@@ -23,6 +26,7 @@ import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.ImageUtils;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Tracking.MultiBoxTracker;
 import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
 import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.TFLiteObjectDetectionAPIModel;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,6 +74,10 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private MultiBoxTracker tracker;
 
     private BorderedText borderedText;
+
+    List<Detector.Recognition> results;
+
+    //public DetectorActivity(List<Detector.Recognition> results) {this.results = results;}
 
     @Override
     public void onPreviewSizeChosen(final Size size, final int rotation) {
@@ -172,7 +180,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                     public void run() {
                         Log.i(DETECTOR_ACTIVITY, "Running detection on image " + currTimestamp);
                         final long startTime = SystemClock.uptimeMillis();
-                        final List<Detector.Recognition> results = detector.recognizeImage(croppedBitmap);
+                        results = detector.recognizeImage(croppedBitmap);
                         lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
 
                         cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
@@ -201,6 +209,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
                                 result.setLocation(location);
                                 mappedRecognitions.add(result);
+
+//                                editor.putString("RESULTS", result.getTitle());
+//                                editor.apply();
                             }
                         }
 
@@ -208,6 +219,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                         trackingOverlay.postInvalidate();
 
                         computingDetection = false;
+
+                        if (mappedRecognitions != null) {
+                            Log.d(DETECTOR_ACTIVITY, "Detectado Mapped Recognition: " + mappedRecognitions);
+                            // Save result value
+                            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            Gson gson = new Gson();
+                            String json = gson.toJson(mappedRecognitions);
+
+                            editor.putString("RESULTS", json);
+                            editor.apply();
+                        } else {
+                            Log.d(DETECTOR_ACTIVITY, "No se ha detectado nada");
+                        }
                     }
                 });
     }
