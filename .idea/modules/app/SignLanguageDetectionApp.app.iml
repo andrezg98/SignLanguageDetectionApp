@@ -79,7 +79,7 @@
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-v4:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database:20.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-auth:21.0.2@aar" level="project" />
-    <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite:2.8.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite:2.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite-task-vision:0.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.viewpager2:viewpager2:1.0.0@aar" level="project" />
@@ -130,7 +130,7 @@
     <orderEntry type="library" name="Gradle: androidx.interpolator:interpolator:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation-experimental:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite-support-api:0.3.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite-api:2.8.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite-api:2.9.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite-task-base:0.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.odml:image:1.0.0-beta1@aar" level="project" />
   </component>

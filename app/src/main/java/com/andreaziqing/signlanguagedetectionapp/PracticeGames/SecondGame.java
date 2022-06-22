@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -21,36 +20,22 @@ import android.widget.Toast;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
 public class SecondGame extends DetectorActivity {
 
-    private static final String FIRST_GAME = "First Game";
-
-    private static final List<Detector.Recognition> results = null;
+    private static final String SECOND_GAME = "Second Game";
 
     TextView mFirstLetter, mSecondLetter, mThirdLetter;
-    ImageView mFirstLetterImage, mSecondLetterImage, mThirdLetterImage;
     RelativeLayout mFirstCardLetter, mSecondCardLetter, mThirdCardLetter;
 
     TextView[] arrLetter;
-    ImageView[] arrLetterImage;
     RelativeLayout[] arrCardLetter;
 
+    public int mPositionGroup;
     String[] arrGroupOfLetters;
-
-//    List<String> abecedary = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-//            "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-//    List<Integer> abecedaryImage = Arrays.asList(R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d,
-//            R.drawable.e, R.drawable.f, R.drawable.g, R.drawable.h, R.drawable.i, R.drawable.j, R.drawable.k,
-//            R.drawable.l, R.drawable.m, R.drawable.n, R.drawable.o, R.drawable.p, R.drawable.q, R.drawable.r,
-//            R.drawable.s, R.drawable.t, R.drawable.u, R.drawable.v, R.drawable.w, R.drawable.x, R.drawable.y,
-//            R.drawable.z);
-
-    Dictionary<String, Integer> signDictionary = new Hashtable<>();
 
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
@@ -63,21 +48,18 @@ public class SecondGame extends DetectorActivity {
         mFirstLetter = findViewById(R.id.first_letter);
         mSecondLetter = findViewById(R.id.second_letter);
         mThirdLetter = findViewById(R.id.third_letter);
-//        mFirstLetterImage = findViewById(R.id.first_letter_image);
-//        mSecondLetterImage = findViewById(R.id.second_letter_image);
-//        mThirdLetterImage = findViewById(R.id.third_letter_image);
 
         mFirstCardLetter = findViewById(R.id.first_card_letter);
         mSecondCardLetter = findViewById(R.id.second_card_letter);
         mThirdCardLetter = findViewById(R.id.third_card_letter);
 
         arrLetter = new TextView[]{mFirstLetter, mSecondLetter, mThirdLetter};
-        arrLetterImage = new ImageView[]{mFirstLetterImage, mSecondLetterImage, mThirdLetterImage};
         arrCardLetter = new RelativeLayout[]{mFirstCardLetter, mSecondCardLetter, mThirdCardLetter};
 
         // Recojo la posición del grupo de letras que ha elegido el usuario
         Bundle bundle = getIntent().getExtras();
         arrGroupOfLetters = bundle.getStringArray("arrGroupOfLetters");
+        //setGroupOfLetters(mPositionGroup);
 
         // Primeras 3 letras
         // Escoger aleatoriamente tres letras (en función del grupo de letras que el usuario haya escogido)
@@ -96,10 +78,10 @@ public class SecondGame extends DetectorActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Log.d(FIRST_GAME, "Hilo en background: "+ Thread.currentThread().getName());
+                Log.d(SECOND_GAME, "Hilo en background: "+ Thread.currentThread().getName());
                 synchronized (this) {
                     for (int cycle = 0; cycle < 4; cycle++) {
-                        Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + 1);
+                        Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + 1);
                         int letterIdx = 0;
                         // Para ese grupo aleatorio de 3 letras, vamos chekeando una tras otra:
                         for (TextView letter: arrLetter) {
@@ -115,7 +97,7 @@ public class SecondGame extends DetectorActivity {
                                 int letterIndex;
                                 UpdateCardColorRunnable(int idx) { letterIndex = idx; }
                                 public void run() {
-                                    Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Actualizando tarjeta de letra a color verde.");
+                                    Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Actualizando tarjeta de letra a color verde.");
                                     // Actualizar aqui UI
                                     arrCardLetter[letterIndex].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                 }
@@ -125,7 +107,7 @@ public class SecondGame extends DetectorActivity {
                             // 3. Avanzamos a la siguiente iteración (letra)
                             letterIdx++;
                         }
-                        Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Adivinado grupo de 3 letras; generando siguiente...");
+                        Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Adivinado grupo de 3 letras; generando siguiente...");
 
                         try {
                             wait(500);
@@ -137,7 +119,7 @@ public class SecondGame extends DetectorActivity {
                         class UpdateLetterCardsRunnable implements Runnable {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
-                                Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Regenerando grupo de 3 letas.");
+                                Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Regenerando grupo de 3 letas.");
                                 setThreeRandomLetters(arrCardLetter, true);
                             }
                         }
@@ -146,7 +128,7 @@ public class SecondGame extends DetectorActivity {
                         } // cycle == 3 seria el ultimo y por tanto no tendriamos que regenerar nada mas
                     }
                 }
-                Log.i(FIRST_GAME, "Subproceso terminado");
+                Log.i(SECOND_GAME, "Subproceso terminado");
             }
         };
 
@@ -189,15 +171,30 @@ public class SecondGame extends DetectorActivity {
             mappedRecognitions = new ArrayList<>();
             return false;
         } else {
-            Log.d(FIRST_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
+            Log.d(SECOND_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
-                    Log.d(FIRST_GAME, "Reconocida la letra: " + result.getTitle());
+                    Log.d(SECOND_GAME, "Reconocida la letra: " + result.getTitle());
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private void setGroupOfLetters(int position) {
+        switch (position) {
+            case 0:
+                arrGroupOfLetters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
+                break;
+            case 1:
+                arrGroupOfLetters = new String[]{"I", "J", "K", "L", "M", "N", "O", "P"};
+                break;
+            case 2:
+                arrGroupOfLetters = new String[]{"Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+                break;
+
+        }
     }
 
     private void setThreeRandomLetters(RelativeLayout[] arrCardLetter, boolean refreshCard) {

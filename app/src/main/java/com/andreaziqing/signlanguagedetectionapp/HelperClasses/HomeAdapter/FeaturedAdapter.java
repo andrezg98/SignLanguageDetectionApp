@@ -1,5 +1,7 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter;
 import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FirstGame;
+import com.andreaziqing.signlanguagedetectionapp.PracticeGames.SecondGame;
+import com.andreaziqing.signlanguagedetectionapp.PracticeGames.ThirdGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import android.content.Context;

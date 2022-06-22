@@ -25,12 +25,12 @@ import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FirstGame extends DetectorActivity {
 
     private static final String FIRST_GAME = "First Game";
-
-    private static final List<Detector.Recognition> results = null;
 
     TextView mFirstLetter, mSecondLetter, mThirdLetter;
     ImageView mFirstLetterImage, mSecondLetterImage, mThirdLetterImage;
@@ -160,11 +160,24 @@ public class FirstGame extends DetectorActivity {
         cardDetectionThread = new Thread(runnable);
         cardDetectionThread.start();
 
-        if (!cardDetectionThread.isAlive()) {
-            Intent intent = new Intent(this, SecondGame.class);
-            intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
-            this.startActivity(intent);
-        }
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!cardDetectionThread.isAlive()) {
+                    // do your work after thread finish
+                    Log.d(FIRST_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+                    Intent intent = new Intent(getApplicationContext(), SecondGame.class);
+                    intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
+                    getApplicationContext().startActivity(intent);
+
+                    timer.cancel();
+                } else {
+                    Log.d(FIRST_GAME, "Sigo esperando a que el hilo termine.");
+                    // do work when thread is running like show progress bar
+                }
+            }
+        }, 200, 200);  // first is delay, second is period
     }
 
     @Override

@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SignLanguageDetectionApp">
         <activity
+            android:name=".PracticeGames.ThirdGame"
+            android:exported="false" />
+        <activity
             android:name=".PracticeGames.SecondGame"
             android:exported="false" />
         <activity
