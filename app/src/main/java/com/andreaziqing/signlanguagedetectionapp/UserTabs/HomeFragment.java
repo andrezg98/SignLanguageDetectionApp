@@ -15,8 +15,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.andreaziqing.signlanguagedetectionapp.Common.LoginActivity;
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter.FeaturedAdapter;
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter.FeaturedHelperClass;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
 
     private static final String HOME_FRAGMENT = "HomeFragment";
 
-    RecyclerView featuredRecycler;
+    RecyclerView lessonsRecycler;
     RecyclerView.Adapter adapter;
 
     // * Firebase Auth *
@@ -59,8 +59,8 @@ public class HomeFragment extends Fragment {
         checkUser();
 
         // Hooks
-        featuredRecycler = view.findViewById(R.id.featured_recycler);
-        featuredRecycler();
+        lessonsRecycler = view.findViewById(R.id.lessons_recycler);
+        lessonsRecycler();
 
         // Logout user
         mLogoutButton = view.findViewById(R.id.logout_button);
@@ -92,16 +92,16 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void featuredRecycler() {
-        featuredRecycler.setHasFixedSize(true);
-        featuredRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+    private void lessonsRecycler() {
+        lessonsRecycler.setHasFixedSize(true);
+        lessonsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        ArrayList<FeaturedHelperClass> featuredLevels = new ArrayList<>();
-        featuredLevels.add(new FeaturedHelperClass(R.drawable.atoh, "Lesson 1", "We will go deeper into learning the letters of the alphabet between A and H. "));
-        featuredLevels.add(new FeaturedHelperClass(R.drawable.itop, "Lesson 2", "We will go deeper into learning the letters of the alphabet between I and P. "));
-        featuredLevels.add(new FeaturedHelperClass(R.drawable.qtoz, "Lesson 3", "We will go deeper into learning the letters of the alphabet between Q and Z. "));
+        ArrayList<LessonsHelperClass> lessons = new ArrayList<>();
+        lessons.add(new LessonsHelperClass(R.drawable.atoh, "Lesson 1", "We will go deeper into learning the letters of the alphabet between A and H. "));
+        lessons.add(new LessonsHelperClass(R.drawable.itop, "Lesson 2", "We will go deeper into learning the letters of the alphabet between I and P. "));
+        lessons.add(new LessonsHelperClass(R.drawable.qtoz, "Lesson 3", "We will go deeper into learning the letters of the alphabet between Q and Z. "));
 
-        adapter = new FeaturedAdapter(featuredLevels);
-        featuredRecycler.setAdapter(adapter);
+        adapter = new LessonsAdapter(lessons);
+        lessonsRecycler.setAdapter(adapter);
     }
 }

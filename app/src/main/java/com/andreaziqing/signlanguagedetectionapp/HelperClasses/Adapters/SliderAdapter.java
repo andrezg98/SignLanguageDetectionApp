@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.HelperClasses;
+package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,21 +22,21 @@ public class SliderAdapter extends PagerAdapter {
         this.context = context;
     }
 
-    int images[] = {
+    int[] images = {
             R.drawable.hands_spelling_word_vote_in_sign_language,
             R.drawable.hands_spelling_word_vote_in_sign_language,
             R.drawable.hands_spelling_word_vote_in_sign_language,
             R.drawable.hands_spelling_word_vote_in_sign_language
     };
 
-    int titles[] = {
+    int[] titles = {
             R.string.first_slide_title,
             R.string.second_slide_title,
             R.string.third_slide_title,
             R.string.fourth_slide_title
     };
 
-    int descriptions[] = {
+    int[] descriptions = {
             R.string.first_slide_desc,
             R.string.second_slide_desc,
             R.string.third_slide_desc,

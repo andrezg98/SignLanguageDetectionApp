@@ -17,6 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SignLanguageDetectionApp">
         <activity
+            android:name=".Common.GlossarySlider"
+            android:exported="false" />
+        <activity
+            android:name=".PracticeGames.FullSecondGame"
+            android:exported="false" />
+        <activity
+            android:name=".PracticeGames.BetweenGamesActivity"
+            android:exported="false" />
+        <activity
             android:name=".PracticeGames.ThirdGame"
             android:exported="false" />
         <activity

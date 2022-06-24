@@ -5,7 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.LoginAdapter;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.LoginAdapter;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;

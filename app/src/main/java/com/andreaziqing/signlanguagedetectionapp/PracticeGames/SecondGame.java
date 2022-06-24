@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -23,10 +24,14 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SecondGame extends DetectorActivity {
 
-    private static final String SECOND_GAME = "Second Game";
+    private static final String SECOND_GAME = "SecondGame";
+
+    Context context;
 
     TextView mFirstLetter, mSecondLetter, mThirdLetter;
     RelativeLayout mFirstCardLetter, mSecondCardLetter, mThirdCardLetter;
@@ -45,6 +50,8 @@ public class SecondGame extends DetectorActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_game);
 
+        context = getApplicationContext();
+
         mFirstLetter = findViewById(R.id.first_letter);
         mSecondLetter = findViewById(R.id.second_letter);
         mThirdLetter = findViewById(R.id.third_letter);
@@ -59,7 +66,7 @@ public class SecondGame extends DetectorActivity {
         // Recojo la posición del grupo de letras que ha elegido el usuario
         Bundle bundle = getIntent().getExtras();
         arrGroupOfLetters = bundle.getStringArray("arrGroupOfLetters");
-        //setGroupOfLetters(mPositionGroup);
+        mPositionGroup = bundle.getInt("position");
 
         // Primeras 3 letras
         // Escoger aleatoriamente tres letras (en función del grupo de letras que el usuario haya escogido)
@@ -135,6 +142,27 @@ public class SecondGame extends DetectorActivity {
         // Declaramos hilo que lanza el Runnable declarado previamente
         cardDetectionThread = new Thread(runnable);
         cardDetectionThread.start();
+
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Log.d(SECOND_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
+                if (!cardDetectionThread.isAlive()) {
+                    Log.d(SECOND_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+                    Intent intent = new Intent(context, BetweenGamesActivity.class);
+                    intent.putExtra("previousActivity", SECOND_GAME);
+                    intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
+                    intent.putExtra("position", mPositionGroup);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
+                    timer.cancel();
+                } else {
+                    Log.d(SECOND_GAME, "Sigo esperando a que el hilo termine.");
+                }
+            }
+        }, 500, 500);  // first is delay, second is period
     }
 
     @Override
@@ -171,7 +199,7 @@ public class SecondGame extends DetectorActivity {
             mappedRecognitions = new ArrayList<>();
             return false;
         } else {
-            Log.d(SECOND_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
+            // Log.d(SECOND_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
                     Log.d(SECOND_GAME, "Reconocida la letra: " + result.getTitle());

@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.SliderAdapter;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.SliderAdapter;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class OnBoarding extends AppCompatActivity {

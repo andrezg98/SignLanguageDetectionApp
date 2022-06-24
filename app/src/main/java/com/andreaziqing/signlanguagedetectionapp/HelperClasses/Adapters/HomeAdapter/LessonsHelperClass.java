@@ -1,11 +1,11 @@
-package com.andreaziqing.signlanguagedetectionapp.HelperClasses.HomeAdapter;
+package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter;
 
-public class FeaturedHelperClass {
+public class LessonsHelperClass {
 
     int image;
     String title, desc;
 
-    public FeaturedHelperClass(int image, String title, String desc) {
+    public LessonsHelperClass(int image, String title, String desc) {
         this.image = image;
         this.title = title;
         this.desc = desc;

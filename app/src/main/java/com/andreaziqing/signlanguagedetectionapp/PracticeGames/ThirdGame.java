@@ -6,7 +6,9 @@ import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -15,6 +17,7 @@ import android.graphics.Typeface;
 import android.graphics.fonts.Font;
 import android.graphics.fonts.FontFamily;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,7 +39,9 @@ import java.util.List;
 
 public class ThirdGame extends DetectorActivity {
 
-    private static final String THIRD_GAME = "Third Game";
+    private static final String THIRD_GAME = "ThirdGame";
+
+    Context context;
 
     TextView mWord;
     RelativeLayout mCardWord;
@@ -44,15 +49,20 @@ public class ThirdGame extends DetectorActivity {
 
     TextView[] arrLetter; // En este caso serán las letras de la palabra
 
-    Dictionary<String, Integer> signDictionary = new Hashtable<>();
-
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
+
+    public int counter;
+    TextView time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_game);
+
+        context = getApplicationContext();
+
+        time = findViewById(R.id.countdown_timer);
 
         mWord = findViewById(R.id.word);
         mCardWord = findViewById(R.id.card_word);
@@ -73,6 +83,7 @@ public class ThirdGame extends DetectorActivity {
         final Handler handler = new Handler();
         final Handler handler2 = new Handler();
         final Handler handler3 = new Handler();
+        final Handler handler4 = new Handler();
 
         // Metodo Runnable que lanzará el hilo principal
         Runnable runnable = new Runnable() {
@@ -83,8 +94,55 @@ public class ThirdGame extends DetectorActivity {
                     for (int cycle = 0; cycle < 4; cycle++) {
                         Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + 1);
                         int letterIdx = 0;
+                        final int[] chances = {3};
+
+                        // Iniciamos timer desde este hilo
+                        class InitTimerRunnable implements Runnable {
+                            CountDownTimer countDownTimer;
+
+                            InitTimerRunnable() {}
+                            public void run() {
+                                Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Iniciando temporizador.");
+                                countDownTimer = new CountDownTimer(10000, 1000) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+                                        time.setText((int) (millisUntilFinished / 1000) + "");
+                                        counter++;
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        chances[0]--;
+                                        if (chances[0] == 0) {
+                                            Intent intent = new Intent(context, BetweenGamesActivity.class);
+                                            intent.putExtra("previousActivity", THIRD_GAME);
+                                            intent.putExtra("state", "FAIL");
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            context.startActivity(intent);
+                                        } else {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(ThirdGame.this);
+                                            builder.setMessage("You have " + chances[0] + " chances left")
+                                                    .setTitle("Ups!")
+                                                    .setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            countDownTimer.start();
+                                                        }
+                                                    })
+                                                    .show();
+                                        }
+                                    }
+                                };
+                                countDownTimer.start();
+                            }
+                        }
+
+                        InitTimerRunnable initTimerRunnable = new InitTimerRunnable();
+                        handler4.postDelayed(initTimerRunnable, 100);
+
                         // Para esa palabra, vamos chekeando letra tras letra:
                         for (TextView letter: arrLetter) {
+
                             // 0. Hasta que no se detecte por el usuario la letra que aparezca en pantalla no avanza.
                             while (!checkLetter(letter, activityStopped)) { }
 
@@ -147,6 +205,9 @@ public class ThirdGame extends DetectorActivity {
                         if(cycle <= 2) {
                             handler3.post(new UpdateLetterCardsRunnable());
                         } // cycle == 3 seria el ultimo y por tanto no tendriamos que regenerar nada mas
+
+                        initTimerRunnable.countDownTimer.cancel();
+                        handler4.removeCallbacksAndMessages(initTimerRunnable);
                     }
                 }
                 Log.i(THIRD_GAME, "Subproceso terminado");
@@ -198,7 +259,7 @@ public class ThirdGame extends DetectorActivity {
             mappedRecognitions = new ArrayList<>();
             return false;
         } else {
-            Log.d(THIRD_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
+            // Log.d(THIRD_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
                     Log.d(THIRD_GAME, "Reconocida la letra: " + result.getTitle());

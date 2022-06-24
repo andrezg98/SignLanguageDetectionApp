@@ -21,6 +21,8 @@ public class NavigationTabsController extends AppCompatActivity {
     ChallengeFragment challengeFragment = new ChallengeFragment();
     GlossaryFragment glossaryFragment = new GlossaryFragment();
 
+    String nextFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,37 @@ public class NavigationTabsController extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        loadFragment(homeFragment);
+        try {
+            Bundle bundle = getIntent().getExtras();
+            nextFragment = bundle.getString("nextFragment");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.d(NAVIGATION_TABS_CONTROLLER, "Next fragment: " + nextFragment);
+
+        if (nextFragment == null) {
+            loadFragment(homeFragment);
+        } else {
+            switch (nextFragment) {
+                case "PracticeFragment":
+                    loadFragment(practiceFragment);
+                    bottomNavigationView.getMenu().getItem(1).setChecked(true);
+                    break;
+                case "ChallengeFragment":
+                    loadFragment(challengeFragment);
+                    bottomNavigationView.getMenu().getItem(2).setChecked(true);
+                    break;
+                case "GlossaryFragment":
+                    loadFragment(glossaryFragment);
+                    bottomNavigationView.getMenu().getItem(3).setChecked(true);
+                    break;
+                default:
+                    loadFragment(homeFragment);
+                    bottomNavigationView.getMenu().getItem(0).setChecked(true);
+                    break;
+            }
+        }
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

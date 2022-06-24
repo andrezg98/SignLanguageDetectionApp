@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.HelperClasses;
+package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters;
 
 import android.content.Context;
 
