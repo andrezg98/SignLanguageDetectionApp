@@ -3,6 +3,7 @@ package com.andreaziqing.signlanguagedetectionapp.Common;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginTabFragment extends Fragment {
 
@@ -39,15 +46,15 @@ public class LoginTabFragment extends Fragment {
     TextInputEditText emailEditText, passwordEditText;
     float v = 0;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-
     // * Firebase Auth *
     TextInputLayout mEmail, mPassword;
     private FirebaseAuth firebaseAuth;
 
     // progress dialog
     private ProgressDialog progressDialog;
+
+    // Firestore Database
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -149,6 +156,12 @@ public class LoginTabFragment extends Fragment {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 String email = firebaseUser.getEmail();
                 Toast.makeText(getContext(), "Logged In\n" + email, Toast.LENGTH_SHORT).show();
+
+                Map<String, Object> dataToUpdate = new HashMap<>();
+                dataToUpdate.put("lastlogin", FieldValue.serverTimestamp());
+
+                db.collection("userstats").document(firebaseUser.getUid())
+                        .set(dataToUpdate, SetOptions.merge());
 
                 // Open Home Activity
                 startActivity(new Intent(getContext(), NavigationTabsController.class));

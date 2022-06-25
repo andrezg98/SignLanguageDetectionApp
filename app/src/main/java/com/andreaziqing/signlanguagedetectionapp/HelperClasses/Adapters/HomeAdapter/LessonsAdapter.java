@@ -3,6 +3,7 @@ import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FirstGame;
 import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FullSecondGame;
 import com.andreaziqing.signlanguagedetectionapp.PracticeGames.ThirdGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,8 +49,8 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, FullSecondGame.class);
-                //intent.putExtra("position", holder.getAdapterPosition());
+                Intent intent = new Intent(context, FirstGame.class);
+                intent.putExtra("position", holder.getAdapterPosition());
                 context.startActivity(intent);
             }
         });

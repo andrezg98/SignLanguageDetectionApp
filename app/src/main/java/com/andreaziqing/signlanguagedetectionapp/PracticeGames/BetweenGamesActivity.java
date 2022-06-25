@@ -129,7 +129,7 @@ public class BetweenGamesActivity extends AppCompatActivity {
 
     public void close(View view) {
         Intent intent = new Intent(getApplicationContext(), NavigationTabsController.class);
-        intent.putExtra("nextFragment", mPreviousActivity);
+        intent.putExtra("nextFragment", "HomeFragment");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getApplicationContext().startActivity(intent);
     }

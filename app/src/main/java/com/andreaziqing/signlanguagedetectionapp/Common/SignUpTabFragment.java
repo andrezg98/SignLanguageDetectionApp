@@ -24,6 +24,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpTabFragment extends Fragment {
 
@@ -38,6 +45,9 @@ public class SignUpTabFragment extends Fragment {
 
     // progress dialog
     private ProgressDialog progressDialog;
+
+    // Firestore Database
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,14 +101,7 @@ public class SignUpTabFragment extends Fragment {
                 progressDialog.dismiss();
 
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                // Set user info
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                        .setDisplayName(username)
-                        .build();
-                firebaseUser.updateProfile(profileUpdates);
 
-                // Get user info
-                String email = firebaseUser.getEmail();
                 Toast.makeText(getContext(), "Account created\n" + email, Toast.LENGTH_SHORT).show();
 
                 // Send email verification
@@ -109,6 +112,29 @@ public class SignUpTabFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     Log.d(SIGNUP_TAB_FRAGMENT, "Verification email sent.");
                                 }
+                            }
+                        });
+
+                Map<String, Object> newUser = new HashMap<>();
+                newUser.put("name", username);
+                newUser.put("regdate", FieldValue.serverTimestamp());
+                newUser.put("lastlogin", FieldValue.serverTimestamp());
+                newUser.put("ncgames", 0);
+                newUser.put("nclessons", 0);
+
+                db.collection("userstats")
+                        .document(firebaseUser.getUid())
+                        .set(newUser)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(SIGNUP_TAB_FRAGMENT, "DocumentSnapshot added with ID: " + firebaseUser.getUid());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(SIGNUP_TAB_FRAGMENT, "Error adding document", e);
                             }
                         });
 

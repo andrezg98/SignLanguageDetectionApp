@@ -3,6 +3,7 @@ package com.andreaziqing.signlanguagedetectionapp.UserTabs;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +19,14 @@ import com.andreaziqing.signlanguagedetectionapp.Common.LoginActivity;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -35,6 +41,8 @@ public class HomeFragment extends Fragment {
     TextView mUsernameEmail;
     ImageButton mLogoutButton;
     private FirebaseAuth firebaseAuth;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -84,11 +92,23 @@ public class HomeFragment extends Fragment {
             // User is not logged in, move to login screen
             startActivity(new Intent(getContext(), LoginActivity.class));
         } else {
-            // User logged in, get info and set username
-            for (UserInfo profile : firebaseUser.getProviderData()) {
-                String username = profile.getDisplayName();
-                mUsernameEmail.setText(username);
-            }
+            // Get user name and display in screen
+            DocumentReference docRef = db.collection("userstats").document(firebaseUser.getUid());
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            mUsernameEmail.setText(document.getString("name"));
+                        } else {
+                            Log.d(HOME_FRAGMENT, "No such document");
+                        }
+                    } else {
+                        Log.d(HOME_FRAGMENT, "get failed with ", task.getException());
+                    }
+                }
+            });
         }
     }
 
