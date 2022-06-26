@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.andreaziqing.signlanguagedetectionapp.R;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.NavigationTabsController;
+import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class BetweenGamesActivity extends AppCompatActivity {

@@ -1,21 +1,15 @@
 package com.andreaziqing.signlanguagedetectionapp.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossarySliderAdapter;
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.SecondGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.GlossaryFragment;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.NavigationTabsController;
+import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;

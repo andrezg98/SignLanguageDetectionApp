@@ -57,7 +57,7 @@
             android:name=".Common.OnBoarding"
             android:exported="true" />
         <activity
-            android:name=".UserTabs.NavigationTabsController"
+            android:name=".Navigation.NavigationTabsController"
             android:exported="true" />
     </application>
 

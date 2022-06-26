@@ -58,5 +58,8 @@
     <string name="tfe_od_camera_error" translation_description="Error regarding camera support[CHAR_LIMIT=40]">This device doesn\'t support Camera2 API.</string>
     <string name="close_button">Close</string>
 
+    <!-- Navigation Drawer -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>
