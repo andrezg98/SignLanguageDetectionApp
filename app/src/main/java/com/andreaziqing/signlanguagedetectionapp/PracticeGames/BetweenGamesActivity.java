@@ -73,11 +73,12 @@ public class BetweenGamesActivity extends AppCompatActivity {
                     } else {
                         switch (mPreviousActivity) {
                             case "SecondGame":
+                                intent = new Intent(getApplicationContext(), NavigationTabsController.class);
+                                intent.putExtra("nextFragment", "HomeFragment");
                             case "FullSecondGame":
-                                intent = new Intent(getApplicationContext(), ThirdGame.class);
-                                break;
                             case "ThirdGame":
-                                intent = new Intent(getApplicationContext(), FullSecondGame.class);
+                                intent = new Intent(getApplicationContext(), NavigationTabsController.class);
+                                intent.putExtra("nextFragment", "PracticeFragment");
                                 break;
                             default:
                                 break;
@@ -128,8 +129,19 @@ public class BetweenGamesActivity extends AppCompatActivity {
     }
 
     public void close(View view) {
-        Intent intent = new Intent(getApplicationContext(), NavigationTabsController.class);
-        intent.putExtra("nextFragment", "HomeFragment");
+        Intent intent;
+        switch (mPreviousActivity) {
+            case "ThirdGame":
+            case "FullSecondGame":
+                intent = new Intent(getApplicationContext(), NavigationTabsController.class);
+                intent.putExtra("nextFragment", "PracticeFragment");
+                break;
+            default:
+                intent = new Intent(getApplicationContext(), NavigationTabsController.class);
+                intent.putExtra("nextFragment", "HomeFragment");
+                break;
+        }
+
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getApplicationContext().startActivity(intent);
     }

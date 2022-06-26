@@ -90,4 +90,7 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.3.0'
 
     implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Navigation Drawer
+    implementation 'com.yarolegovich:sliding-root-nav:1.1.1'
 }

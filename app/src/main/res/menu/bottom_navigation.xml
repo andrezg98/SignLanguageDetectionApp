@@ -9,9 +9,9 @@
         android:icon="@drawable/ic_fitness_center_48px"
         android:title="Practice"/>
     <item
-        android:id="@+id/challengeFragment"
+        android:id="@+id/rankingFragment"
         android:icon="@drawable/ic_workspace_premium_48px"
-        android:title="Challenge"/>
+        android:title="Ranking"/>
     <item
         android:id="@+id/glossaryFragment"
         android:icon="@drawable/ic_menu_book_48px"

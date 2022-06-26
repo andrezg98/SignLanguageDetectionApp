@@ -1,16 +1,16 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter;
+
 import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FirstGame;
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FullSecondGame;
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.ThirdGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
-import com.google.firebase.auth.FirebaseUser;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsViewHolder> {
+
+    private static final String LESSONS_ADAPTER = "LessonsAdapter";
 
     ArrayList<LessonsHelperClass> lessons;
     private Context context;
@@ -45,6 +47,9 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsV
         holder.image.setImageResource(lessonsHelperClass.getImage());
         holder.title.setText(lessonsHelperClass.getTitle());
         holder.desc.setText(lessonsHelperClass.getDesc());
+        holder.progress.setProgress((int) (((float)lessonsHelperClass.getProgress()/3)*100), true);
+
+        Log.d(LESSONS_ADAPTER, "Progress Lesson: " + ((int) (((float)lessonsHelperClass.getProgress()/2)*100)));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +71,7 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsV
 
         ImageView image;
         TextView title, desc;
+        ProgressBar progress;
 
         public LessonsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +80,7 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsV
             image = itemView.findViewById(R.id.lesson_image);
             title = itemView.findViewById(R.id.lesson_title);
             desc = itemView.findViewById(R.id.lesson_desc);
+            progress = itemView.findViewById(R.id.lesson_progress);
         }
     }
 }

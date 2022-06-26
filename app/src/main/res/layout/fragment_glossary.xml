@@ -46,8 +46,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="sans-serif-condensed"
-                        android:textColor="@color/dark_gray_blue"
                         android:text="Glossary"
+                        android:textColor="@color/dark_gray_blue"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 

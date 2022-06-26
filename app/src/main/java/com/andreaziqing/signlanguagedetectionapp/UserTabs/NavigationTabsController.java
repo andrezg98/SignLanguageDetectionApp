@@ -18,7 +18,7 @@ public class NavigationTabsController extends AppCompatActivity {
 
     HomeFragment homeFragment = new HomeFragment();
     PracticeFragment practiceFragment = new PracticeFragment();
-    ChallengeFragment challengeFragment = new ChallengeFragment();
+    RankingFragment rankingFragment = new RankingFragment();
     GlossaryFragment glossaryFragment = new GlossaryFragment();
 
     String nextFragment;
@@ -49,8 +49,8 @@ public class NavigationTabsController extends AppCompatActivity {
                     loadFragment(practiceFragment);
                     bottomNavigationView.getMenu().getItem(1).setChecked(true);
                     break;
-                case "ChallengeFragment":
-                    loadFragment(challengeFragment);
+                case "RankingFragment":
+                    loadFragment(rankingFragment);
                     bottomNavigationView.getMenu().getItem(2).setChecked(true);
                     break;
                 case "GlossaryFragment":
@@ -76,8 +76,8 @@ public class NavigationTabsController extends AppCompatActivity {
                 loadFragment(practiceFragment);
                 return true;
             }
-            if (item.getItemId() == R.id.challengeFragment) {
-                loadFragment(challengeFragment);
+            if (item.getItemId() == R.id.rankingFragment) {
+                loadFragment(rankingFragment);
                 return true;
             }
             if (item.getItemId() == R.id.glossaryFragment) {

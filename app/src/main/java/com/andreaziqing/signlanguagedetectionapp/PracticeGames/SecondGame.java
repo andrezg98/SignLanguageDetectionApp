@@ -163,6 +163,7 @@ public class SecondGame extends DetectorActivity {
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     Map<String, Object> dataToUpdate = new HashMap<>();
                     dataToUpdate.put("nclessons", FieldValue.increment(1));
+                    dataToUpdate.put("progressl2", "2");
                     db.collection("userstats")
                             .document(firebaseUser.getUid())
                             .update(dataToUpdate);

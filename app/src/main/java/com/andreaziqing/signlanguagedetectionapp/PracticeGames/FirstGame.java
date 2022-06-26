@@ -3,6 +3,10 @@ package com.andreaziqing.signlanguagedetectionapp.PracticeGames;
 import com.andreaziqing.signlanguagedetectionapp.DetectorActivity;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,8 +27,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,6 +63,9 @@ public class FirstGame extends DetectorActivity {
 
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +181,14 @@ public class FirstGame extends DetectorActivity {
                 Log.d(FIRST_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
                     Log.d(FIRST_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    Map<String, Object> dataToUpdate = new HashMap<>();
+                    dataToUpdate.put("progressl1", "1");
+                    db.collection("userstats")
+                            .document(firebaseUser.getUid())
+                            .update(dataToUpdate);
+
                     Intent intent = new Intent(context, SecondGame.class);
                     intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
                     intent.putExtra("position", mPositionGroup);

@@ -1,14 +1,17 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter;
 
-public class LessonsHelperClass {
+import android.widget.ProgressBar;
 
+public class LessonsHelperClass {
     int image;
     String title, desc;
+    int progress;
 
-    public LessonsHelperClass(int image, String title, String desc) {
+    public LessonsHelperClass(int image, String title, String desc, int progress) {
         this.image = image;
         this.title = title;
         this.desc = desc;
+        this.progress = progress;
     }
 
     public int getImage() {
@@ -21,5 +24,9 @@ public class LessonsHelperClass {
 
     public String getDesc() {
         return desc;
+    }
+
+    public int getProgress() {
+        return progress;
     }
 }

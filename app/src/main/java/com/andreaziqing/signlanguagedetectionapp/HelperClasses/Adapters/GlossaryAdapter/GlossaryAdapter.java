@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.andreaziqing.signlanguagedetectionapp.Common.GlossarySlider;
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.ThirdGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import java.util.ArrayList;
@@ -30,17 +28,17 @@ public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.Glossa
     public GlossaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.glossary_card_design, parent, false);
-        GlossaryAdapter.GlossaryViewHolder glossaryViewHolder = new GlossaryAdapter.GlossaryViewHolder(view);
+        GlossaryViewHolder glossaryViewHolder = new GlossaryViewHolder(view);
         context = parent.getContext();
 
         return glossaryViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GlossaryAdapter.GlossaryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GlossaryViewHolder holder, int position) {
 
-        GlossaryHelperClass glossaryHelperClass = letters.get(position);
-        holder.title.setText(glossaryHelperClass.getTitle());
+        GlossaryHelperClass practiceHelperClass = letters.get(position);
+        holder.title.setText(practiceHelperClass.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,4 +67,5 @@ public class GlossaryAdapter extends RecyclerView.Adapter<GlossaryAdapter.Glossa
             title = itemView.findViewById(R.id.letter_title);
         }
     }
+
 }

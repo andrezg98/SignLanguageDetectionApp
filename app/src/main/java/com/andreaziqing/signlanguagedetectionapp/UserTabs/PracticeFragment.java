@@ -3,64 +3,61 @@ package com.andreaziqing.signlanguagedetectionapp.UserTabs;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsHelperClass;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.PracticeAdapter.PracticeAdapter;
+import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.PracticeAdapter.PracticeHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PracticeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class PracticeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String PRACTICE_FRAGMENT = "PracticeFragment";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    RecyclerView practiceRecycler;
+    RecyclerView.Adapter adapter;
 
     public PracticeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PracticeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PracticeFragment newInstance(String param1, String param2) {
-        PracticeFragment fragment = new PracticeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Log.i(PRACTICE_FRAGMENT, "Starting Practice Fragment");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_practice, container, false);
+        View view = inflater.inflate(R.layout.fragment_practice, container, false);
+
+        // Hooks
+        practiceRecycler = view.findViewById(R.id.practice_recycler);
+        practiceRecycler();
+
+        return view;
+    }
+
+    private void practiceRecycler() {
+        practiceRecycler.setHasFixedSize(true);
+        practiceRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        ArrayList<PracticeHelperClass> games = new ArrayList<>();
+        games.add(new PracticeHelperClass(R.drawable.atoh, "Guess the letter sign!", "Guess the letter sign before time runs out. Challenge yourself and try to do it without the clues. You can do it!"));
+        games.add(new PracticeHelperClass(R.drawable.itop, "Spell the word with signs!", "Guess all the letters that form the word that appears on the screen. Be careful, time is running out! "));
+        games.add(new PracticeHelperClass(R.drawable.qtoz, "Make a match!", "Match the letter with its sign and make a \"match\". You can do it! This is easier than making a match on Tinder!"));
+
+        adapter = new PracticeAdapter(games);
+        practiceRecycler.setAdapter(adapter);
     }
 }

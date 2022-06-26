@@ -121,6 +121,9 @@ public class SignUpTabFragment extends Fragment {
                 newUser.put("lastlogin", FieldValue.serverTimestamp());
                 newUser.put("ncgames", 0);
                 newUser.put("nclessons", 0);
+                newUser.put("progressl1", "0");
+                newUser.put("progressl2", "0");
+                newUser.put("progressl3", "0");
 
                 db.collection("userstats")
                         .document(firebaseUser.getUid())

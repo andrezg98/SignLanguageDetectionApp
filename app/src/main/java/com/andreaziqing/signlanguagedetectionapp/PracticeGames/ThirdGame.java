@@ -3,6 +3,10 @@ package com.andreaziqing.signlanguagedetectionapp.PracticeGames;
 import com.andreaziqing.signlanguagedetectionapp.DetectorActivity;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,8 +37,12 @@ import androidx.core.content.res.ResourcesCompat;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ThirdGame extends DetectorActivity {
@@ -54,6 +62,10 @@ public class ThirdGame extends DetectorActivity {
 
     public int counter;
     TextView time;
+    volatile boolean isTimesOut = false;
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +126,7 @@ public class ThirdGame extends DetectorActivity {
                                     public void onFinish() {
                                         chances[0]--;
                                         if (chances[0] == 0) {
-                                            Intent intent = new Intent(context, BetweenGamesActivity.class);
-                                            intent.putExtra("previousActivity", THIRD_GAME);
-                                            intent.putExtra("state", "FAIL");
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            context.startActivity(intent);
+                                            isTimesOut = true;
                                         } else {
                                             AlertDialog.Builder builder = new AlertDialog.Builder(ThirdGame.this);
                                             builder.setMessage("You have " + chances[0] + " chances left")
@@ -218,11 +226,41 @@ public class ThirdGame extends DetectorActivity {
         cardDetectionThread = new Thread(runnable);
         cardDetectionThread.start();
 
-        /*if (!cardDetectionThread.isAlive()) {
-            Intent intent = new Intent(this, SecondGame.class);
-            intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
-            this.startActivity(intent);
-        }*/
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Log.d(THIRD_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
+                if (!cardDetectionThread.isAlive()) {
+                    Log.d(THIRD_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    Map<String, Object> dataToUpdate = new HashMap<>();
+                    dataToUpdate.put("ncgames", FieldValue.increment(1));
+                    db.collection("userstats")
+                            .document(firebaseUser.getUid())
+                            .update(dataToUpdate);
+
+                    Intent intent = new Intent(context, BetweenGamesActivity.class);
+                    intent.putExtra("previousActivity", THIRD_GAME);
+                    intent.putExtra("state", "SUCCESS");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
+                    timer.cancel();
+                } else if (isTimesOut) {
+                    Intent intent = new Intent(context, BetweenGamesActivity.class);
+                    intent.putExtra("previousActivity", THIRD_GAME);
+                    intent.putExtra("state", "FAIL");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
+                    timer.cancel();
+                } else {
+                    Log.d(THIRD_GAME, "Sigo esperando a que el hilo termine.");
+                }
+            }
+        }, 500, 500);  // first is delay, second is period
     }
 
     @Override

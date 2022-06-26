@@ -277,7 +277,7 @@ public abstract class CameraActivity extends AppCompatActivity implements ImageR
             if (shouldShowRequestPermissionRationale(PERMISSION_CAMERA)) {
                 Toast.makeText(
                         CameraActivity.this,
-                        "Camera permission is required for this demo",
+                        "Camera permission is required for this application",
                         Toast.LENGTH_LONG)
                         .show();
             }
