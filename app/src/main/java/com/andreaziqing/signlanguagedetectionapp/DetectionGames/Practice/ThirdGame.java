@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -31,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ public class ThirdGame extends DetectorActivity {
     RelativeLayout mCardWord;
     LinearLayout mLetterSpelling;
 
-    TextView[] arrLetter; // En este caso serán las letras de la palabra
+    volatile TextView[] arrLetter; // En este caso serán las letras de la palabra
 
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
@@ -64,12 +67,18 @@ public class ThirdGame extends DetectorActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    public MediaPlayer mpCorrect;
+    public MediaPlayer mpWrong;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_game);
 
         context = getApplicationContext();
+
+        mpCorrect = MediaPlayer.create(context, R.raw.correct);
+        mpWrong = MediaPlayer.create(context, R.raw.wrong);
 
         time = findViewById(R.id.countdown_timer);
 
@@ -79,7 +88,7 @@ public class ThirdGame extends DetectorActivity {
 
         // Palabra random
         // Escoger aleatoriamente una palabra del banco de palabras
-        setRandomWord(mCardWord,false);
+        arrLetter = setRandomWord(mCardWord,false);
 
         // TODO: Escoger palabra según temática
     }
@@ -101,10 +110,14 @@ public class ThirdGame extends DetectorActivity {
                 Log.d(THIRD_GAME, "Hilo en background: "+ Thread.currentThread().getName());
                 synchronized (this) {
                     for (int cycle = 0; cycle < 4; cycle++) {
-                        Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + 1);
+                        try { // we give time for arrLetter to update
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + " Palabra : "+ arrLetter[0].getText().toString());
                         int letterIdx = 0;
                         final int[] chances = {3};
-
                         // Iniciamos timer desde este hilo
                         class InitTimerRunnable implements Runnable {
                             CountDownTimer countDownTimer;
@@ -121,10 +134,12 @@ public class ThirdGame extends DetectorActivity {
 
                                     @Override
                                     public void onFinish() {
+
                                         chances[0]--;
                                         if (chances[0] == 0) {
                                             isTimesOut = true;
                                         } else {
+                                            mpWrong.start();
                                             AlertDialog.Builder builder = new AlertDialog.Builder(ThirdGame.this);
                                             builder.setMessage("You have " + chances[0] + " chances left")
                                                     .setTitle("Ups!")
@@ -171,7 +186,7 @@ public class ThirdGame extends DetectorActivity {
                                 }
                             }
                             handler.post(new UpdateSpellingLetterRunnable());
-
+                            mpCorrect.start();
                             // 1. Avanzamos a la siguiente iteración (letra)
                             letterIdx++;
 
@@ -187,6 +202,7 @@ public class ThirdGame extends DetectorActivity {
                                         mCardWord.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                     }
                                 }
+                                mpCorrect.start();
                                 // 3. Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado
                                 handler2.post(new UpdateCardColorRunnable(letterIdx));
                             }
@@ -204,7 +220,7 @@ public class ThirdGame extends DetectorActivity {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
                                 Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Generando nueva palabra.");
-                                setRandomWord(mCardWord, true);
+                                arrLetter = setRandomWord(mCardWord, true);
                             }
                         }
                         if(cycle <= 2) {
@@ -252,6 +268,9 @@ public class ThirdGame extends DetectorActivity {
                         timer.cancel();
                     }
                 } else if (isTimesOut) {
+                    Log.d(THIRD_GAME, "Times out.");
+                    mpWrong.start();
+
                     Intent intent = new Intent(context, BetweenGamesActivity.class);
                     intent.putExtra("previousActivity", THIRD_GAME);
                     intent.putExtra("state", "FAIL");
@@ -275,6 +294,12 @@ public class ThirdGame extends DetectorActivity {
     @Override
     public synchronized void onStop() {
         super.onStop();
+
+        mpCorrect.release();
+        mpCorrect = null;
+
+        mpWrong.release();
+        mpWrong = null;
 
         Toast.makeText(this, "Hilo terminado", Toast.LENGTH_SHORT).show();
     }
@@ -311,9 +336,9 @@ public class ThirdGame extends DetectorActivity {
         return false;
     }
 
-    private void setRandomWord(RelativeLayout cardWord, boolean refreshCard) {
+    private TextView[] setRandomWord(RelativeLayout cardWord, boolean refreshCard) {
         String[] words = new String[]{"SIGNOS", "LENGUAJE", "APRENDER", "ANDROID", "VERANO",
-                "PLAYA", "PISCINA", "MONTAÑA", "MOJACAR"};
+                "PLAYA", "PISCINA", "MOJACAR"};
         //String[] words = new String[]{"AB"};
 
         int wordPosition = (int) (Math.random() * (words.length));
@@ -336,6 +361,7 @@ public class ThirdGame extends DetectorActivity {
             cardWord.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             mLetterSpelling.removeAllViews();
         }
+        return arrLetter;
     }
 
     @Override

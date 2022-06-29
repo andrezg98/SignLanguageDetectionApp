@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -75,12 +76,16 @@ public class SecondGame extends DetectorActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    public MediaPlayer mpCorrect;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_game);
 
         context = getApplicationContext();
+
+        mpCorrect = MediaPlayer.create(context, R.raw.correct);
 
         for (int i = 0; i < abecedary.toArray().length; i++) {
             signDictionary.put(abecedary.get(i), abecedaryImage.get(i));
@@ -161,6 +166,7 @@ public class SecondGame extends DetectorActivity {
                                     arrCardLetter[letterIndex].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                 }
                             }
+                            mpCorrect.start();
                             // 2. Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado
                             handler.post(new UpdateCardColorRunnable(letterIdx));
                             // 3. Avanzamos a la siguiente iteración (letra)
@@ -284,6 +290,9 @@ public class SecondGame extends DetectorActivity {
     @Override
     public synchronized void onStop() {
         super.onStop();
+
+        mpCorrect.release();
+        mpCorrect = null;
 
         Toast.makeText(this, "Hilo terminado", Toast.LENGTH_SHORT).show();
     }

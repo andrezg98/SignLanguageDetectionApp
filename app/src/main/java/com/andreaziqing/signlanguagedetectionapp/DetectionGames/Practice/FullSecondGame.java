@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -79,6 +80,9 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    public MediaPlayer mpCorrect;
+    public MediaPlayer mpWrong;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +90,10 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
         counter = 0;
         context = getApplicationContext();
+
+        mpCorrect = MediaPlayer.create(context, R.raw.correct);
+        mpWrong = MediaPlayer.create(context, R.raw.wrong);
+
         initViews();
 
         // Primeras 3 letras
@@ -202,6 +210,8 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                                 }
                             }
 
+                            mpCorrect.start();
+
                             initTimerRunnable.countDownTimer.cancel();
                             handler3.removeCallbacksAndMessages(initTimerRunnable);
                             // 2. Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado
@@ -268,6 +278,8 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                     }
                 } else if (isTimesOut) {
                     Log.d(FULL_SECOND_GAME, "Times out.");
+                    mpWrong.start();
+
                     Intent intent = new Intent(FullSecondGame.this, BetweenGamesActivity.class);
                     intent.putExtra("previousActivity", FULL_SECOND_GAME);
                     intent.putExtra("state", "FAIL");
@@ -319,6 +331,12 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
     @Override
     public synchronized void onStop() {
         super.onStop();
+
+        mpCorrect.release();
+        mpCorrect = null;
+
+        mpWrong.release();
+        mpWrong = null;
 
         Toast.makeText(this, "Hilo terminado", Toast.LENGTH_SHORT).show();
     }

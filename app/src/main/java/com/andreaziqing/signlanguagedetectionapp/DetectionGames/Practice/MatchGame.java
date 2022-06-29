@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -94,12 +95,19 @@ public class MatchGame extends AppCompatActivity {
     int chances = 3;
     int counterMatches = 0;
 
+    public MediaPlayer mpCorrect;
+    public MediaPlayer mpWrong;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_game);
 
         context = getApplicationContext();
+
+        mpCorrect = MediaPlayer.create(context, R.raw.correct);
+        mpWrong = MediaPlayer.create(context, R.raw.wrong);
+
         initViews();
 
         // Primeras 8 letras
@@ -157,6 +165,17 @@ public class MatchGame extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mpCorrect.release();
+        mpCorrect = null;
+
+        mpWrong.release();
+        mpWrong = null;
+    }
+
     private void isAMatch(boolean match, int cardLetterPosition, int cardImagePosition) {
         final Handler handler = new Handler();
 
@@ -170,6 +189,8 @@ public class MatchGame extends AppCompatActivity {
                     Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Actualizando tarjetas a color verde.");
                     arrCardLetter[cardLetterPosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                     arrCardImage[cardImagePosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
+
+                    mpCorrect.start();
 
                     counterMatches++;
 
@@ -194,6 +215,8 @@ public class MatchGame extends AppCompatActivity {
                     Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Actualizando tarjetas a color rojo.");
                     arrCardLetter[cardLetterPosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#EC6E6E")));
                     arrCardImage[cardImagePosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#EC6E6E")));
+
+                    mpWrong.start();
 
                     chances--;
                     if (chances == 0) {
