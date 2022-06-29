@@ -1,6 +1,8 @@
-package com.andreaziqing.signlanguagedetectionapp.PracticeGames;
+package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice;
 
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.BetweenGamesActivity;
 import com.andreaziqing.signlanguagedetectionapp.Detector.DetectorActivity;
+import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +60,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
+    volatile boolean threadIsInterrupted = false;
 
     List<String> abecedary = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
             "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
@@ -82,7 +85,15 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
         setContentView(R.layout.activity_full_second_game);
 
         counter = 0;
+        context = getApplicationContext();
+        initViews();
 
+        // Primeras 3 letras
+        // Escoger aleatoriamente tres letras del abecedario
+        setThreeRandomLetters(arrCardLetter, false);
+    }
+
+    private void initViews() {
         for (int i = 0; i < abecedary.toArray().length; i++) {
             signDictionary.put(abecedary.get(i), abecedaryImage.get(i));
         }
@@ -112,10 +123,6 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
         arrGroupOfLetters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
                 "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-
-        // Primeras 3 letras
-        // Escoger aleatoriamente tres letras (en función del grupo de letras que el usuario haya escogido)
-        setThreeRandomLetters(arrCardLetter, false);
     }
 
     @Override
@@ -212,9 +219,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
                         // Una vez se han adivinado las 3 letras; volvemos a generar otras 3 aleatorias desde este hilo
                         class UpdateLetterCardsRunnable implements Runnable {
-                            UpdateLetterCardsRunnable() {
-                            }
-
+                            UpdateLetterCardsRunnable() {}
                             public void run() {
                                 Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Regenerando grupo de 3 letas.");
                                 setThreeRandomLetters(arrCardLetter, true);
@@ -240,24 +245,29 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
             public void run() {
                 Log.d(FULL_SECOND_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
-                    Log.d(FULL_SECOND_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+                    if (!threadIsInterrupted) {
+                        Log.d(FULL_SECOND_GAME, "Hilo terminado, pasando a la siguiente actividad.");
 
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    Map<String, Object> dataToUpdate = new HashMap<>();
-                    dataToUpdate.put("ncgames", FieldValue.increment(1));
-                    db.collection("userstats")
-                            .document(firebaseUser.getUid())
-                            .update(dataToUpdate);
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        Map<String, Object> dataToUpdate = new HashMap<>();
+                        dataToUpdate.put("ncgames", FieldValue.increment(1));
+                        db.collection("userstats")
+                                .document(firebaseUser.getUid())
+                                .update(dataToUpdate);
 
-                    Intent intent = new Intent(FullSecondGame.this, BetweenGamesActivity.class);
-                    intent.putExtra("previousActivity", FULL_SECOND_GAME);
-                    intent.putExtra("state", "SUCCESS");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    FullSecondGame.this.startActivity(intent);
+                        Intent intent = new Intent(FullSecondGame.this, BetweenGamesActivity.class);
+                        intent.putExtra("previousActivity", FULL_SECOND_GAME);
+                        intent.putExtra("state", "SUCCESS");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        FullSecondGame.this.startActivity(intent);
 
-                    timer.cancel();
+                        timer.cancel();
+                    } else {
+                        Log.d(FULL_SECOND_GAME, "Hilo interrumpido, cerrando actividad.");
+                        timer.cancel();
+                    }
                 } else if (isTimesOut) {
-                    Log.d(FULL_SECOND_GAME, "FINISH TIMER: QUIERO QUE PASES");
+                    Log.d(FULL_SECOND_GAME, "Times out.");
                     Intent intent = new Intent(FullSecondGame.this, BetweenGamesActivity.class);
                     intent.putExtra("previousActivity", FULL_SECOND_GAME);
                     intent.putExtra("state", "FAIL");
@@ -321,8 +331,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
         Gson gson = new Gson();
 
         String json = sharedPreferences.getString("RESULTS", "A");
-        Type type = new TypeToken<List<Detector.Recognition>>() {
-        }.getType();
+        Type type = new TypeToken<List<Detector.Recognition>>() {}.getType();
 
         if (json.equals("A")) { // No se ha detectado nada
             return false;
@@ -369,4 +378,16 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) { super.onBackPressed();
+            threadIsInterrupted = true;
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
 }

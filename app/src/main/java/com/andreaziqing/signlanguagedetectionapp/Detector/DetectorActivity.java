@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.Detector;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,6 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
-import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
@@ -24,8 +23,9 @@ import com.andreaziqing.signlanguagedetectionapp.HelperClasses.CustomView.Overla
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.BorderedText;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.ImageUtils;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Tracking.MultiBoxTracker;
-import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
-import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.TFLiteObjectDetectionAPIModel;
+import com.andreaziqing.signlanguagedetectionapp.R;
+import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
+import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.TFLiteObjectDetectionAPIModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;

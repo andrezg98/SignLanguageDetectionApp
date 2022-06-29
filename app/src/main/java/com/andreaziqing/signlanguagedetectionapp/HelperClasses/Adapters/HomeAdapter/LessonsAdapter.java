@@ -1,6 +1,6 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter;
 
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FirstGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.FirstGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import android.content.Context;
@@ -47,7 +47,7 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsV
         holder.image.setImageResource(lessonsHelperClass.getImage());
         holder.title.setText(lessonsHelperClass.getTitle());
         holder.desc.setText(lessonsHelperClass.getDesc());
-        holder.progress.setProgress((int) (((float)lessonsHelperClass.getProgress()/3)*100), true);
+        holder.progress.setProgress((int) (((float)lessonsHelperClass.getProgress()/2)*100), true);
 
         Log.d(LESSONS_ADAPTER, "Progress Lesson: " + ((int) (((float)lessonsHelperClass.getProgress()/2)*100)));
 

@@ -11,8 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.FullSecondGame;
-import com.andreaziqing.signlanguagedetectionapp.PracticeGames.ThirdGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.FullSecondGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.MatchGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.ThirdGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ public class PracticeAdapter extends RecyclerView.Adapter<PracticeAdapter.Practi
                         break;
                     case 1:
                         intent = new Intent(context, ThirdGame.class);
+                        break;
+                    case 2:
+                        intent = new Intent(context, MatchGame.class);
                         break;
                     default:
                         break;

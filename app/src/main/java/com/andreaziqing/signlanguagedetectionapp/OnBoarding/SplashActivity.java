@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Common;
+package com.andreaziqing.signlanguagedetectionapp.OnBoarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class SplashActivity extends AppCompatActivity {

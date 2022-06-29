@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter;
+package com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter;
 
 import android.content.Context;
 import android.graphics.Bitmap;

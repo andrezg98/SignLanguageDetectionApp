@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Common;
+package com.andreaziqing.signlanguagedetectionapp.OnBoarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.SliderAdapter;
 import com.andreaziqing.signlanguagedetectionapp.R;
 

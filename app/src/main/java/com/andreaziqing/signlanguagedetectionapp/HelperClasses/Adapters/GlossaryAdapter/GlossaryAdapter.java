@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.andreaziqing.signlanguagedetectionapp.Common.GlossarySlider;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.GlossarySlider;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.Detector;
 
 import android.app.Fragment;
 import android.graphics.SurfaceTexture;
@@ -17,8 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.io.IOException;
 import java.util.List;
+
+import com.andreaziqing.signlanguagedetectionapp.Detector.CameraConnectionFragment;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.CustomView.AutoFitTextureView;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.ImageUtils;
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 public class LegacyCameraConnectionFragment extends Fragment {
     private static final String LEGACY_CAMERA_CONNECTION_FRAGMENT = "Legacy Camera Connection Fragment";

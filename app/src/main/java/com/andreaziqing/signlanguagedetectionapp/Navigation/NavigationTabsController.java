@@ -4,33 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.TaskStackBuilder;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.andreaziqing.signlanguagedetectionapp.Common.AboutFragment;
-import com.andreaziqing.signlanguagedetectionapp.Common.SettingsFragment;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.AboutFragment;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.SettingsFragment;
 import com.andreaziqing.signlanguagedetectionapp.R;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.GlossaryFragment;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.HomeFragment;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.PracticeFragment;
-import com.andreaziqing.signlanguagedetectionapp.UserTabs.RankingFragment;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.GlossaryFragment;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.HomeFragment;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.PracticeFragment;
+import com.andreaziqing.signlanguagedetectionapp.Tabs.RankingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.Objects;
 
@@ -188,7 +180,7 @@ public class NavigationTabsController extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            loadFragment(homeFragment);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.Detector;
 
 import android.Manifest;
 import android.app.Fragment;
@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.ImageUtils;
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 import java.nio.ByteBuffer;
 

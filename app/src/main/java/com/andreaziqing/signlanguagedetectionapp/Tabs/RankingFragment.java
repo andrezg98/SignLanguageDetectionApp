@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.UserTabs;
+package com.andreaziqing.signlanguagedetectionapp.Tabs;
 
 import android.os.Bundle;
 
@@ -13,10 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsHelperClass;
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.PracticeAdapter.PracticeAdapter;
-import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.PracticeAdapter.PracticeHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.RankingAdapter.RankingAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.RankingAdapter.RankingHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.R;
@@ -25,17 +21,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class RankingFragment extends Fragment {

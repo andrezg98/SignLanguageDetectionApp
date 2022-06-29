@@ -16,7 +16,7 @@ import android.util.TypedValue;
 
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.BorderedText;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.ImageUtils;
-import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
+import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 
 import java.util.LinkedList;
 import java.util.List;

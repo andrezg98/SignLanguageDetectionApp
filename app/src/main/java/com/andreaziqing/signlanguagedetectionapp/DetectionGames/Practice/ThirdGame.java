@@ -1,6 +1,8 @@
-package com.andreaziqing.signlanguagedetectionapp.PracticeGames;
+package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice;
 
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.BetweenGamesActivity;
 import com.andreaziqing.signlanguagedetectionapp.Detector.DetectorActivity;
+import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -52,6 +55,7 @@ public class ThirdGame extends DetectorActivity {
 
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
+    volatile boolean threadIsInterrupted = false;
 
     public int counter;
     TextView time;
@@ -108,7 +112,7 @@ public class ThirdGame extends DetectorActivity {
                             InitTimerRunnable() {}
                             public void run() {
                                 Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Iniciando temporizador.");
-                                countDownTimer = new CountDownTimer(10000, 1000) {
+                                countDownTimer = new CountDownTimer(30000, 1000) {
                                     @Override
                                     public void onTick(long millisUntilFinished) {
                                         time.setText((int) (millisUntilFinished / 1000) + "");
@@ -225,22 +229,28 @@ public class ThirdGame extends DetectorActivity {
             public void run() {
                 Log.d(THIRD_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
-                    Log.d(THIRD_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+                    if (!threadIsInterrupted) {
+                        Log.d(THIRD_GAME, "Hilo terminado, pasando a la siguiente actividad.");
 
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    Map<String, Object> dataToUpdate = new HashMap<>();
-                    dataToUpdate.put("ncgames", FieldValue.increment(1));
-                    db.collection("userstats")
-                            .document(firebaseUser.getUid())
-                            .update(dataToUpdate);
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        Map<String, Object> dataToUpdate = new HashMap<>();
+                        dataToUpdate.put("ncgames", FieldValue.increment(1));
+                        db.collection("userstats")
+                                .document(firebaseUser.getUid())
+                                .update(dataToUpdate);
 
-                    Intent intent = new Intent(context, BetweenGamesActivity.class);
-                    intent.putExtra("previousActivity", THIRD_GAME);
-                    intent.putExtra("state", "SUCCESS");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                        Intent intent = new Intent(context, BetweenGamesActivity.class);
+                        intent.putExtra("previousActivity", THIRD_GAME);
+                        intent.putExtra("state", "SUCCESS");
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
 
-                    timer.cancel();
+                        timer.cancel();
+                    } else {
+                        Log.d(THIRD_GAME, "Hilo interrumpido, cerrando actividad.");
+
+                        timer.cancel();
+                    }
                 } else if (isTimesOut) {
                     Intent intent = new Intent(context, BetweenGamesActivity.class);
                     intent.putExtra("previousActivity", THIRD_GAME);
@@ -302,8 +312,9 @@ public class ThirdGame extends DetectorActivity {
     }
 
     private void setRandomWord(RelativeLayout cardWord, boolean refreshCard) {
-        //String[] words = new String[]{"SIGNOS", "LENGUAJE", "APRENDER"};
-        String[] words = new String[]{"AB"};
+        String[] words = new String[]{"SIGNOS", "LENGUAJE", "APRENDER", "ANDROID", "VERANO",
+                "PLAYA", "PISCINA", "MONTAÑA", "MOJACAR"};
+        //String[] words = new String[]{"AB"};
 
         int wordPosition = (int) (Math.random() * (words.length));
 
@@ -324,6 +335,17 @@ public class ThirdGame extends DetectorActivity {
             // Reseteamos color de la tarjeta a blanco
             cardWord.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             mLetterSpelling.removeAllViews();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) { super.onBackPressed();
+            threadIsInterrupted = true;
+        } else {
+            getSupportFragmentManager().popBackStack();
         }
     }
 }

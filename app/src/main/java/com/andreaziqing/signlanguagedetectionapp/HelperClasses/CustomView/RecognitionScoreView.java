@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
+import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import java.util.List;
 
 public class RecognitionScoreView extends View implements ResultsView {

@@ -1,6 +1,7 @@
-package com.andreaziqing.signlanguagedetectionapp.Lessons;
+package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons;
 
 import com.andreaziqing.signlanguagedetectionapp.Detector.DetectorActivity;
+import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +18,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,6 +64,7 @@ public class FirstGame extends DetectorActivity {
 
     Thread cardDetectionThread;
     volatile boolean activityStopped = false;
+    volatile boolean threadIsInterrupted = false;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -179,22 +182,43 @@ public class FirstGame extends DetectorActivity {
             public void run() {
                 Log.d(FIRST_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
-                    Log.d(FIRST_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+                    if (!threadIsInterrupted) {
+                        Log.d(FIRST_GAME, "Hilo terminado, pasando a la siguiente actividad.");
 
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    Map<String, Object> dataToUpdate = new HashMap<>();
-                    dataToUpdate.put("progressl1", "1");
-                    db.collection("userstats")
-                            .document(firebaseUser.getUid())
-                            .update(dataToUpdate);
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        Map<String, Object> dataToUpdate = new HashMap<>();
 
-                    Intent intent = new Intent(context, SecondGame.class);
-                    intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
-                    intent.putExtra("position", mPositionGroup);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                        switch (mPositionGroup) {
+                            case 0:
+                                dataToUpdate.put("progressl1", "1");
+                                break;
+                            case 1:
+                                dataToUpdate.put("progressl2", "1");
+                                break;
+                            case 2:
+                                dataToUpdate.put("progressl3", "1");
+                                break;
+                            default:
+                                break;
+                        }
 
-                    timer.cancel();
+                        db.collection("userstats")
+                                .document(firebaseUser.getUid())
+                                .update(dataToUpdate);
+
+                        Intent intent = new Intent(context, SecondGame.class);
+                        intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
+                        intent.putExtra("position", mPositionGroup);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        //finish();
+
+                        timer.cancel();
+                    } else {
+                        Log.d(FIRST_GAME, "Hilo interrumpido, cerrando actividad.");
+
+                        timer.cancel();
+                    }
                 } else {
                     Log.d(FIRST_GAME, "Sigo esperando a que el hilo termine.");
                 }
@@ -283,6 +307,18 @@ public class FirstGame extends DetectorActivity {
                 }
             }
 
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            threadIsInterrupted = true;
+        } else {
+            getSupportFragmentManager().popBackStack();
         }
     }
 }

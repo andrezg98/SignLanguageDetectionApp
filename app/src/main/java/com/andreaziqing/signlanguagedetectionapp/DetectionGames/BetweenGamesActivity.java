@@ -1,16 +1,20 @@
-package com.andreaziqing.signlanguagedetectionapp.PracticeGames;
+package com.andreaziqing.signlanguagedetectionapp.DetectionGames;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.andreaziqing.signlanguagedetectionapp.Lessons.FirstGame;
-import com.andreaziqing.signlanguagedetectionapp.Lessons.SecondGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.FirstGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.SecondGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.FullSecondGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.MatchGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.ThirdGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.service.autofill.FieldClassification;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -77,6 +81,7 @@ public class BetweenGamesActivity extends AppCompatActivity {
                                 intent.putExtra("nextFragment", "HomeFragment");
                             case "FullSecondGame":
                             case "ThirdGame":
+                            case "MatchGame":
                                 intent = new Intent(getApplicationContext(), NavigationTabsController.class);
                                 intent.putExtra("nextFragment", "PracticeFragment");
                                 break;
@@ -103,7 +108,7 @@ public class BetweenGamesActivity extends AppCompatActivity {
 
     private void repeatActivity(Intent intent) {
         switch (mPreviousActivity) {
-            case "FirsGame":
+            case "FirstGame":
                 intent = new Intent(getApplicationContext(), FirstGame.class);
                 intent.putExtra("position", mPositionGroup);
                 break;
@@ -117,6 +122,9 @@ public class BetweenGamesActivity extends AppCompatActivity {
                 break;
             case "FullSecondGame":
                 intent = new Intent(getApplicationContext(), FullSecondGame.class);
+                break;
+            case "MatchGame":
+                intent = new Intent(getApplicationContext(), MatchGame.class);
                 break;
             default:
                 break;
@@ -133,6 +141,7 @@ public class BetweenGamesActivity extends AppCompatActivity {
         switch (mPreviousActivity) {
             case "ThirdGame":
             case "FullSecondGame":
+            case "MatchGame":
                 intent = new Intent(getApplicationContext(), NavigationTabsController.class);
                 intent.putExtra("nextFragment", "PracticeFragment");
                 break;
@@ -144,5 +153,19 @@ public class BetweenGamesActivity extends AppCompatActivity {
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getApplicationContext().startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            Intent intent = new Intent(getApplicationContext(), NavigationTabsController.class);
+            intent.putExtra("nextFragment", "HomeFragment");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(intent);
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 }

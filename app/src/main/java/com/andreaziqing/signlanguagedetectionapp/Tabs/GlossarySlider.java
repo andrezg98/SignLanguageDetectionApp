@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Common;
+package com.andreaziqing.signlanguagedetectionapp.Tabs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;

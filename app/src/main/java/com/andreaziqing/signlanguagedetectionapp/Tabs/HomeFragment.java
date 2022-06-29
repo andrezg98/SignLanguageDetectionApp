@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.UserTabs;
+package com.andreaziqing.signlanguagedetectionapp.Tabs;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andreaziqing.signlanguagedetectionapp.Common.LoginActivity;
+import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossaryAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossaryHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;
@@ -255,9 +255,9 @@ public class HomeFragment extends Fragment {
         practiceGamesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         ArrayList<PracticeHelperClass> games = new ArrayList<>();
-        games.add(new PracticeHelperClass(R.drawable.atoh, "Guess the letter sign!"));
-        games.add(new PracticeHelperClass(R.drawable.itop, "Spell the word with signs!"));
-        games.add(new PracticeHelperClass(R.drawable.qtoz, "Make a match!"));
+        games.add(new PracticeHelperClass(R.drawable.guesslettersign, "Guess the letter sign!"));
+        games.add(new PracticeHelperClass(R.drawable.spelltheword, "Spell the word with signs!"));
+        games.add(new PracticeHelperClass(R.drawable.makeamatch, "Make a match!"));
 
         adapter = new PracticeHomeAdapter(games);
         practiceGamesRecycler.setAdapter(adapter);

@@ -18,5 +18,6 @@
     <color name="light_gray_blue">#DBEDF3</color>
 
     <color name="green_correct">#8cf5c1</color>
+    <color name="red_incorrect">#EC6E6E</color>
 
 </resources>

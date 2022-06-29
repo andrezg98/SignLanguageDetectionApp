@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.UserTabs;
+package com.andreaziqing.signlanguagedetectionapp.Tabs;
 
 import android.os.Bundle;
 

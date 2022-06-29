@@ -11,41 +11,44 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SignLanguageDetectionApp">
         <activity
-            android:name=".Common.GlossarySlider"
+            android:name=".DetectionGames.Practice.MatchGame"
             android:exported="false" />
         <activity
-            android:name=".PracticeGames.FullSecondGame"
+            android:name=".Tabs.GlossarySlider"
             android:exported="false" />
         <activity
-            android:name=".PracticeGames.BetweenGamesActivity"
+            android:name=".DetectionGames.Practice.FullSecondGame"
             android:exported="false" />
         <activity
-            android:name=".PracticeGames.ThirdGame"
+            android:name=".DetectionGames.BetweenGamesActivity"
             android:exported="false" />
         <activity
-            android:name=".PracticeGames.SecondGame"
+            android:name=".DetectionGames.Practice.ThirdGame"
             android:exported="false" />
         <activity
-            android:name=".PracticeGames.FirstGame"
+            android:name=".DetectionGames.Lessons.SecondGame"
             android:exported="false" />
         <activity
-            android:name=".DetectorActivity"
+            android:name=".DetectionGames.Lessons.FirstGame"
+            android:exported="false" />
+        <activity
+            android:name=".Detector.DetectorActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CameraActivity"
+            android:name=".Detector.CameraActivity"
             android:exported="true" />
         <activity
-            android:name=".Common.LoginActivity"
+            android:name=".Authentication.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".Common.SplashActivity"
+            android:name=".OnBoarding.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +57,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Common.OnBoarding"
+            android:name=".OnBoarding.OnBoarding"
             android:exported="true" />
         <activity
             android:name=".Navigation.NavigationTabsController"

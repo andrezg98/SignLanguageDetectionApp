@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Common;
+package com.andreaziqing.signlanguagedetectionapp.Authentication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp;
+package com.andreaziqing.signlanguagedetectionapp.Detector;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -51,6 +51,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.CustomView.AutoFitTextureView;
+import com.andreaziqing.signlanguagedetectionapp.R;
 
 @SuppressLint("ValidFragment")
 public class CameraConnectionFragment extends Fragment {

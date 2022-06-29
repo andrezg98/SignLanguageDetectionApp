@@ -1,7 +1,7 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.CustomView;
 
 
-import com.andreaziqing.signlanguagedetectionapp.TFLiteInterpreter.Detector;
+import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import java.util.List;
 
 public interface ResultsView {

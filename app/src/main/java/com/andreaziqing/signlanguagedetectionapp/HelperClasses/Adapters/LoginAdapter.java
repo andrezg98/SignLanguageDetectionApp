@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.andreaziqing.signlanguagedetectionapp.Common.LoginTabFragment;
-import com.andreaziqing.signlanguagedetectionapp.Common.SignUpTabFragment;
+import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginTabFragment;
+import com.andreaziqing.signlanguagedetectionapp.Authentication.SignUpTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
 
