@@ -64,18 +64,8 @@
                 android:layout_below="@id/linear_fields"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:layout_toEndOf="@id/forget_password"
                 android:text="Remember me"
                 android:buttonTint="@color/neon_pink"/>
-
-            <TextView
-                android:id="@+id/forget_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linear_fields"
-                android:layout_marginTop="10dp"
-                android:text="Forget Password?"
-                android:textAlignment="textEnd" />
 
             <Button
                 android:id="@+id/login_button"

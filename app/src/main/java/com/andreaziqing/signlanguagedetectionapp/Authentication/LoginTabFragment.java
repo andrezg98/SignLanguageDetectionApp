@@ -35,7 +35,6 @@ public class LoginTabFragment extends Fragment {
 
     private static final String LOGIN_TAB_FRAGMENT = "Login Tab Fragment";
 
-    TextView forgotPassword;
     Button login_button;
     CheckBox rememberMe;
     TextInputEditText emailEditText, passwordEditText;
@@ -69,7 +68,6 @@ public class LoginTabFragment extends Fragment {
         mEmail = view.findViewById(R.id.email_login);
         mPassword = view.findViewById(R.id.password_login);
 
-        forgotPassword = view.findViewById(R.id.forget_password);
         login_button = view.findViewById(R.id.login_button);
         rememberMe = view.findViewById(R.id.remember_me);
         emailEditText = view.findViewById(R.id.editEmailLogin);
@@ -86,17 +84,14 @@ public class LoginTabFragment extends Fragment {
         // Animation
         mEmail.setTranslationX(800);
         mPassword.setTranslationX(800);
-        forgotPassword.setTranslationX(800);
         login_button.setTranslationX(800);
 
         mEmail.setAlpha(v);
         mPassword.setAlpha(v);
-        forgotPassword.setAlpha(v);
         login_button.setAlpha(v);
 
         mEmail.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         mPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
-        forgotPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         login_button.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
 
         // Save data in Firebase on button click

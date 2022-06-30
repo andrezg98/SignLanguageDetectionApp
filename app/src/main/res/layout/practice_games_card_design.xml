@@ -33,14 +33,14 @@
 
         <ProgressBar
             android:id="@+id/practice_game_progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progress="60"
-            android:progressTint="@color/neon_pink"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_below="@+id/practice_game_title"
+            android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/practice_game_image"
-            android:layout_marginStart="10dp"/>
+            android:progress="100"
+            android:progressTint="@color/neon_pink" />
 
         <TextView
             android:id="@+id/practice_game_desc"

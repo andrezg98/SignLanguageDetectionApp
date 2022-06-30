@@ -407,5 +407,4 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
             getSupportFragmentManager().popBackStack();
         }
     }
-
 }

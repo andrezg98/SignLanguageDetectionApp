@@ -14,7 +14,6 @@ public class LoginActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    FloatingActionButton google;
 
     float v = 0;
 
@@ -25,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.login_tab_layout);
         viewPager = findViewById(R.id.login_view_pager);
-        google = findViewById(R.id.fab_google);
 
         tabLayout.addTab(tabLayout.newTab().setText("Login"));
         tabLayout.addTab(tabLayout.newTab().setText("Sign Up"));
@@ -36,14 +34,32 @@ public class LoginActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        google.setTranslationY(300);
         tabLayout.setTranslationY(300);
-
-        google.setAlpha(v);
         tabLayout.setAlpha(v);
-
-        google.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(100).start();
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tabLayout.setScrollPosition(tab.getPosition(),0f,true);
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 }
