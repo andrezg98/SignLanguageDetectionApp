@@ -2,6 +2,7 @@ package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.DetectionGames.BetweenGamesActivity;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
@@ -84,7 +85,7 @@ public class MatchGame extends AppCompatActivity {
     Dictionary<String, Integer> signDictionary = new Hashtable<String, Integer>();
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserStatsDatabase userStatsDB = new UserStatsDatabase();
 
     Map<String, String> letterMap = new HashMap<>();
     Map<String, String> imageMap = new HashMap<>();
@@ -198,9 +199,7 @@ public class MatchGame extends AppCompatActivity {
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         Map<String, Object> dataToUpdate = new HashMap<>();
                         dataToUpdate.put("ncgames", FieldValue.increment(1));
-                        db.collection("userstats")
-                                .document(firebaseUser.getUid())
-                                .update(dataToUpdate);
+                        userStatsDB.updateUserStats(firebaseUser.getUid(), dataToUpdate);
 
                         Intent intent = new Intent(context, BetweenGamesActivity.class);
                         intent.putExtra("previousActivity", MATCH_GAME);
@@ -210,7 +209,6 @@ public class MatchGame extends AppCompatActivity {
                     }
 
                     // Reset variables
-                    resetValues();
                 } else {
                     Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Updating cards to red.");
                     arrCardLetter[cardLetterPosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#EC6E6E")));
@@ -244,8 +242,8 @@ public class MatchGame extends AppCompatActivity {
                     }
 
                     // Reset variables
-                    resetValues();
                 }
+                resetValues();
             }
         }
         // Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado

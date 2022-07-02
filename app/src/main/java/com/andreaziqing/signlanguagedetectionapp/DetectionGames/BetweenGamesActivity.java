@@ -69,8 +69,6 @@ public class BetweenGamesActivity extends AppCompatActivity {
             mButtonNext.setText(R.string.try_again);
             mButtonRepeat.setVisibility(View.INVISIBLE);
             lottieAnimationView.setAnimation(R.raw.fail);
-            /*lottieAnimationView.getLayoutParams().height = 100;
-            lottieAnimationView.setLayoutParams(lottieAnimationView.getLayoutParams());*/
         }
 
         // Starts UI animation

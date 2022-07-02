@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.andreaziqing.signlanguagedetectionapp.Databases.SessionManager;
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,8 +51,7 @@ public class LoginTabFragment extends Fragment {
     // progress dialog
     private ProgressDialog progressDialog;
 
-    // Firestore Database instance
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserStatsDatabase userStatsDB = new UserStatsDatabase();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,9 +160,7 @@ public class LoginTabFragment extends Fragment {
 
                 Map<String, Object> dataToUpdate = new HashMap<>();
                 dataToUpdate.put("lastlogin", FieldValue.serverTimestamp());
-
-                db.collection("userstats").document(firebaseUser.getUid())
-                        .set(dataToUpdate, SetOptions.merge());
+                userStatsDB.updateUserStats(firebaseUser.getUid(), dataToUpdate);
 
                 // Open Home Activity
                 startActivity(new Intent(getContext(), NavigationTabsController.class));

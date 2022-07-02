@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDTO;
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,11 +25,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Fragment class in charge of the Sign Up Tab Screen logic.
@@ -46,8 +43,7 @@ public class SignUpTabFragment extends Fragment {
     // progress dialog
     private ProgressDialog progressDialog;
 
-    // Firestore Database instance
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserStatsDatabase userStatsDB = new UserStatsDatabase();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,7 +110,6 @@ public class SignUpTabFragment extends Fragment {
                 Toast.makeText(getContext(), getString(R.string.account_created) + email, Toast.LENGTH_SHORT).show();
 
                 // Send email verification
-                assert firebaseUser != null;
                 firebaseUser.sendEmailVerification()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -125,33 +120,11 @@ public class SignUpTabFragment extends Fragment {
                             }
                         });
 
-                Map<String, Object> newUser = new HashMap<>();
-                newUser.put("name", username);
-                newUser.put("regdate", FieldValue.serverTimestamp());
-                newUser.put("lastlogin", FieldValue.serverTimestamp());
-                newUser.put("ncgames", 0);
-                newUser.put("nclessons", 0);
-                newUser.put("progressl1", "0");
-                newUser.put("progressl2", "0");
-                newUser.put("progressl3", "0");
+                UserStatsDTO newUser = new UserStatsDTO(firebaseUser.getUid(), username);
 
                 // Update internal user stats database with the newly created user information.
                 // The document ID is set to the firebase auth user ID; allowing for later identifying user data.
-                db.collection("userstats")
-                        .document(firebaseUser.getUid())
-                        .set(newUser)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(SIGNUP_TAB_FRAGMENT, "DocumentSnapshot added with ID: " + firebaseUser.getUid());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(SIGNUP_TAB_FRAGMENT, "Error adding document", e);
-                            }
-                        });
+                userStatsDB.insertNewUser(newUser);
 
                 // Open Home Activity
                 startActivity(new Intent(getContext(), NavigationTabsController.class));

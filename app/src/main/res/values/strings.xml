@@ -69,7 +69,7 @@
     <string name="about">About</string>
     <string name="glossary">Glossary</string>
     <string name="start_learning">Start learning</string>
-    <string name="hi_again">Hi again,</string>
+    <string name="hi_again">"Hi again, "</string>
     <string name="username">Username</string>
     <string name="all_your_lessons">All your lessons</string>
     <string name="practice_games">Practice Games</string>

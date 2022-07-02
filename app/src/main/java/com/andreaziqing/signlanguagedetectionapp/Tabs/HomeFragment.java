@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossaryAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossaryHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserStatsDatabase userStatsDB = new UserStatsDatabase();
     FirebaseUser firebaseUser;
 
     String[] abecedary;
@@ -193,24 +195,7 @@ public class HomeFragment extends Fragment {
             startActivity(new Intent(getContext(), LoginActivity.class));
         } else {
             // Get user name and display in screen
-            db.collection("userstats")
-                    .document(firebaseUser.getUid())
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    mUsername.setText(document.getString("name"));
-                                } else {
-                                    Log.d(HOME_FRAGMENT, "No such document");
-                                }
-                            } else {
-                                Log.d(HOME_FRAGMENT, "get failed with ", task.getException());
-                            }
-                        }
-            });
+            userStatsDB.updateUsernameView(firebaseUser.getUid(), mUsername);
         }
     }
 
@@ -218,7 +203,7 @@ public class HomeFragment extends Fragment {
         lessonsRecycler.setHasFixedSize(true);
         lessonsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        // Get user name and display in screen
+        // Get user from database and update lessons adapter view
         db.collection("userstats")
                 .document(firebaseUser.getUid())
                 .get()

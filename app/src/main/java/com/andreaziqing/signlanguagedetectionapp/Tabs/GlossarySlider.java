@@ -89,8 +89,6 @@ public class GlossarySlider extends AppCompatActivity {
             dots[i].setTextSize(35);
 
             dotsLayout.addView(dots[i]);
-
-            Log.d(GLOSSARY_SLIDER, "New dot");
         }
 
         if (dots.length > 0) {

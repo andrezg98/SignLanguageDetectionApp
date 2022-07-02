@@ -1,5 +1,6 @@
 package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice;
 
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.DetectionGames.BetweenGamesActivity;
 import com.andreaziqing.signlanguagedetectionapp.Detector.DetectorActivity;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
@@ -92,7 +93,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
     // DB instances for updating user stats
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserStatsDatabase userStatsDB = new UserStatsDatabase();
 
     // MediaPlayer used for playing sound effect on valid detections and on times-out incorrect guess.
     public MediaPlayer mpCorrect;
@@ -285,9 +286,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         Map<String, Object> dataToUpdate = new HashMap<>();
                         dataToUpdate.put("ncgames", FieldValue.increment(1));
-                        db.collection("userstats")
-                                .document(firebaseUser.getUid())
-                                .update(dataToUpdate);
+                        userStatsDB.updateUserStats(firebaseUser.getUid(), dataToUpdate);
 
                         // We go to the next stage screen of the lesson (the between games activity), passing necessary information.
                         Intent intent = new Intent(FullSecondGame.this, BetweenGamesActivity.class);
@@ -372,7 +371,6 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
         mpWrong.release();
         mpWrong = null;
-
     }
 
     /**

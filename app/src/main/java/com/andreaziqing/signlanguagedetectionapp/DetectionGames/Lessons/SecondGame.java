@@ -1,5 +1,6 @@
 package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons;
 
+import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.Detector.DetectorActivity;
 import com.andreaziqing.signlanguagedetectionapp.DetectionGames.BetweenGamesActivity;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
@@ -91,7 +92,7 @@ public class SecondGame extends DetectorActivity {
 
     // DB instances for updating user stats
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserStatsDatabase userStatsDB = new UserStatsDatabase();
 
     // MediaPlayer used for playing sound effect on valid detections.
     public MediaPlayer mpCorrect;
@@ -252,9 +253,7 @@ public class SecondGame extends DetectorActivity {
                                 break;
                         }
 
-                        db.collection("userstats")
-                                .document(firebaseUser.getUid())
-                                .update(dataToUpdate);
+                        userStatsDB.updateUserStats(firebaseUser.getUid(), dataToUpdate);
 
                         // We go to the next stage screen of the lesson (the between games activity), passing necessary information.
                         Intent intent = new Intent(context, BetweenGamesActivity.class);
@@ -328,8 +327,6 @@ public class SecondGame extends DetectorActivity {
         // We release the MP for graceful exit
         mpCorrect.release();
         mpCorrect = null;
-
-        Toast.makeText(this, "Finished thread", Toast.LENGTH_SHORT).show();
     }
 
     /**
