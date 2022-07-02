@@ -11,7 +11,7 @@
         android:id="@+id/letter_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="A"
+        android:text="@string/A"
         android:textSize="35sp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"

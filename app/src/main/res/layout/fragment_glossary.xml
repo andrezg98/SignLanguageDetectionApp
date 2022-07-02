@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="Glossary"
+                        android:text="@string/glossary"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="24sp"
                         android:textStyle="bold" />

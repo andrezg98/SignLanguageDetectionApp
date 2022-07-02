@@ -165,10 +165,10 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Log.d(FULL_SECOND_GAME, "Hilo en background: " + Thread.currentThread().getName());
+                Log.d(FULL_SECOND_GAME, "Thread in background: " + Thread.currentThread().getName());
                 synchronized (this) {
                     for (int cycle = 0; cycle < 4; cycle++) {
-                        Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Ciclo #" + cycle + 1);
+                        Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Cycle #" + cycle + 1);
                         int letterIdx = 0;
                         // Runnable in charge of the CountDown timer logic. Controls logic for time passing and time out alarm.
                         class InitTimerRunnable implements Runnable {
@@ -176,7 +176,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
                             InitTimerRunnable() {}
                             public void run() {
-                                Log.d(FULL_SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Iniciando temporizador.");
+                                Log.d(FULL_SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Starting timer.");
                                 countDownTimer = new CountDownTimer(10000, 1000) {
                                     @Override
                                     public void onTick(long millisUntilFinished) {
@@ -223,7 +223,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                                 }
 
                                 public void run() {
-                                    Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Actualizando tarjeta de letra a color verde.");
+                                    Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Updating letter card to green.");
                                     // Card color updated to green
                                     arrCardLetter[letterIndex].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                 }
@@ -239,7 +239,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                             // 3. We go for the next card letter to check
                             letterIdx++;
                         }
-                        Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Adivinado grupo de 3 letras; generando siguiente...");
+                        Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Guessed group of 3 letters; generating next...");
 
                         try {
                             wait(500);
@@ -251,7 +251,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                         class UpdateLetterCardsRunnable implements Runnable {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
-                                Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Regenerando grupo de 3 letas.");
+                                Log.d(FULL_SECOND_GAME, "[" + Thread.currentThread() + "]" + "Regenerating group of 3 letters.");
                                 setThreeRandomLetters(arrCardLetter, true);
                             }
                         }
@@ -262,7 +262,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
                     }
                 }
-                Log.i(FULL_SECOND_GAME, "Subproceso terminado");
+                Log.i(FULL_SECOND_GAME, "Sub-process completed");
             }
         };
 
@@ -279,7 +279,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                 if (!cardDetectionThread.isAlive()) {
                     if (!threadIsInterrupted) {
                         // Case where user finished the first game (thread ended by itself)
-                        Log.d(FULL_SECOND_GAME, "Hilo terminado, pasando a la siguiente actividad.");
+                        Log.d(FULL_SECOND_GAME, "Thread finished, moving on to the next activity.");
 
                         // Update lesson progress in user database.
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -298,12 +298,12 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
                         timer.cancel();
                     } else {
-                        Log.d(FULL_SECOND_GAME, "Hilo interrumpido, cerrando actividad.");
+                        Log.d(FULL_SECOND_GAME, "Thread interrupted, closing activity.");
                         timer.cancel();
                     }
                 } else if (isTimesOut) {
                     // Case when user ran out of time for guessing the letter.
-                    Log.d(FULL_SECOND_GAME, "Times out.");
+                    Log.d(FULL_SECOND_GAME, "Time's out.");
                     mpWrong.start();
 
                     Intent intent = new Intent(FullSecondGame.this, BetweenGamesActivity.class);
@@ -314,7 +314,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
 
                     timer.cancel();
                 } else {
-                    Log.d(FULL_SECOND_GAME, "Sigo esperando a que el hilo termine.");
+                    Log.d(FULL_SECOND_GAME, "I'm still waiting for the thread to end.");
                 }
             }
         }, 500, 500);  // first is delay, second is period
@@ -344,7 +344,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
                     }
 
                     public void run() {
-                        Log.d(FULL_SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Mostrando la imagen de pista.");
+                        Log.d(FULL_SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Showing the hint image.");
                         // Showing in screen
                         arrLetter[finalLetterIdx].setVisibility(View.VISIBLE);
                         buttonHint.setVisibility(View.VISIBLE);
@@ -409,7 +409,7 @@ public class FullSecondGame extends DetectorActivity implements View.OnClickList
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
                     // Detected letter matches the one shown in screen. User is correct.
-                    Log.d(FULL_SECOND_GAME, "Reconocida la letra: " + result.getTitle());
+                    Log.d(FULL_SECOND_GAME, "Recognized the letter: " + result.getTitle());
                     return true;
                 }
             }

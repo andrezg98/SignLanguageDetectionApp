@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="Start learning"
+                        android:text="@string/start_learning"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -78,23 +78,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="15dp"
-                            android:text="Hi again, " />
+                            android:layout_marginStart="15dp"
+                            android:text="@string/hi_again" />
 
                         <TextView
                             android:id="@+id/hi_username"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/hi"
-                            android:text="username" />
+                            android:layout_toEndOf="@+id/hi"
+                            android:text="@string/username" />
 
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginEnd="15dp"
                             android:src="@drawable/ic_waving_hand_48px"
                             app:tint="@color/neon_pink" />
 
@@ -126,10 +126,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:layout_marginTop="50dp"
                                 android:fontFamily="sans-serif-condensed-light"
-                                android:text="All your lessons"
+                                android:text="@string/all_your_lessons"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
                                 android:textSize="25sp"
@@ -138,7 +138,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
                                 android:fontFamily="sans-serif"
                                 android:text="@string/all_lessons_desc"
                                 android:textColor="@color/white" />
@@ -149,7 +149,7 @@
                             android:id="@+id/lessons_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="310dp"
-                            android:layout_toRightOf="@+id/ll1"
+                            android:layout_toEndOf="@+id/ll1"
                             android:background="@color/white" />
 
                     </RelativeLayout>
@@ -175,7 +175,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-condensed"
-                            android:text="Practice Games"
+                            android:text="@string/practice_games"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
                             android:textSize="20sp"
@@ -187,9 +187,9 @@
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:textAllCaps="false"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="top|end"
-                            android:text="View all"
+                            android:text="@string/view_all"
                             android:textColor="@color/white" />
 
                     </RelativeLayout>
@@ -218,7 +218,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-condensed"
-                            android:text="Glossary"
+                            android:text="@string/glossary"
                             android:textAllCaps="true"
                             android:textColor="@color/dark_gray_blue"
                             android:textSize="20sp"
@@ -230,9 +230,9 @@
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:textAllCaps="false"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="top|end"
-                            android:text="View all"
+                            android:text="@string/view_all"
                             android:textColor="@color/dark_gray_blue" />
 
                     </RelativeLayout>

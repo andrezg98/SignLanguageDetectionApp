@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        android:text="A"
+        android:text="@string/A"
         android:textSize="100sp"
         android:textStyle="bold"
         android:textColor="@color/dark_gray_blue"

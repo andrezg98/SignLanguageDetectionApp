@@ -64,8 +64,8 @@ public class LoginTabFragment extends Fragment {
 
         // Configure progress dialog
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("Please wait");
-        progressDialog.setMessage("Logging In");
+        progressDialog.setTitle(getString(R.string.please_wait));
+        progressDialog.setMessage(getString(R.string.logging_in));
         progressDialog.setCanceledOnTouchOutside(false);
 
         mEmail = view.findViewById(R.id.email_login);
@@ -156,7 +156,7 @@ public class LoginTabFragment extends Fragment {
                 // Get user info
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 String email = firebaseUser.getEmail();
-                Toast.makeText(getContext(), "Logged In\n" + email, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.logged_in) + email, Toast.LENGTH_SHORT).show();
 
                 Map<String, Object> dataToUpdate = new HashMap<>();
                 dataToUpdate.put("lastlogin", FieldValue.serverTimestamp());
@@ -186,10 +186,10 @@ public class LoginTabFragment extends Fragment {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if (value.isEmpty()){
-            mEmail.setError("Field cannot be empty");
+            mEmail.setError(getString(R.string.field_cannot_be_empty));
             return false;
         } else if (!value.matches(emailPattern)) {
-            mEmail.setError("Invalid email address");
+            mEmail.setError(getString(R.string.invalid_email));
             return false;
         } else {
             mEmail.setError(null);
@@ -206,7 +206,7 @@ public class LoginTabFragment extends Fragment {
         String value = mPassword.getEditText().getText().toString();
 
         if (value.isEmpty()) {
-            mPassword.setError("Field cannot be empty");
+            mPassword.setError(getString(R.string.field_cannot_be_empty));
             return false;
         } else {
             mPassword.setError(null);

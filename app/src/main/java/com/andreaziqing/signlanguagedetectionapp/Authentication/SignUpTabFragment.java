@@ -59,8 +59,8 @@ public class SignUpTabFragment extends Fragment {
 
         // Configure progress dialog
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("Please wait");
-        progressDialog.setMessage("Creating your account...");
+        progressDialog.setTitle(getString(R.string.please_wait));
+        progressDialog.setMessage(getString(R.string.creating_account));
         progressDialog.setCanceledOnTouchOutside(false);
 
         mEmail = view.findViewById(R.id.email_signup);
@@ -111,9 +111,10 @@ public class SignUpTabFragment extends Fragment {
 
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-                Toast.makeText(getContext(), "Account created\n" + email, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.account_created) + email, Toast.LENGTH_SHORT).show();
 
                 // Send email verification
+                assert firebaseUser != null;
                 firebaseUser.sendEmailVerification()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -174,13 +175,13 @@ public class SignUpTabFragment extends Fragment {
         String noWhiteSpace = "\\A\\w{4,20}\\z";
 
         if (value.isEmpty()){
-            mUsername.setError("Field cannot be empty");
+            mUsername.setError(getString(R.string.field_cannot_be_empty));
             return false;
         } else if (value.length() >= 15) {
-            mUsername.setError("Username too long");
+            mUsername.setError(getString(R.string.username_too_long));
             return false;
         } else if (!value.matches(noWhiteSpace)) {
-            mUsername.setError("White spaces are not allowed");
+            mUsername.setError(getString(R.string.white_spaces));
             return false;
         } else {
             mUsername.setError(null);
@@ -198,10 +199,10 @@ public class SignUpTabFragment extends Fragment {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if (value.isEmpty()){
-            mEmail.setError("Field cannot be empty");
+            mEmail.setError(getString(R.string.field_cannot_be_empty));
             return false;
         } else if (!value.matches(emailPattern)) {
-            mEmail.setError("Invalid email address");
+            mEmail.setError(getString(R.string.invalid_email));
             return false;
         } else {
             mEmail.setError(null);
@@ -218,7 +219,7 @@ public class SignUpTabFragment extends Fragment {
         String value = mPhoneNumber.getEditText().getText().toString();
 
         if (value.isEmpty()){
-            mPhoneNumber.setError("Field cannot be empty");
+            mPhoneNumber.setError(getString(R.string.field_cannot_be_empty));
             return false;
         } else {
             mPhoneNumber.setError(null);
@@ -241,10 +242,10 @@ public class SignUpTabFragment extends Fragment {
                 "$";
 
         if (value.isEmpty()) {
-            mPassword.setError("Field cannot be empty");
+            mPassword.setError(getString(R.string.field_cannot_be_empty));
             return false;
         } else if (!value.matches(passwordValue)) {
-            mPassword.setError("Password is too weak");
+            mPassword.setError(getString(R.string.password_too_weak));
             return false;
         } else {
             mPassword.setError(null);

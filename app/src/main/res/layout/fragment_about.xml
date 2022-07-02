@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="About"
+                        android:text="@string/about"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="24sp"
                         android:textStyle="bold" />

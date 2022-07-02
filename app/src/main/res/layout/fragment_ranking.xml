@@ -41,10 +41,10 @@
                         android:id="@+id/ranking_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:layout_toEndOf="@+id/left_side_menu"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="Username"
+                        android:text="@string/username"
                         android:textColor="@color/white"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -62,10 +62,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Here are your stats:"
+                    android:text="@string/here_are_your_stats"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -73,7 +73,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_margin="20dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="2"
                     android:orientation="horizontal">
 
@@ -100,20 +100,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-condensed"
-                                android:text="0"
+                                android:text="10"
                                 android:textAllCaps="true"
                                 android:textColor="@color/dark_gray_blue"
                                 android:textSize="40sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
                                 android:layout_toEndOf="@+id/n_lessons_user"
                                 android:fontFamily="sans-serif-condensed"
                                 android:gravity="center_vertical"
-                                android:text="lessons completed"
+                                android:text="@string/lessons_completed"
                                 android:textColor="@color/dark_gray_blue"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
@@ -144,20 +144,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-condensed"
-                                android:text="0"
+                                android:text="10"
                                 android:textAllCaps="true"
                                 android:textColor="@color/dark_gray_blue"
                                 android:textSize="40sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
                                 android:layout_toEndOf="@+id/n_games_user"
                                 android:fontFamily="sans-serif-condensed"
                                 android:gravity="center_vertical"
-                                android:text="games completed"
+                                android:text="@string/games_completed"
                                 android:textColor="@color/dark_gray_blue"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
@@ -186,13 +186,13 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/n_active_days_user"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="days learning"
+                        android:text="@string/days_learning"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="18sp" />

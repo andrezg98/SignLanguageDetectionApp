@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="Practice"
+                        android:text="@string/practice"
                         android:textColor="@color/white"
                         android:textSize="24sp"
                         android:textStyle="bold" />

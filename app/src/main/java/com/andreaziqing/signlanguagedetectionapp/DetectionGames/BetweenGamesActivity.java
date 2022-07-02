@@ -64,8 +64,9 @@ public class BetweenGamesActivity extends AppCompatActivity {
         mState = bundle.getString("state");
 
         if (mState.equals("FAIL")) {
-            mTitle.setText("Oh, no!");
-            mButtonNext.setText("Try again");
+            mTitle.setText(R.string.oh_no);
+            mDesc.setText(R.string.try_again_desc);
+            mButtonNext.setText(R.string.try_again);
             mButtonRepeat.setVisibility(View.INVISIBLE);
             lottieAnimationView.setAnimation(R.raw.fail);
             /*lottieAnimationView.getLayoutParams().height = 100;

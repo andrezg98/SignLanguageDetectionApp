@@ -2,6 +2,7 @@ package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -25,14 +26,13 @@ public class LoginAdapter extends FragmentPagerAdapter {
         return totalTabs;
     }
 
+    @NonNull
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                LoginTabFragment loginTabFragment = new LoginTabFragment();
-                return loginTabFragment;
+                return new LoginTabFragment();
             case 1:
-                SignUpTabFragment signupTabFragment = new SignUpTabFragment();
-                return signupTabFragment;
+                return new SignUpTabFragment();
             default:
                 return null;
         }

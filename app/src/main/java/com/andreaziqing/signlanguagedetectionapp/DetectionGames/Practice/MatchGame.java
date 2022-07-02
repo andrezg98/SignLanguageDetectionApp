@@ -186,7 +186,7 @@ public class MatchGame extends AppCompatActivity {
 
             public void run() {
                 if (match) {
-                    Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Actualizando tarjetas a color verde.");
+                    Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Updating cards to green.");
                     arrCardLetter[cardLetterPosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                     arrCardImage[cardImagePosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
 
@@ -212,7 +212,7 @@ public class MatchGame extends AppCompatActivity {
                     // Reset variables
                     resetValues();
                 } else {
-                    Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Actualizando tarjetas a color rojo.");
+                    Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Updating cards to red.");
                     arrCardLetter[cardLetterPosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#EC6E6E")));
                     arrCardImage[cardImagePosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#EC6E6E")));
 
@@ -227,12 +227,12 @@ public class MatchGame extends AppCompatActivity {
                         context.startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MatchGame.this);
-                        builder.setMessage("You have " + chances + " chances left.")
-                                .setTitle("Ups!")
-                                .setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+                        builder.setMessage(getString(R.string.you_have) + chances + getString(R.string.chances_left) + "")
+                                .setTitle(R.string.ups)
+                                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Actualizando tarjetas a color por defecto inicial.");
+                                        Log.d(MATCH_GAME, "[" + Thread.currentThread() + "]" + "Updating cards to initial default color.");
                                         arrCardLetter[cardLetterPosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                                         arrCardImage[cardImagePosition].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
 

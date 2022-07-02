@@ -54,7 +54,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
     private static final boolean SAVE_PREVIEW_BITMAP = false;
     private static final float TEXT_SIZE_DIP = 10;
-    OverlayView trackingOverlay; // rectángulo de alrededor
+    OverlayView trackingOverlay; // surrounding rectangle
     private Integer sensorOrientation;
 
     private Detector detector;
@@ -221,7 +221,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                         computingDetection = false;
 
                         if (mappedRecognitions != null) {
-                            Log.d(DETECTOR_ACTIVITY, "Detectado Mapped Recognition: " + mappedRecognitions);
+                            Log.d(DETECTOR_ACTIVITY, "Detected Mapped Recognition: " + mappedRecognitions);
                             // Save result value
                             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -232,7 +232,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                             editor.putString("RESULTS", json);
                             editor.apply();
                         } else {
-                            Log.d(DETECTOR_ACTIVITY, "No se ha detectado nada");
+                            Log.d(DETECTOR_ACTIVITY, "Nothing has been detected.");
                         }
                     }
                 });

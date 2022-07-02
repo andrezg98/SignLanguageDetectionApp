@@ -90,7 +90,7 @@ public class GlossarySlider extends AppCompatActivity {
 
             dotsLayout.addView(dots[i]);
 
-            Log.d(GLOSSARY_SLIDER, "Dot pintado");
+            Log.d(GLOSSARY_SLIDER, "New dot");
         }
 
         if (dots.length > 0) {

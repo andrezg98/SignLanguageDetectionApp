@@ -49,7 +49,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="A"
+                        android:text="@string/A"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -76,7 +76,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="B"
+                        android:text="@string/B"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -103,7 +103,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="C"
+                        android:text="@string/C"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -130,7 +130,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="D"
+                        android:text="@string/D"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -165,7 +165,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="E"
+                        android:text="@string/E"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -192,7 +192,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="F"
+                        android:text="@string/F"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -219,7 +219,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="G"
+                        android:text="@string/G"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />
@@ -246,7 +246,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="center"
-                        android:text="H"
+                        android:text="@string/H"
                         android:textAlignment="center"
                         android:textColor="@color/dark_gray_blue"
                         android:textSize="60sp" />

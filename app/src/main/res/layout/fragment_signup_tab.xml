@@ -28,7 +28,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="@string/username"
                     android:padding="5dp"
                     app:counterMaxLength="15">
 
@@ -44,7 +44,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:padding="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -59,7 +59,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number"
+                    android:hint="@string/phone_number"
                     android:padding="5dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +74,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     app:passwordToggleEnabled="true"
                     android:padding="5dp">
 
@@ -94,7 +94,7 @@
                 android:layout_marginTop="25dp"
                 android:background="@drawable/button_bg"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Sign up"
+                android:text="@string/sign_up"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_gray_blue"
                 android:textSize="16sp"

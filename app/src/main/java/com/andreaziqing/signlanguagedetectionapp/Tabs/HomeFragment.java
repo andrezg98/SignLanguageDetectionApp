@@ -236,14 +236,14 @@ public class HomeFragment extends Fragment {
                                 int progressl2 = Integer.parseInt(document.getString("progressl2"));
                                 int progressl3 = Integer.parseInt(document.getString("progressl3"));
 
-                                lessons.add(new LessonsHelperClass(R.drawable.atoh, "Lesson 1",
-                                        "We will go deeper into learning the letters of the alphabet between A and H.",
+                                lessons.add(new LessonsHelperClass(R.drawable.atoh, getString(R.string.lesson_1),
+                                        getString(R.string.lesson1_desc),
                                         progressl1));
-                                lessons.add(new LessonsHelperClass(R.drawable.itop, "Lesson 2",
-                                        "We will go deeper into learning the letters of the alphabet between I and P.",
+                                lessons.add(new LessonsHelperClass(R.drawable.itop, getString(R.string.lesson_2),
+                                        getString(R.string.lesson2_desc),
                                         progressl2));
-                                lessons.add(new LessonsHelperClass(R.drawable.qtoz, "Lesson 3",
-                                        "We will go deeper into learning the letters of the alphabet between Q and Z.",
+                                lessons.add(new LessonsHelperClass(R.drawable.qtoz, getString(R.string.lesson_3),
+                                        getString(R.string.lesson3_desc),
                                         progressl3));
 
                                 adapter = new LessonsAdapter(lessons);
@@ -263,9 +263,9 @@ public class HomeFragment extends Fragment {
         practiceGamesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         ArrayList<PracticeHelperClass> games = new ArrayList<>();
-        games.add(new PracticeHelperClass(R.drawable.guesslettersign, "Guess the letter sign!"));
-        games.add(new PracticeHelperClass(R.drawable.spelltheword, "Spell the word with signs!"));
-        games.add(new PracticeHelperClass(R.drawable.makeamatch, "Make a match!"));
+        games.add(new PracticeHelperClass(R.drawable.guesslettersign, getString(R.string.game1_title)));
+        games.add(new PracticeHelperClass(R.drawable.spelltheword, getString(R.string.game2_title)));
+        games.add(new PracticeHelperClass(R.drawable.makeamatch, getString(R.string.game3_title)));
 
         adapter = new PracticeHomeAdapter(games);
         practiceGamesRecycler.setAdapter(adapter);
