@@ -41,6 +41,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+/**
+ * Home fragment class.
+ *
+ * In charge of the "main" or "home" section of the app.
+ *
+ * Shows the rest of the main lessons and practice games sections of the application and provides
+ * functionality to routing to each of them easily from the home page of the app.
+ */
 public class HomeFragment extends Fragment {
 
     private static final String HOME_FRAGMENT = "HomeFragment";

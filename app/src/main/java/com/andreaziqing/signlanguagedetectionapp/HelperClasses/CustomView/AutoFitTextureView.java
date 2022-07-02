@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.TextureView;
 
+/*
+ Helper / Utils code from the Tensorflow Object Detection API example.
+ */
 /** A {@link TextureView} that can be adjusted to a specified aspect ratio. */
 public class AutoFitTextureView extends TextureView {
     private int ratioWidth = 0;

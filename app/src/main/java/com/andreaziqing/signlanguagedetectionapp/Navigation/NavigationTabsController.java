@@ -26,6 +26,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
+/**
+ * Navigation Tabs Controller Class.
+ *
+ * In charge of handling the routing logic of the bottom navigation tab UI of the application.
+ * Mainly, routes the "Home", "Practice", "Ranking", "Glossary", "Settings" and "About" fragments.
+ */
 public class NavigationTabsController extends AppCompatActivity {
 
     private static final String NAVIGATION_TABS_CONTROLLER = "NavigationTabsController";
@@ -53,6 +59,9 @@ public class NavigationTabsController extends AppCompatActivity {
         initComponentsNavHeader();
     }
 
+    /**
+     * Sets up the top-left toolbar menu of the application.
+     */
     private void setToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,6 +91,10 @@ public class NavigationTabsController extends AppCompatActivity {
         toggle.syncState();
     }
 
+    /**
+     * Initializes the Components Navigation Header UI containing the "Settings" and "About" sections.
+     * Routes, based on navigation item selection, towards the desired fragment load.
+     */
     private void initComponentsNavHeader() {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -107,6 +120,10 @@ public class NavigationTabsController extends AppCompatActivity {
         });
     }
 
+    /**
+     * Based of the intent extras bundle value, routes to the "nextFragment" target.
+     * In charge of the flow control logic for routing between the navigation tabs.
+     */
     private void setNextFragment() {
         try {
             Bundle bundle = getIntent().getExtras();
@@ -167,12 +184,20 @@ public class NavigationTabsController extends AppCompatActivity {
         }
     };
 
+    /**
+     * Load fragment.
+     * Handles the fragment manager transaction commits to the selected target fragment.
+     * @param fragment the fragment
+     */
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.commit();
     }
 
+    /**
+     * Handles "back" button press logic. Closes drawer if is already open, else heads to home screen.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

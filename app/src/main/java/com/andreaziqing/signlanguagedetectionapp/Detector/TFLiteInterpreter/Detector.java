@@ -5,6 +5,9 @@ import android.graphics.RectF;
 import java.util.List;
 
 /** Generic interface for interacting with different recognition engines. */
+/*
+ *  Helper / Utils Code from Tensorflow Object Detection Android API.
+ */
 public interface Detector {
     List<Recognition> recognizeImage(Bitmap bitmap);
 

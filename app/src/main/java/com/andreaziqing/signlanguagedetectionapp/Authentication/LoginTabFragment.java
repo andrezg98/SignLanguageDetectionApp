@@ -31,6 +31,9 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Fragment class in charge of the Login Tab Screen logic.
+ */
 public class LoginTabFragment extends Fragment {
 
     private static final String LOGIN_TAB_FRAGMENT = "Login Tab Fragment";
@@ -47,7 +50,7 @@ public class LoginTabFragment extends Fragment {
     // progress dialog
     private ProgressDialog progressDialog;
 
-    // Firestore Database
+    // Firestore Database instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -108,6 +111,7 @@ public class LoginTabFragment extends Fragment {
 
                     firebaseLogin(email, password);
 
+                    // If user checks the "Remember Me" section, a Session manager is instantiated recalling the session details.
                     if (rememberMe.isChecked()) {
                         SessionManager sessionManager = new SessionManager(getContext(), SessionManager.SESSION_REMEMBERME);
                         sessionManager.createRememberMeSession(email, password);
@@ -120,10 +124,11 @@ public class LoginTabFragment extends Fragment {
         return view;
     }
 
+    /**
+     *  Checks if user is already logged in.
+     *  If so, goes directly to the Home Activity.
+     */
     private void checkUser() {
-        // Check if user is already logged in
-        // if already logged in then open home activity
-
         // Get current user
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
@@ -132,8 +137,14 @@ public class LoginTabFragment extends Fragment {
         }
     }
 
-    // * Useful functions *
+    // * Utils functions *
 
+    /**
+     * Handles login through Firebase Authentication.
+     *
+     * @param email User email for login into the application
+     * @param password User password.
+     */
     private void firebaseLogin(String email, String password) {
         // Show progress
         progressDialog.show();
@@ -166,6 +177,10 @@ public class LoginTabFragment extends Fragment {
         });
     }
 
+    /**
+     * Handles email validation logic.
+     * @return True if email has been correctly validated, False otherwise.
+     */
     private Boolean validateEmail() {
         String value = mEmail.getEditText().getText().toString();
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -183,6 +198,10 @@ public class LoginTabFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles password security validation logic.
+     * @return True if password security has been correctly validated, False otherwise.
+     */
     private Boolean validatePassword() {
         String value = mPassword.getEditText().getText().toString();
 

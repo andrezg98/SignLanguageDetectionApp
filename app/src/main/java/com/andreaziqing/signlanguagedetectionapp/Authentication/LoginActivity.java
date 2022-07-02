@@ -10,6 +10,9 @@ import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+/**
+ * Login Activity Class that is in charge of the application login screen.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
@@ -22,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Declaring main layout login and sign up tabs
         tabLayout = findViewById(R.id.login_tab_layout);
         viewPager = findViewById(R.id.login_view_pager);
 

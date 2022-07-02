@@ -53,6 +53,10 @@ import java.util.concurrent.TimeUnit;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.CustomView.AutoFitTextureView;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
+/**
+ * Helper / Utils Code from Tensorflow Object Detection Android API.
+ */
+
 @SuppressLint("ValidFragment")
 public class CameraConnectionFragment extends Fragment {
     private static final String CAMERA_CONNECTION_FRAGMENT = "CameraConnectionFragment";

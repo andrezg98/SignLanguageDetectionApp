@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SignLanguageDetectionApp</string>
+    <string name="first_slide_title">Aprende Lengua de Signos</string>
+    <string name="second_slide_title">Práctica libre</string>
+    <string name="third_slide_title">Prueba tu conocimiento</string>
+    <string name="fourth_slide_title">Empecemos</string>
+    <string name="skip_button">Saltar</string>
+    <string name="next_button">Siguiente</string>
+    <string name="lets_start_button">¡Empecemos!</string>
+    <string name="all_lessons_desc">Las clases están divididas en tres secciones. Primero estudiaremos signos asociados con las primeras letras del alfabeto y después añadiremos las restantes. ¡Empecemos!</string>
+    <string name="tfe_od_camera_error">Este dispositivo no es compatible con la API Camera2.</string>
+    <string name="close_button">Cerrar</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
+</resources>

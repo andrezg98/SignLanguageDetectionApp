@@ -9,6 +9,10 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import java.util.Vector;
 
+/**
+ * Utils / Helper code extracted from Tensorflow Lite Object Detection API
+ */
+
 /** A class that encapsulates the tedious bits of rendering legible, bordered text onto a canvas. */
 public class BorderedText {
     private final Paint interiorPaint;

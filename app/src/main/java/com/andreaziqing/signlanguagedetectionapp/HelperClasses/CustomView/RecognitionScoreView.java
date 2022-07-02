@@ -10,6 +10,12 @@ import android.view.View;
 import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import java.util.List;
 
+/**
+ * Recognitions Score View
+ *
+ * View that shows the sign language detection model recognitions and scores.
+ * Draws the detected class (i.e. sign letter) as well as the confidence score.
+ */
 public class RecognitionScoreView extends View implements ResultsView {
     private static final float TEXT_SIZE_DIP = 14;
     private final float textSizePx;

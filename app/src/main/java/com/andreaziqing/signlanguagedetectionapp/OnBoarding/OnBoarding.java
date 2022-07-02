@@ -18,6 +18,11 @@ import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.SliderAdapter;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
+/**
+ * On Boarding Activity Class.
+ * Handles the On Boarding activity shown in the beginning of the application launch.
+ * Mainly, the scroll through the slide adapter cards shown in succession.
+ */
 public class OnBoarding extends AppCompatActivity {
 
     // Variables
@@ -58,6 +63,9 @@ public class OnBoarding extends AppCompatActivity {
         viewPager.setCurrentItem(currentPos + 1);
     }
 
+    /*
+        Manages dots in the slider view based on the currently selected position in the card deck.
+     */
     private void addDots(int position) {
         dots = new TextView[4];
 
@@ -77,6 +85,9 @@ public class OnBoarding extends AppCompatActivity {
         }
     }
 
+    /* Page change listener function in charge of handling the page scrolling function.
+     * Upon page selection, modifies current position and handles card movement load animation.
+     */
     ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

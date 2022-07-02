@@ -19,10 +19,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Activity that is in charge of the screen in between games.
+ *
+ * Depending on the state from the game the user is coming (failure, or success), different
+ * UI is shown and actions to be chosen are present to the user, E.g. whether if repeating the lesson
+ * or game; go to the main menu, etc.
+ */
 public class BetweenGamesActivity extends AppCompatActivity {
 
     private static final String BETWEEN_GAMES = "BetweenGamesActivity";
 
+    // For showing a small animation emoji / image
     LottieAnimationView lottieAnimationView;
     private static int SPLASH_TIMER = 5000;
 
@@ -47,8 +55,8 @@ public class BetweenGamesActivity extends AppCompatActivity {
 
         mState = "SUCCESS";
 
-        // Recojo la actividad de donde provengo, para actuar en consecuencia.
-        // También la posición del grupo de letras que ha elegido el usuario
+        // We gather the activity we are coming from, to act in consequence
+        // As well as the (if chosen) group of letters user had chosen in the lesson games.
         Bundle bundle = getIntent().getExtras();
         mPreviousActivity = bundle.getString("previousActivity");
         arrGroupOfLetters = bundle.getStringArray("arrGroupOfLetters");
@@ -64,8 +72,10 @@ public class BetweenGamesActivity extends AppCompatActivity {
             lottieAnimationView.setLayoutParams(lottieAnimationView.getLayoutParams());*/
         }
 
+        // Starts UI animation
         lottieAnimationView.animate().setDuration(600).setStartDelay(4000);
 
+        // Controlling the logic for the next activity / intent to launch based on game control flow.
         new Handler().postDelayed(()-> {
 
             mButtonNext.setOnClickListener(new View.OnClickListener() {
@@ -88,13 +98,13 @@ public class BetweenGamesActivity extends AppCompatActivity {
                             default:
                                 break;
                         }
-
+                        // Starts the activity based of the state machine selection logic.
                         startActivity(intent);
                         finish();
                     }
                 }
             });
-
+            // If user clicks button to repeact activity, relaunch it.
             mButtonRepeat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,6 +116,12 @@ public class BetweenGamesActivity extends AppCompatActivity {
         }, SPLASH_TIMER);
     }
 
+    /**
+     * Function in charge of controlling the activity repeat action.
+     *
+     * Depending on the current previous activity, starts again the same activity as to repeat the lesson or game.
+     * @param intent  intent object
+     */
     private void repeatActivity(Intent intent) {
         switch (mPreviousActivity) {
             case "FirstGame":
@@ -136,6 +152,10 @@ public class BetweenGamesActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Handles the case when the user choses to close the game upon finishing, going back to Home or to the practice tab.
+     * @param view current activity view
+     */
     public void close(View view) {
         Intent intent;
         switch (mPreviousActivity) {
@@ -155,6 +175,9 @@ public class BetweenGamesActivity extends AppCompatActivity {
         getApplicationContext().startActivity(intent);
     }
 
+    /*
+    Handles the "back" button control logic; going back to the Home tab if corresponds.
+     */
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();

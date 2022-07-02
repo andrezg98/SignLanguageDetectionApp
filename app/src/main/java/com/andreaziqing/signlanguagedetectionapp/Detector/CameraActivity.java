@@ -34,6 +34,13 @@ import com.andreaziqing.signlanguagedetectionapp.R;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Helper / Utils Code from Tensorflow Object Detection Android API.
+ */
+
+/*
+    Main CameraActivity abstract class in charge of Video image processing from the device camera.
+ */
 public abstract class CameraActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener,
         Camera.PreviewCallback, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 

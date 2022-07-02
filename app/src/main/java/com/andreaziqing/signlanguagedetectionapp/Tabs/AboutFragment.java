@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 
 import com.andreaziqing.signlanguagedetectionapp.R;
 
+/**
+ * About fragment class.
+ * In charge of the "About" section of the application showing basic author information.
+ */
 public class AboutFragment extends Fragment {
 
     public AboutFragment() {

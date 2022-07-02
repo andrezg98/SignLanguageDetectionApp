@@ -29,6 +29,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Fragment class in charge of the Sign Up Tab Screen logic.
+ */
 public class SignUpTabFragment extends Fragment {
 
     private static final String SIGNUP_TAB_FRAGMENT = "Sign Up Tab Fragment";
@@ -43,7 +46,7 @@ public class SignUpTabFragment extends Fragment {
     // progress dialog
     private ProgressDialog progressDialog;
 
-    // Firestore Database
+    // Firestore Database instance
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -87,7 +90,16 @@ public class SignUpTabFragment extends Fragment {
         return view;
     }
 
-    // * Useful functions *
+    // * Utils functions *
+
+
+    /**
+     * Handles Firebase Authentication Sign Up process.
+     * @param username Username chosen by the user upon sign up.
+     * @param email User email
+     * @param phoneNumber User phone number for validation
+     * @param password User chosen password
+     */
     private void firebaseSignUp(String username, String email, String phoneNumber, String password) {
         // Show progress
         progressDialog.show();
@@ -122,6 +134,8 @@ public class SignUpTabFragment extends Fragment {
                 newUser.put("progressl2", "0");
                 newUser.put("progressl3", "0");
 
+                // Update internal user stats database with the newly created user information.
+                // The document ID is set to the firebase auth user ID; allowing for later identifying user data.
                 db.collection("userstats")
                         .document(firebaseUser.getUid())
                         .set(newUser)
@@ -151,6 +165,10 @@ public class SignUpTabFragment extends Fragment {
         });
     }
 
+    /**
+     * Handles username validation logic.
+     * @return True if user has been correctly validated, False otherwise.
+     */
     private Boolean validateUsername() {
         String value = mUsername.getEditText().getText().toString();
         String noWhiteSpace = "\\A\\w{4,20}\\z";
@@ -171,6 +189,10 @@ public class SignUpTabFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles email validation logic.
+     * @return True if email has been correctly validated, False otherwise.
+     */
     private Boolean validateEmail() {
         String value = mEmail.getEditText().getText().toString();
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -188,6 +210,10 @@ public class SignUpTabFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles phone number validation logic.
+     * @return True if phone number has been correctly validated, False otherwise.
+     */
     private Boolean validatePhoneNumber() {
         String value = mPhoneNumber.getEditText().getText().toString();
 
@@ -201,6 +227,10 @@ public class SignUpTabFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles password validation logic.
+     * @return True if password has been correctly validated, False otherwise.
+     */
     private Boolean validatePassword() {
         String value = mPassword.getEditText().getText().toString();
         String passwordValue = "^" +

@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
+/**
+ * Class that handles the user session in the application.
+ * Handles "Remember me" user session mappings.
+ */
 public class SessionManager {
 
     // Variables
@@ -20,6 +24,7 @@ public class SessionManager {
     public static final String KEY_USERNAME_REMEMBER = "username";
     public static final String KEY_PASSWORD_REMEMBER = "password";
 
+    // Constructor
     public SessionManager(Context _context, String sessionName) {
         context = _context;
         usersSession = context.getSharedPreferences(sessionName, Context.MODE_PRIVATE);
@@ -35,6 +40,12 @@ public class SessionManager {
         editor.commit();
     }
 
+
+    /**
+     * Function that puts in the userData map the details from the remembered session.
+     *
+     * @return Map with the user-pass relationship
+     */
     public HashMap<String, String> getRememberMeDetailFromSession() {
         HashMap<String, String> userData = new HashMap<String, String>();
 
@@ -44,6 +55,9 @@ public class SessionManager {
         return userData;
     }
 
+    /**
+     * @return True if user session is set to be remembered, False elsewhere.
+     */
     public boolean checkRememberMe() {
         if (usersSession.getBoolean(IS_REMEMBERME, false)) {
             return true;

@@ -16,17 +16,7 @@ import org.tensorflow.lite.task.vision.detector.ObjectDetector;
 
 /**
  * Wrapper for frozen detection models trained using the Tensorflow Object Detection API: -
- * https://github.com/tensorflow/models/tree/master/research/object_detection where you can find the
- * training code.
- *
- * <p>To use pretrained models in the API or convert to TF Lite models, please see docs for details:
- * -
- * https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md
- * -
- * https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md
- * -
- * https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/running_on_mobile_tensorflowlite.md#running-our-model-on-android
- *
+ * https://github.com/tensorflow/models/tree/master/research/object_detection
  * <p>For more information about Metadata and associated fields (eg: `labels.txt`), see <a
  * href="https://www.tensorflow.org/lite/convert/metadata#read_the_metadata_from_models">Read the
  * metadata from models</a>

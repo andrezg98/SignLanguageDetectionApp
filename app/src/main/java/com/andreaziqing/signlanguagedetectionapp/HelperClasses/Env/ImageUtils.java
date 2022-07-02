@@ -8,6 +8,10 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * Utils / Helper code extracted from Tensorflow Lite Object Detection API
+ */
+
 /** Utility class for manipulating images. */
 public class ImageUtils {
     // This value is 2 ^ 18 - 1, and is used to clamp the RGB values before their ranges

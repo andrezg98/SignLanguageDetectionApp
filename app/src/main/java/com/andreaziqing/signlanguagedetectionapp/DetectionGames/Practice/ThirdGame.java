@@ -44,29 +44,42 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+/**
+ *     Guessing the words game.
+ *
+ *     This class is in charge of the logic regarding the practice game with timing where users will
+ *     have to correctly guess the appearing words and doing one by one their spelling letters the word
+ *     is composed of. If they fail and countdown timer is set off for 3 times, game will be lost.
+ */
 public class ThirdGame extends DetectorActivity {
 
     private static final String THIRD_GAME = "ThirdGame";
 
     Context context;
 
+    // View and Layout for the word composed of several letters.
     TextView mWord;
     RelativeLayout mCardWord;
     LinearLayout mLetterSpelling;
 
-    volatile TextView[] arrLetter; // En este caso serán las letras de la palabra
+    volatile TextView[] arrLetter;
 
+    // Thread in charge of controlling main game logic
     Thread cardDetectionThread;
+    // To control the thread stop/interrupt logic.
     volatile boolean activityStopped = false;
     volatile boolean threadIsInterrupted = false;
 
+    // Countdown timer variables
     public int counter;
     TextView time;
     volatile boolean isTimesOut = false;
 
+    // DB instances for updating user stats
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    // MediaPlayer used for playing sound effect on valid detections and on times-out incorrect guess.
     public MediaPlayer mpCorrect;
     public MediaPlayer mpWrong;
 
@@ -80,14 +93,14 @@ public class ThirdGame extends DetectorActivity {
         mpCorrect = MediaPlayer.create(context, R.raw.correct);
         mpWrong = MediaPlayer.create(context, R.raw.wrong);
 
+        // Countdown timer UI
         time = findViewById(R.id.countdown_timer);
 
         mWord = findViewById(R.id.word);
         mCardWord = findViewById(R.id.card_word);
         mLetterSpelling = findViewById(R.id.letter_spelling);
 
-        // Palabra random
-        // Escoger aleatoriamente una palabra del banco de palabras
+        // A full word is randomly chosen from the word list.
         arrLetter = setRandomWord(mCardWord,false);
 
         // TODO: Escoger palabra según temática
@@ -97,13 +110,14 @@ public class ThirdGame extends DetectorActivity {
     public synchronized void onResume() {
         super.onResume();
 
-        // El Handler será necesario para actualizar la UI desde el hilo principal
+        // We will need these handlers to manage the UI changes.
         final Handler handler = new Handler();
         final Handler handler2 = new Handler();
         final Handler handler3 = new Handler();
         final Handler handler4 = new Handler();
 
-        // Metodo Runnable que lanzará el hilo principal
+        // The CardDectectionThread will be in charge of running this runnable that performs the iterative
+        // checking of the detected signs and showed words in screen as well as the main game control logic
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -118,7 +132,7 @@ public class ThirdGame extends DetectorActivity {
                         Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + " Palabra : "+ arrLetter[0].getText().toString());
                         int letterIdx = 0;
                         final int[] chances = {3};
-                        // Iniciamos timer desde este hilo
+                        // Runnable in charge of the CountDown timer logic. Controls logic for time passing and time out alarm.
                         class InitTimerRunnable implements Runnable {
                             CountDownTimer countDownTimer;
 
@@ -134,7 +148,7 @@ public class ThirdGame extends DetectorActivity {
 
                                     @Override
                                     public void onFinish() {
-
+                                        // Logic handling for when timer runs out of time
                                         chances[0]--;
                                         if (chances[0] == 0) {
                                             isTimesOut = true;
@@ -158,25 +172,24 @@ public class ThirdGame extends DetectorActivity {
                         }
 
                         InitTimerRunnable initTimerRunnable = new InitTimerRunnable();
+                        // Timer starts
                         handler4.postDelayed(initTimerRunnable, 100);
 
-                        // Para esa palabra, vamos chekeando letra tras letra:
+                        // For this word, we go 1 by 1 checking the word signs
                         for (TextView letter: arrLetter) {
 
-                            // 0. Hasta que no se detecte por el usuario la letra que aparezca en pantalla no avanza.
+                            // Wait for letter validation
                             while (!checkLetter(letter, activityStopped)) { }
 
                             if (activityStopped) {
                                 return;
                             }
-                            // Una vez comprobado que la letra ha sido correctamente detectada:
-
-                            // Pintamos la letra en pantalla desde este hilo
+                            // Once the letter has been correctly detected, its color will be updated (green)
                             class UpdateSpellingLetterRunnable implements Runnable {
                                 UpdateSpellingLetterRunnable() {}
                                 public void run() {
                                     Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Pintando la letra adivinada.");
-                                    // Pintamos la letra en pantalla
+                                    // The guessed letter composing the word will be shown in screen
                                     letter.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT));
                                     letter.setGravity(Gravity.CENTER);
                                     letter.setTextColor(Color.parseColor("#8CF5C1"));
@@ -192,18 +205,17 @@ public class ThirdGame extends DetectorActivity {
 
                             // Comprobamos si es la última letra de la palabra
                             if (letterIdx == arrLetter.length) {
-                                // 2. Definimos metodo Runnable que acepta un parametro (indice de la letra a actualizar)
+                                // 2. UI update thread runs the color update runnable on that specific guessed letter card id
                                 class UpdateCardColorRunnable implements Runnable {
                                     int letterIndex;
                                     UpdateCardColorRunnable(int idx) { letterIndex = idx; }
                                     public void run() {
                                         Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Actualizando tarjeta de letra a color verde.");
-                                        // Actualizar aqui UI
+                                        // Card color updated to green
                                         mCardWord.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                     }
                                 }
-                                mpCorrect.start();
-                                // 3. Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado
+                                mpCorrect.start(); // correct sound effect plays
                                 handler2.post(new UpdateCardColorRunnable(letterIdx));
                             }
                         }
@@ -215,7 +227,7 @@ public class ThirdGame extends DetectorActivity {
                             e.printStackTrace();
                         }
 
-                        // Una vez se ha adivinado la palabra; volvemos a generar otra palabra desde este hilo
+                        // We show a new sampled word as the user has correctly guessed all letters from the prior word.
                         class UpdateLetterCardsRunnable implements Runnable {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
@@ -225,8 +237,9 @@ public class ThirdGame extends DetectorActivity {
                         }
                         if(cycle <= 2) {
                             handler3.post(new UpdateLetterCardsRunnable());
-                        } // cycle == 3 seria el ultimo y por tanto no tendriamos que regenerar nada mas
+                        } // cycle == 3 would be the last cycle so we would not need to update more cards.
 
+                        // Stopping timer as user did a correct guess.
                         initTimerRunnable.countDownTimer.cancel();
                         handler4.removeCallbacksAndMessages(initTimerRunnable);
                     }
@@ -235,10 +248,11 @@ public class ThirdGame extends DetectorActivity {
             }
         };
 
-        // Declaramos hilo que lanza el Runnable declarado previamente
+        // Initiate the main card detection game logic thread
         cardDetectionThread = new Thread(runnable);
         cardDetectionThread.start();
 
+        // We have a running task for checking for game completion and if so, goes to the next lesson game.
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -246,8 +260,10 @@ public class ThirdGame extends DetectorActivity {
                 Log.d(THIRD_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
                     if (!threadIsInterrupted) {
+                        // Case where user finished the first game (thread ended by itself)
                         Log.d(THIRD_GAME, "Hilo terminado, pasando a la siguiente actividad.");
 
+                        // Update lesson progress in user database.
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         Map<String, Object> dataToUpdate = new HashMap<>();
                         dataToUpdate.put("ncgames", FieldValue.increment(1));
@@ -255,6 +271,7 @@ public class ThirdGame extends DetectorActivity {
                                 .document(firebaseUser.getUid())
                                 .update(dataToUpdate);
 
+                        // We go to the next stage screen of the lesson (the between games activity), passing necessary information.
                         Intent intent = new Intent(context, BetweenGamesActivity.class);
                         intent.putExtra("previousActivity", THIRD_GAME);
                         intent.putExtra("state", "SUCCESS");
@@ -268,6 +285,7 @@ public class ThirdGame extends DetectorActivity {
                         timer.cancel();
                     }
                 } else if (isTimesOut) {
+                    // Case when user ran out of time for guessing the letter.
                     Log.d(THIRD_GAME, "Times out.");
                     mpWrong.start();
 
@@ -287,6 +305,7 @@ public class ThirdGame extends DetectorActivity {
 
     @Override
     public synchronized void onPause() {
+        // Setting flag for thread signalling
         super.onPause();
         activityStopped = true;
     }
@@ -294,7 +313,7 @@ public class ThirdGame extends DetectorActivity {
     @Override
     public synchronized void onStop() {
         super.onStop();
-
+        // We release the MPs for graceful exit
         mpCorrect.release();
         mpCorrect = null;
 
@@ -304,17 +323,26 @@ public class ThirdGame extends DetectorActivity {
         Toast.makeText(this, "Hilo terminado", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Function in charge of comparison between the letter shown in screen and the one detected
+     * by the sign language detection model.
+     * @param letter: textView of the letter showing in screen that we are interested on comparing
+     * @param activityStopped: control logic boolean that will stop comparison in case activity stops.
+     * @return True if detected letter matches the one being asked to the user to guess.
+     */
     private boolean checkLetter(TextView letter, boolean activityStopped) {
         if (activityStopped) {
             return true;
         }
+        // We will get from here the model detected sign
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
 
+        // Obtaining sign language detection model predictions (recognition)
         String json = sharedPreferences.getString("RESULTS", "A");
         Type type = new TypeToken<List<Detector.Recognition>>() {}.getType();
 
-        if(json.equals("A")){ // No se ha detectado nada
+        if(json.equals("A")){ // No detection at all.
             return false;
         }
 
@@ -328,6 +356,7 @@ public class ThirdGame extends DetectorActivity {
             // Log.d(THIRD_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
+                    // Detected letter matches the one shown in screen. User is correct.
                     Log.d(THIRD_GAME, "Reconocida la letra: " + result.getTitle());
                     return true;
                 }
@@ -336,6 +365,14 @@ public class ThirdGame extends DetectorActivity {
         return false;
     }
 
+    /**
+     * Function in charge of selecting a new word randomly from a list of predefined words.
+     * Performs the sampling as well as the UI updates
+     *
+     * @param cardWord :layout containing the card where the word is present
+     * @param refreshCard : if True, changes the card color back to white when a new cycle begins.
+     * @return updated array of letters composing the randomly chosen word.
+     */
     private TextView[] setRandomWord(RelativeLayout cardWord, boolean refreshCard) {
         String[] words = new String[]{"SIGNOS", "LENGUAJE", "APRENDER", "ANDROID", "VERANO",
                 "PLAYA", "PISCINA", "MOJACAR"};
@@ -343,12 +380,12 @@ public class ThirdGame extends DetectorActivity {
 
         int wordPosition = (int) (Math.random() * (words.length));
 
-        // Pintamos la palabra en pantalla
         mWord.setText(words[wordPosition] + "");
 
-        // Convertimos la palabra en un array de letras
+        // Word is turn to a list of letters
         arrLetter = new TextView[words[wordPosition].length()];
 
+        // For each of the letters composing the word, we update the text views.
         for (int j = 0; j < words[wordPosition].length(); j ++) {
             TextView newLetter = new TextView(this);
             Log.d(THIRD_GAME, "New letter: " + words[wordPosition].charAt(j));
@@ -357,13 +394,16 @@ public class ThirdGame extends DetectorActivity {
         }
 
         if (refreshCard) {
-            // Reseteamos color de la tarjeta a blanco
+            // Card color reset back to wait
             cardWord.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             mLetterSpelling.removeAllViews();
         }
         return arrLetter;
     }
 
+    /**
+     * Graceful termination of thread and activity when user performs the "back" action.
+     */
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();

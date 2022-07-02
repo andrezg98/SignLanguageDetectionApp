@@ -23,6 +23,10 @@ import com.andreaziqing.signlanguagedetectionapp.HelperClasses.CustomView.AutoFi
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Env.ImageUtils;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
+/**
+ * Legacy Camera connection fragment for the cases that Camera2 API is not ready for the current device.
+ *  Helper / Utils Code from Tensorflow Object Detection Android API.
+ */
 public class LegacyCameraConnectionFragment extends Fragment {
     private static final String LEGACY_CAMERA_CONNECTION_FRAGMENT = "Legacy Camera Connection Fragment";
     /** Conversion from screen rotation to JPEG orientation. */

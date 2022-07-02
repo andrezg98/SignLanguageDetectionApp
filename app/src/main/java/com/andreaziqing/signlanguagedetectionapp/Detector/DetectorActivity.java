@@ -33,20 +33,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
- * objects.
+ * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track objects.
+ *
+ *  Helper / Utils Code from Tensorflow Object Detection Android API.
  */
-
 public class DetectorActivity extends CameraActivity implements OnImageAvailableListener {
     private static final String DETECTOR_ACTIVITY = "Detector Activity";
 
-    // Configuration values for the prepackaged SSD model.
+    // Configuration values for the Object detection SSD model.
     private static final int TF_OD_API_INPUT_SIZE = 300;
     private static final boolean TF_OD_API_IS_QUANTIZED = true;
-    private static final String TF_OD_API_MODEL_FILE = "detect_sign_V4B_meta.tflite"; // "detect.tflite";
-    private static final String TF_OD_API_LABELS_FILE = "labelmap_signs.txt"; // "labelmap.txt";
+    // This is the trained model file location that the code will launch.
+    private static final String TF_OD_API_MODEL_FILE = "detect_sign_V4B_meta.tflite";
+    // .TXT file containing all the different classes the model has been trained to detect.
+    private static final String TF_OD_API_LABELS_FILE = "labelmap_signs.txt";
     private static final DetectorMode MODE = DetectorMode.TF_OD_API;
-    // Minimum detection confidence to track a detection.
+    // Minimum detection confidence to track a detection. Currently set to 30% of confidence.
     private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.3f;
     private static final boolean MAINTAIN_ASPECT = false;
     private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
@@ -167,7 +169,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
         readyForNextImage();
 
-        final Canvas canvas = new Canvas(croppedBitmap); // croppedBitmap es la imagen de entrada al modelo
+        final Canvas canvas = new Canvas(croppedBitmap); // croppedBitmap es la imagen de entrada al modelo recortada en su input size
         canvas.drawBitmap(rgbFrameBitmap, frameToCropTransform, null);
         // For examining the actual TF input.
         if (SAVE_PREVIEW_BITMAP) {
@@ -210,8 +212,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                                 result.setLocation(location);
                                 mappedRecognitions.add(result);
 
-//                                editor.putString("RESULTS", result.getTitle());
-//                                editor.apply();
                             }
                         }
 
@@ -253,8 +253,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
     }
 
-    // Which detection model to use: by default uses Tensorflow Object Detection API frozen
-    // checkpoints.
+    // Which detection model to use: by default uses Tensorflow Object Detection API frozen checkpoints.
     private enum DetectorMode {
         TF_OD_API;
     }

@@ -34,12 +34,20 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Guessing the alphabet signs lesson class.
+ *
+ *     This class is in charge of the logic regarding the first lesson; by means of identifying the
+ *     signs the user is doing to the camera and matching it to the randomly generated 3-letter groups.
+ *     The match is done by checking the Detector model prediction on the letter the user is signalling
+ *     to the camera and comparing that to the letters being shown in the screen.
+ */
 public class FirstGame extends DetectorActivity {
-
     private static final String FIRST_GAME = "FirstGame";
 
     Context context;
 
+    // Views and Layout for the letter card images shown to the user to guess their corresponding signs.
     TextView mFirstLetter, mSecondLetter, mThirdLetter;
     ImageView mFirstLetterImage, mSecondLetterImage, mThirdLetterImage;
     RelativeLayout mFirstCardLetter, mSecondCardLetter, mThirdCardLetter;
@@ -51,6 +59,7 @@ public class FirstGame extends DetectorActivity {
     public int mPositionGroup;
     String[] arrGroupOfLetters;
 
+    // Lists from which we are going to randomly sample 3 of them to show.
     List<String> abecedary = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
             "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
     List<Integer> abecedaryImage = Arrays.asList(R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d,
@@ -59,15 +68,21 @@ public class FirstGame extends DetectorActivity {
             R.drawable.s, R.drawable.t, R.drawable.u, R.drawable.v, R.drawable.w, R.drawable.x, R.drawable.y,
             R.drawable.z);
 
+    // This map contains the relationship between the randomly drawn letters and their ground truth.
     Dictionary<String, Integer> signDictionary = new Hashtable<>();
 
+    // Thread in charge of detecting that the model predicted sign match the randomly shown letters.
     Thread cardDetectionThread;
+
+    // To control the thread stop/interrupt logic.
     volatile boolean activityStopped = false;
     volatile boolean threadIsInterrupted = false;
 
+    // DB instances for updating user stats
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    // MediaPlayer used for playing sound effect on valid detections.
     public MediaPlayer mpCorrect;
 
     @Override
@@ -78,11 +93,13 @@ public class FirstGame extends DetectorActivity {
         context = getApplicationContext();
 
         mpCorrect = MediaPlayer.create(context, R.raw.correct);
-        //mpWrong = MediaPlayer.create(context, R.raw.wrong);
 
+        //We build the signDictionary map with their corresponding image locations.
         for (int i = 0; i < abecedary.toArray().length; i++) {
             signDictionary.put(abecedary.get(i), abecedaryImage.get(i));
         }
+
+        //Views setup for the letters shown to display
 
         mFirstLetter = findViewById(R.id.first_letter);
         mSecondLetter = findViewById(R.id.second_letter);
@@ -100,13 +117,12 @@ public class FirstGame extends DetectorActivity {
         arrLetterImage = new ImageView[]{mFirstLetterImage, mSecondLetterImage, mThirdLetterImage};
         arrCardLetter = new RelativeLayout[]{mFirstCardLetter, mSecondCardLetter, mThirdCardLetter};
 
-        // Recojo la posición del grupo de letras que ha elegido el usuario
+        // Getting the position of the letter groups the user has chosen prior to launching the lesson
         Bundle bundle = getIntent().getExtras();
         mPositionGroup = bundle.getInt("position");
         setGroupOfLetters(mPositionGroup);
 
-        // Primeras 3 letras
-        // Escoger aleatoriamente tres letras (en función del grupo de letras que el usuario haya escogido)
+        // Randomly sampling 3 letters from that letter group chosen.
         setThreeRandomLetters(arrCardLetter,false);
     }
 
@@ -114,11 +130,12 @@ public class FirstGame extends DetectorActivity {
     public synchronized void onResume() {
         super.onResume();
 
-        // El Handler será necesario para actualizar la UI desde el hilo principal
+        // We will need these handlers to manage the UI changes.
         final Handler handler = new Handler();
         final Handler handler2 = new Handler();
 
-        // Metodo Runnable que lanzará el hilo principal
+        // The CardDectectionThread will be in charge of running this runnable
+        // Runnable that performs the iterative checking of the detected signs <--> showed letter in screen.
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -127,31 +144,30 @@ public class FirstGame extends DetectorActivity {
                     for (int cycle = 0; cycle < 4; cycle++) {
                         Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Ciclo #"+ cycle + 1);
                         int letterIdx = 0;
-                        // Para ese grupo aleatorio de 3 letras, vamos chekeando una tras otra:
+                        // For this group of 3 letters, we go 1 by 1 checking the guesses.
                         for (TextView letter: arrLetter) {
-                            // 0. Hasta que no se detecte por el usuario la letra que aparezca en pantalla no avanza.
+                            // Wait for letter validation
                             while (!checkLetter(letter, activityStopped)) { }
 
                             if (activityStopped) {
                                 return;
                             }
-                            // Una vez comprobado que la letra ha sido correctamente detectada:
-                            // 1. Definimos metodo Runnable que acepta un parametro (indice de la letra a actualizar)
+                            // Once letter has been correctly guessed by the user; we need to show in screen the green card
+                            // 1. Runnable to be executed by the ui update thread that will update the card color to green
                             class UpdateCardColorRunnable implements Runnable {
                                 int letterIndex;
                                 UpdateCardColorRunnable(int idx) { letterIndex = idx; }
                                 public void run() {
                                     Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Actualizando tarjeta de letra a color verde.");
-                                    // Actualizar aqui UI
                                     arrCardLetter[letterIndex].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                 }
                             }
 
-                            mpCorrect.start();
+                            mpCorrect.start(); // Playing the "correct" sound effect
 
-                            // 2. Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado
+                            // 2. UI update thread runs the color update runnable on that specific guessed letter card.
                             handler.post(new UpdateCardColorRunnable(letterIdx));
-                            // 3. Avanzamos a la siguiente iteración (letra)
+                            // 3. We go for the next card letter to check
                             letterIdx++;
                         }
                         Log.d(FIRST_GAME, "["+ Thread.currentThread()+ "]" + "Adivinado grupo de 3 letras; generando siguiente...");
@@ -162,7 +178,7 @@ public class FirstGame extends DetectorActivity {
                             e.printStackTrace();
                         }
 
-                        // Una vez se han adivinado las 3 letras; volvemos a generar otras 3 aleatorias desde este hilo
+                        // Now we can randomly sample 3 new letters to show in screen for the user to guess. Next cycle starts.
                         class UpdateLetterCardsRunnable implements Runnable {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
@@ -172,17 +188,18 @@ public class FirstGame extends DetectorActivity {
                         }
                         if(cycle <= 2) {
                             handler2.post(new UpdateLetterCardsRunnable());
-                        } // cycle == 3 seria el ultimo y por tanto no tendriamos que regenerar nada mas
+                        } // cycle == 3 would be the last cycle so we would not need to update more cards.
                     }
                 }
                 Log.i(FIRST_GAME, "Subproceso terminado");
             }
         };
 
-        // Declaramos hilo que lanza el Runnable declarado previamente
+        // Initiate the main card detection thread
         cardDetectionThread = new Thread(runnable);
         cardDetectionThread.start();
 
+        // We have a running task for checking for game completion and if so, goes to the next lesson game.
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -190,11 +207,12 @@ public class FirstGame extends DetectorActivity {
                 Log.d(FIRST_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
                     if (!threadIsInterrupted) {
+                        // Case where user finished the first game (thread ended by itself)
                         Log.d(FIRST_GAME, "Hilo terminado, pasando a la siguiente actividad.");
 
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         Map<String, Object> dataToUpdate = new HashMap<>();
-
+                        // Update lesson progress in user database.
                         switch (mPositionGroup) {
                             case 0:
                                 dataToUpdate.put("progressl1", "1");
@@ -213,6 +231,7 @@ public class FirstGame extends DetectorActivity {
                                 .document(firebaseUser.getUid())
                                 .update(dataToUpdate);
 
+                        // We go to the next lesson upon completion. Passing necesary information in the bundle.
                         Intent intent = new Intent(context, SecondGame.class);
                         intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
                         intent.putExtra("position", mPositionGroup);
@@ -222,6 +241,7 @@ public class FirstGame extends DetectorActivity {
 
                         timer.cancel();
                     } else {
+                        // Case when thread was interrupted due to external reasons.
                         Log.d(FIRST_GAME, "Hilo interrumpido, cerrando actividad.");
 
                         timer.cancel();
@@ -236,30 +256,40 @@ public class FirstGame extends DetectorActivity {
     @Override
     public synchronized void onPause() {
         super.onPause();
+        // Setting flag for thread signalling
         activityStopped = true;
     }
 
     @Override
     public synchronized void onStop() {
         super.onStop();
-
+        // We release the MP for graceful exit
         mpCorrect.release();
         mpCorrect = null;
 
         Toast.makeText(this, "Hilo terminado", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Function in charge of comparison between the letter shown in screen and the one detected
+     * by the sign language detection model.
+     * @param letter: textView of the letter showing in screen that we are interested on comparing
+     * @param activityStopped: control logic boolean that will stop comparison in case activity stops.
+     * @return True if detected letter matches the one being asked to the user to guess.
+     */
     private boolean checkLetter(TextView letter, boolean activityStopped) {
         if (activityStopped) {
             return true;
         }
+
+        // We will get from here the model detected sign
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-
+        // Obtaining sign language detection model predictions (recognition)
         String json = sharedPreferences.getString("RESULTS", "A");
         Type type = new TypeToken<List<Detector.Recognition>>() {}.getType();
 
-        if(json.equals("A")){ // No se ha detectado nada
+        if(json.equals("A")){ // No detection at all.
             return false;
         }
 
@@ -273,6 +303,7 @@ public class FirstGame extends DetectorActivity {
             // Log.d(FIRST_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
+                    // Detected letter matches the one shown in screen. User is correct.
                     Log.d(FIRST_GAME, "Reconocida la letra: " + result.getTitle());
                     return true;
                 }
@@ -281,6 +312,11 @@ public class FirstGame extends DetectorActivity {
         return false;
     }
 
+    /**
+     * Function in charge of setting the arrGroupOfLetters array containing the relevant letters that
+     * will be randomly sampled from for the user to guess.
+     * @param position: 0 1 or 2 depending of the group of letters the user has selected for the lesson.
+     */
     private void setGroupOfLetters(int position) {
         switch (position) {
             case 0:
@@ -296,6 +332,12 @@ public class FirstGame extends DetectorActivity {
         }
     }
 
+    /**
+     * Function in charge of randomly sampling 3 letters out of the arrGroupOfLetters array as well
+     * as updating the cards shown in screen to the user for guessing.
+     * @param arrCardLetter array containing the letters from which to sample
+     * @param refreshCard if True, changes the card color back to white when a new cycle begins.
+     */
     private void setThreeRandomLetters(RelativeLayout[] arrCardLetter, boolean refreshCard) {
         String positions = "";
         for (int i = 0; i < arrLetter.length; i++) {
@@ -303,13 +345,14 @@ public class FirstGame extends DetectorActivity {
             while(retryLetter) {
                 int letterPosition = (int) (Math.random() * (arrGroupOfLetters.length));
                 if (!positions.contains(String.valueOf(letterPosition))) {
+                    // Randomly samples the letter position from the arrGroupOfLetters list, and sets image and letter accordingly.
                     retryLetter = false;
                     arrLetter[i].setText(arrGroupOfLetters[letterPosition]);
                     arrLetterImage[i].setImageResource(signDictionary.get(arrGroupOfLetters[letterPosition]));
                     positions = positions.concat(String.valueOf(letterPosition));
 
                     if (refreshCard) {
-                        // Reseteamos color de la tarjeta a blanco
+                        // Card color reset back to white.
                         arrCardLetter[i].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     }
                 } else {
@@ -320,6 +363,9 @@ public class FirstGame extends DetectorActivity {
         }
     }
 
+    /**
+     * Graceful termination of thread and activity when user performs the "back" action.
+     */
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();

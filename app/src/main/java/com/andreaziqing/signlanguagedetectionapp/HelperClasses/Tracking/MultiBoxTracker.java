@@ -22,6 +22,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Helper / Utils Code from Tensorflow Object Detection Android API.
+ */
+
 /** A tracker that handles non-max suppression and matches existing objects to new detections. */
 public class MultiBoxTracker {
     private static final float TEXT_SIZE_DIP = 18;

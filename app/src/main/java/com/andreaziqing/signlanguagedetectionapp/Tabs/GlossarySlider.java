@@ -16,6 +16,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Glossary Slider class.
+ *
+ * In charge of the "Glossary" section slider of the application, handling the slide of different
+ * letter cards so that users can click one of them and get the sign image corresponding to that letter.
+ */
 public class GlossarySlider extends AppCompatActivity {
 
     private static final String GLOSSARY_SLIDER = "GlossarySlider";

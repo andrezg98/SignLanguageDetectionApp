@@ -30,6 +30,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Ranking fragment class.
+ *
+ * In charge of the "Ranking" section of the app. Handles showing to the user the stats of their
+ * contribution or learning in the app, as well as loads a ranking table extracted from the application
+ * database showing other users' progress (such as number of games completed, etc).
+ */
 public class RankingFragment extends Fragment {
 
     private static final String RANKING_FRAGMENT = "RankingFragment";

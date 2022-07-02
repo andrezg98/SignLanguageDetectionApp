@@ -17,6 +17,10 @@ import com.andreaziqing.signlanguagedetectionapp.R;
 
 import java.util.ArrayList;
 
+/**
+ * Glossary fragment class.
+ * In charge of the "Glossary" section of the application showing the different A-Z sign letters.
+ */
 public class GlossaryFragment extends Fragment {
 
     private static final String GLOSSARY_FRAGMENT = "GlossaryFragment";

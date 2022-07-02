@@ -12,6 +12,13 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
+
+/**
+ * The Splash activity class.
+ * Handles the splash screen logic and animation of the start UI.
+ * Varies its behavior depending whether is the first time for the user in the app or not, showing
+ * the onboarding UI accordingly.
+ */
 public class SplashActivity extends AppCompatActivity {
 
     LottieAnimationView lottieAnimationView;
