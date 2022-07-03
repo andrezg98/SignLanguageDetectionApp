@@ -20,4 +20,6 @@
     <color name="green_correct">#8cf5c1</color>
     <color name="red_incorrect">#EC6E6E</color>
 
+    <color name="light_pink">#fde1e0</color>
+
 </resources>
