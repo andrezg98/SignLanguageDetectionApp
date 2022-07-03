@@ -1,4 +1,5 @@
 # Sign Language Detection App
+[![Android CICD](https://github.com/andrezg98/SignLanguageDetectionApp/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/andrezg98/SignLanguageDetectionApp/actions/workflows/android.yml)
 
 ***Master Thesis** - Aplicación móvil didáctica para el aprendizaje del lenguaje de signos mediante la integración de un modelo de IA*
 
