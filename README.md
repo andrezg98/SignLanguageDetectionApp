@@ -41,7 +41,7 @@ TODO Explain
 │   │       └── andreaziqing/
 │   │           └── signlanguagedetectionapp/
 │   │               ├── Authentication/: Firebase Auth -related code.
-│   │               ├── Databases/: Session management data code
+│   │               ├── Database/: Firestore DB Wrapper and Session management code
 │   │               ├── DetectionGames/: Lessons and Games main business logic code.
 │   │               ├── Detector/: AI model recognition logic (Tensorflow Lite code).
 │   │               ├── HelperClasses/: Adapters, view, environment and tracking helper classes.
@@ -56,7 +56,7 @@ TODO Explain
 │       ├── mipmap/ folders: app icon files. 
 │       ├── raw/ : Holds lottie .json files and sound effect files.
 │       ├── values/: Localization strings and color/theme xml files.
-└──androidTest/ and test/ folders: placeholder test folders for testing purposes.
+└──androidTest/: test folder containing SignDetector detection tests.
 
 ```
 
@@ -91,6 +91,17 @@ You can install the application on your android smartphone in two ways:
 ### Install via APK
 
 You can find the latest `.apk` file with the compiled application [here](). To install it to your Android phone, you can simply (TODO)
+
+## Application Project CI/CD
+
+This project has a **Github Actions CI/CD pipeline** configured with two main stages:
+
+1. Build and Test
+2. Build and Upload APK File as Artifact.
+
+You can find the .yml containing the pipeline and details in the [Actions](https://github.com/andrezg98/SignLanguageDetectionApp/actions) section of the Github Action.
+
+![](https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/cicd.png?raw=true)
 
 ## Planned features (future work development)
 
