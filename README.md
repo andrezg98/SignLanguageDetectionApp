@@ -96,7 +96,7 @@ You can install the application on your android smartphone in two ways:
 
 ### Install via APK
 
-You can find the latest `.apk` file with the compiled application [in the Releases section](https://github.com/andrezg98/SignLanguageDetectionApp/releases/tag/releases) of the repository, or from the Latest [CICD build](https://github.com/andrezg98/SignLanguageDetectionApp/actions) artifact. 
+You can find the latest `.apk` file with the compiled application [in the Releases section](https://github.com/andrezg98/SignLanguageDetectionApp/releases) of the repository, or from the Latest [CICD build](https://github.com/andrezg98/SignLanguageDetectionApp/actions) artifact. 
 
 ## Application Project CI/CD
 
