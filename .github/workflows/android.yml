@@ -3,6 +3,8 @@ name: Android CICD
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'app/**/*'
   pull_request:
     branches: [ "main" ]
 
