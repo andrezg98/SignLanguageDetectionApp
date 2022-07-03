@@ -123,7 +123,7 @@
     <string name="game2_desc">Guess all the letters that form the word that appears on the screen. Be careful, time is running out!</string>
     <string name="game3_desc">Match the letter with its sign and make a \"match\". You can do it! This is easier than making a match on Tinder!</string>
     <string name="main_developer">Main Developer</string>
-    <string name="contact">Contact: </string>
+    <string name="contact">Contact:</string>
     <string name="my_email" translatable="false">andreaziqing98@gmail.com</string>
     <string name="work_in_progress">Work in progress...</string>
 

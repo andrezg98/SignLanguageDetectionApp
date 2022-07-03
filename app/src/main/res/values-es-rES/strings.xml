@@ -77,6 +77,6 @@
     <string name="lesson2_desc">Profundizaremos en el aprendizaje de las letras del alfabeto entre la I y la P.</string>
     <string name="game2_desc">Adivina todas las letras que forman la palabra que aparece en la pantalla. Ten cuidado, ¡el tiempo se acaba!</string>
     <string name="main_developer">Desarrolladora principal</string>
-    <string name="contact">Contacto: </string>
+    <string name="contact">Contacto:</string>
     <string name="work_in_progress">Desarrollo en curso...</string>
 </resources>
