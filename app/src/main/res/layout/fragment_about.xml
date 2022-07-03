@@ -67,6 +67,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
                     android:text="@string/main_developer"
                     android:gravity="center"
                     android:fontFamily="sans-serif-condensed"

@@ -42,7 +42,7 @@
     <string name="ranking">Clasificación</string>
     <string name="please_wait">Por favor, espere</string>
     <string name="logging_in">Iniciando sesión</string>
-    <string name="logged_in">Conectado</string>
+    <string name="logged_in">"Conectado "</string>
     <string name="creating_account">Creando su cuenta...</string>
     <string name="account_created">"Cuenta creada "</string>
     <string name="field_cannot_be_empty">El campo no puede estar vacío</string>

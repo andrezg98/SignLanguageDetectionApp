@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
 
         // * Firebase Auth *
         mUsername = view.findViewById(R.id.hi_username);
-        final String usernameEmail = mUsername.getText().toString().trim();
+
         // Init firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
