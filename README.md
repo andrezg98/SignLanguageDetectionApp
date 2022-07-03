@@ -12,23 +12,24 @@ TODO Application Video
 
   * [Application Screenshots](#application-screenshots)
   * [Android Project Structure](#android-project-structure)
-  * [AI Model Development](#ai-model-development)
-  * [Getting Started - Application Installation](#application-screenshots)
+  * [AI Model (Sign Language Detector) Development](#ai-model-sign-language-detector-development)
+  * [Getting Started - Application Installation](#getting-started---application-installation)
     * [Prerequisites](#application-screenshots)
-    * [Install via Android Studio compilation](#application-screenshots)
-    * [Install via APK](#application-screenshots)
+    * [Install via Android Studio](#install-via-android-studio-compilation)
+    * [Manual APK Installation](#install-via-apk)
+  * [Application Project CICD](#application-project-cicd)
   * [Planned features (future work development)](#application-screenshots)
 
 
 ## Application Screenshots
 
-TODO
+<img src="https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/appScreenshots.png?raw=true" width="800" />
+
 
 ## Android Project Structure
 
 This application project file structure is explained as follows:
 
-TODO Explain
 ```
 .
 ├── main
@@ -60,31 +61,36 @@ TODO Explain
 
 ```
 
-## AI Model Development Folder
+## AI Model (Sign Language Detector) Development
 
-The folder `SignLanguageModel` contains the resources that have been developed for the Sign Language detection neural network that has been trained and exported to be used in this application.
+<img src="https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/mobile_net.png?raw=true" width="600" />
+
+The folder `Detector Model Training and Export` contains the resources that have been developed for the Sign Language detection neural network that has been trained and exported to be used in this application.
 
 Where:
- - `ModelTraining.ipynb`: Python (Jupyter Notebook format) code that has been used for the model training.
- - `ModelExport.ipynb`: Python (Jupyter Notebook format) code that has been used for the model export as tflite to be used in 
- - `detect_sign_V4B_meta.tflite`: TFLite model exported file.
- - `labels.txt`: "Labels" file containing the classes that the model has been trained on to detect. Namely, the sign language 
+ - [Training_and_TFLite_Model_Generation.ipynb](https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/Detector%20Model%20Training%20and%20Export/Sign_Language_Detector_Training_and_TFLite_Model_Generation.ipynb): Python (Jupyter Notebook format) code that has been used for the model training and export to TFLite format.
+ - [Writing_TFLIte_Metadata.ipynb](https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/Detector%20Model%20Training%20and%20Export/Sign_Language_Detector_Adapting_TFLite_Model_Metadata.ipynb): Python (Jupyter Notebook format) code that has been used for the model tflite metadata write so that it could be later used in the Android application.
+ 
+The resulting trained model file exported to TFLite as well as its "labels" .txt file containing the class names that the model has been trained on to detect can be found both in the application `assets` [folder](https://github.com/andrezg98/SignLanguageDetectionApp/tree/main/app/src/main/assets) , as `detect_sign_V4B_meta.tflite` and `labels.txt`
 
+ 
 To achieve a sign language detection AI model, a MobileNet SSD V2 neural network has been fine tuned (trained) over this [a dataset of 1728 labeled images](https://public.roboflow.com/object-detection/american-sign-language-letters/1), and its resulting model has been exported to a Tensorflow Lite model format that has been integrated into a generic object detection framework in [Android](https://github.com/tensorflow/examples/tree/3c3806673635b702d5ce936f6f2235b84a937777/lite/examples/object_detection/android).
+
+<img src="https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/datasetSample.png?raw=true" width="800" />
 
 The main code regarding the "low level" TensorflowLite model integration in Java/Android has been obtained from the [TFLite Official Object Detection sample](https://github.com/tensorflow/examples/tree/3c3806673635b702d5ce936f6f2235b84a937777/lite/examples/object_detection/android); more specifically from the "lib_task_api" API and the "tensorflow/lite/examples/detection/" sections; those regarding the `customview/`,  `env/`,  `tracking/` helpers as well as the `CameraActivity` and `DetectorActivity` core API classes.
 
 ## Getting Started - Application Installation
 
 ### Prerequisites
-- Android device with at least Android TODO version.
+- Android device with at least **Android 8** version (API Level 26).
 - Android Studio (if chose to install via Android Studio compilation).
 
 You can install the application on your android smartphone in two ways:
 
 ### Install via Android Studio compilation
 
-1. Clone this repository into a local folder of your computer with `git clone https://github.com/andrezg98/sign-language-detection.git`
+1. Clone this repository into a local folder of your computer with `git clone https://github.com/andrezg98/SignLanguageDetectionApp.git`
 2. Load the project into Android Studio.
 3. Build and Install the application to your smartphone provided is connected to your computer and Android Studio has connection to it (i.e. appears as a Build target).
 
@@ -101,7 +107,8 @@ This project has a **Github Actions CI/CD pipeline** configured with two main st
 
 You can find the .yml containing the pipeline and details in the [Actions](https://github.com/andrezg98/SignLanguageDetectionApp/actions) section of the Github Action.
 
-![](https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/cicd.png?raw=true)
+<img src="https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/cicd.png?raw=true" width="800" />
+
 
 ## Planned features (future work development)
 
