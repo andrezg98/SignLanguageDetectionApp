@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
+import com.andreaziqing.signlanguagedetectionapp.Database.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.RankingAdapter.RankingAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.RankingAdapter.RankingHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.R;

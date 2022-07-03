@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andreaziqing.signlanguagedetectionapp.Authentication.LoginActivity;
-import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
+import com.andreaziqing.signlanguagedetectionapp.Database.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossaryAdapter;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.GlossaryAdapter.GlossaryHelperClass;
 import com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter.LessonsAdapter;

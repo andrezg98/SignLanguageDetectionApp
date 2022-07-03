@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Databases;
+package com.andreaziqing.signlanguagedetectionapp.Database;
 
 import android.widget.TextView;
 

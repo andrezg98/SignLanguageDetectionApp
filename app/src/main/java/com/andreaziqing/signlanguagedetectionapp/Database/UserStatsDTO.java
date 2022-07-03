@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Databases;
+package com.andreaziqing.signlanguagedetectionapp.Database;
 
 import com.google.firebase.firestore.FieldValue;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.andreaziqing.signlanguagedetectionapp.Databases;
+package com.andreaziqing.signlanguagedetectionapp.Authentication;
 
 import android.content.Context;
 import android.content.SharedPreferences;

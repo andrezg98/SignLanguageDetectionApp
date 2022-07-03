@@ -1,15 +1,13 @@
 package com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice;
 
-import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
+import com.andreaziqing.signlanguagedetectionapp.Database.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.DetectionGames.BetweenGamesActivity;
 import com.andreaziqing.signlanguagedetectionapp.Detector.DetectorActivity;
-import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.Detector.TFLiteInterpreter.Detector;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,14 +25,10 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

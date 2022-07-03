@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDTO;
-import com.andreaziqing.signlanguagedetectionapp.Databases.UserStatsDatabase;
+import com.andreaziqing.signlanguagedetectionapp.Database.UserStatsDTO;
+import com.andreaziqing.signlanguagedetectionapp.Database.UserStatsDatabase;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
