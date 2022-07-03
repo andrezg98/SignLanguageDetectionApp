@@ -23,7 +23,7 @@ TODO Application Video
 
 ## Application Screenshots
 
-<img src="https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/appScreenshots.png?raw=true" width="800" />
+<img src="https://github.com/andrezg98/SignLanguageDetectionApp/blob/main/repoAssets/SCREENSHOTS.png?raw=true" width="1000" />
 
 
 ## Android Project Structure
