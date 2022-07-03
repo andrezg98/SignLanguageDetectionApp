@@ -225,7 +225,7 @@ public class MatchGame extends AppCompatActivity {
                         context.startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MatchGame.this);
-                        builder.setMessage(getString(R.string.you_have) + chances + getString(R.string.chances_left) + "")
+                        builder.setMessage(getString(R.string.you_have) + " " + chances + " " + getString(R.string.chances_left))
                                 .setTitle(R.string.ups)
                                 .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                                     @Override

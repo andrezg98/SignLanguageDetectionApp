@@ -103,8 +103,8 @@
     <string name="username_too_long">Username too long</string>
     <string name="white_spaces">White spaces are not allowed</string>
     <string name="password_too_weak">Password is too weak</string>
-    <string name="you_have">\"You have \"</string>
-    <string name="chances_left">\" chances left.\"</string>
+    <string name="you_have">You have </string>
+    <string name="chances_left"> chances left.</string>
     <string name="ups" translatable="false">Ups!</string>
     <string name="got_it">Got it!</string>
     <string name="oh_no" translatable="false">Oh, no!</string>

@@ -50,8 +50,8 @@
     <string name="username_too_long">Nombre de usuario demasiado largo</string>
     <string name="white_spaces">Los espacios en blanco no están permitidos</string>
     <string name="password_too_weak">La contraseña es demasiado débil</string>
-    <string name="you_have">\"Te quedan \"</string>
-    <string name="chances_left">\" oportunidades\"</string>
+    <string name="you_have">Te quedan </string>
+    <string name="chances_left"> oportunidades</string>
     <string name="got_it">¡Lo tengo!</string>
     <string name="try_again">Inténtalo de nuevo</string>
     <string name="try_again_desc">No te preocupes. Inténtalo de nuevo. ¡Tú puedes!</string>

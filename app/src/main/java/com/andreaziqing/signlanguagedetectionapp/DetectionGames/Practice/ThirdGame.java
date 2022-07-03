@@ -154,9 +154,14 @@ public class ThirdGame extends DetectorActivity {
                                         if (chances[0] == 0) {
                                             isTimesOut = true;
                                         } else {
-                                            mpWrong.start();
+                                            try {
+                                                mpWrong.start();
+                                            } catch (Exception e){
+                                                Log.d(THIRD_GAME, "Mediaplayer not initiated");
+                                            }
+
                                             AlertDialog.Builder builder = new AlertDialog.Builder(ThirdGame.this);
-                                            builder.setMessage(getString(R.string.you_have) + chances[0] + getString(R.string.chances_left) + "")
+                                            builder.setMessage(getString(R.string.you_have) + " " + chances[0] + " " + getString(R.string.chances_left))
                                                     .setTitle(R.string.ups)
                                                     .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                                                         @Override
