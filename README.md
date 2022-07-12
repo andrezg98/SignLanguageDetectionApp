@@ -112,7 +112,7 @@ You can find the .yml containing the pipeline and details in the [Actions](https
 
 ## Planned features (future work development)
 
-- [ ] TODO 1
-- [ ] TODO 2
-- [ ] TODO 3
-- [ ] TODO 4
+- [ ] Add support for Spanish Sign Language.
+- [ ] Configuration / Settings for app personalization.
+- [ ] Social features: friend list, multiplayer challenges.
+- [ ] Create further unit tests.
