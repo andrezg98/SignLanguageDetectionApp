@@ -109,8 +109,8 @@ public class MatchGame extends AppCompatActivity {
 
         initViews();
 
-        // Primeras 8 letras
-        // Escoger aleatoriamente ocho letras
+        // First 8 letters
+        // Randomly choose eight letters
         setEightRandomLetters(arrCardLetter, arrCardImage, false);
     }
 
@@ -244,7 +244,7 @@ public class MatchGame extends AppCompatActivity {
                 resetValues();
             }
         }
-        // Lanzamos el Handler para que actualice la interfaz con el runnable interno declarado
+        // We launch the Handler to update the interface with the declared internal runnable
         handler.post(new UpdateCardColorRunnable());
     }
 
@@ -348,7 +348,7 @@ public class MatchGame extends AppCompatActivity {
                     positions = positions.concat(String.valueOf(letterPosition));
 
                     if (refreshCard) {
-                        // Reseteamos color de la tarjeta a blanco
+                        // Reset card color to white
                         arrCardLetter[i].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                         arrCardImage[i].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     }
@@ -370,7 +370,7 @@ public class MatchGame extends AppCompatActivity {
         }
 
         int letterPosition;
-        // Construimos el mapa que relaciona ids de botones de letras con su letra
+        // We build the map that relates ids of letter buttons to their letter
         for (int k = 0; k < arrButtonLetterPositions.length ; k++) {
             letterPosition = arrButtonLetterPositions[k];
             letterMap.put(LETTER_ID_RSC + (k+1), arrGroupOfLetters[letterPosition]);
@@ -389,7 +389,7 @@ public class MatchGame extends AppCompatActivity {
         }
 
         int imagePosition;
-        // Construimos el mapa que relaciona ids de botones de imágenes con su letra
+        // We build the map that relates ids of image buttons with their letters
         for (int n = 0; n < arrButtonImagePositions.length ; n++) {
             imagePosition = arrButtonImagePositions[n];
             imageMap.put(IMAGE_ID_RSC + (n+1), arrGroupOfLetters[imagePosition]);

@@ -46,9 +46,9 @@ import java.util.TimerTask;
  *     have to correctly guess the appearing words and doing one by one their spelling letters the word
  *     is composed of. If they fail and countdown timer is set off for 3 times, game will be lost.
  */
-public class ThirdGame extends DetectorActivity {
+public class SpellTheWordGame extends DetectorActivity {
 
-    private static final String THIRD_GAME = "ThirdGame";
+    private static final String SPELL_THE_WORD_GAME = "SpellTheWordGame";
 
     Context context;
 
@@ -81,7 +81,7 @@ public class ThirdGame extends DetectorActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_third_game);
+        setContentView(R.layout.activity_spell_the_word_game);
 
         context = getApplicationContext();
 
@@ -116,7 +116,7 @@ public class ThirdGame extends DetectorActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Log.d(THIRD_GAME, "Thread in background: "+ Thread.currentThread().getName());
+                Log.d(SPELL_THE_WORD_GAME, "Thread in background: "+ Thread.currentThread().getName());
                 synchronized (this) {
                     for (int cycle = 0; cycle < 4; cycle++) {
                         try { // we give time for arrLetter to update
@@ -124,7 +124,7 @@ public class ThirdGame extends DetectorActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Cycle #"+ cycle + " Word : "+ arrLetter[0].getText().toString());
+                        Log.d(SPELL_THE_WORD_GAME, "["+ Thread.currentThread()+ "]" + "Cycle #"+ cycle + " Word : "+ arrLetter[0].getText().toString());
                         int letterIdx = 0;
                         final int[] chances = {3};
                         // Runnable in charge of the CountDown timer logic. Controls logic for time passing and time out alarm.
@@ -133,7 +133,7 @@ public class ThirdGame extends DetectorActivity {
 
                             InitTimerRunnable() {}
                             public void run() {
-                                Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Starting timer.");
+                                Log.d(SPELL_THE_WORD_GAME, "["+ Thread.currentThread()+ "]" + "Starting timer.");
                                 countDownTimer = new CountDownTimer(30000, 1000) {
                                     @Override
                                     public void onTick(long millisUntilFinished) {
@@ -151,10 +151,10 @@ public class ThirdGame extends DetectorActivity {
                                             try {
                                                 mpWrong.start();
                                             } catch (Exception e){
-                                                Log.d(THIRD_GAME, "Mediaplayer not initiated");
+                                                Log.d(SPELL_THE_WORD_GAME, "Mediaplayer not initiated");
                                             }
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(ThirdGame.this);
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(SpellTheWordGame.this);
                                             builder.setMessage(getString(R.string.you_have) + " " + chances[0] + " " + getString(R.string.chances_left))
                                                     .setTitle(R.string.ups)
                                                     .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
@@ -188,7 +188,7 @@ public class ThirdGame extends DetectorActivity {
                             class UpdateSpellingLetterRunnable implements Runnable {
                                 UpdateSpellingLetterRunnable() {}
                                 public void run() {
-                                    Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Painting the guessed letter.");
+                                    Log.d(SPELL_THE_WORD_GAME, "["+ Thread.currentThread()+ "]" + "Painting the guessed letter.");
                                     // The guessed letter composing the word will be shown in screen
                                     letter.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT));
                                     letter.setGravity(Gravity.CENTER);
@@ -210,7 +210,7 @@ public class ThirdGame extends DetectorActivity {
                                     final int letterIndex;
                                     UpdateCardColorRunnable(int idx) { letterIndex = idx; }
                                     public void run() {
-                                        Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Updating letter card to green.");
+                                        Log.d(SPELL_THE_WORD_GAME, "["+ Thread.currentThread()+ "]" + "Updating letter card to green.");
                                         // Card color updated to green
                                         mCardWord.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                     }
@@ -219,7 +219,7 @@ public class ThirdGame extends DetectorActivity {
                                 handler2.post(new UpdateCardColorRunnable(letterIdx));
                             }
                         }
-                        Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Word guessed; generating next...");
+                        Log.d(SPELL_THE_WORD_GAME, "["+ Thread.currentThread()+ "]" + "Word guessed; generating next...");
 
                         try {
                             wait(500);
@@ -231,7 +231,7 @@ public class ThirdGame extends DetectorActivity {
                         class UpdateLetterCardsRunnable implements Runnable {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
-                                Log.d(THIRD_GAME, "["+ Thread.currentThread()+ "]" + "Generating new word.");
+                                Log.d(SPELL_THE_WORD_GAME, "["+ Thread.currentThread()+ "]" + "Generating new word.");
                                 arrLetter = setRandomWord(mCardWord, true);
                             }
                         }
@@ -244,7 +244,7 @@ public class ThirdGame extends DetectorActivity {
                         handler4.removeCallbacksAndMessages(initTimerRunnable);
                     }
                 }
-                Log.i(THIRD_GAME, "Sub-process completed");
+                Log.i(SPELL_THE_WORD_GAME, "Sub-process completed");
             }
         };
 
@@ -257,11 +257,11 @@ public class ThirdGame extends DetectorActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.d(THIRD_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
+                Log.d(SPELL_THE_WORD_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
                     if (!threadIsInterrupted) {
                         // Case where user finished the first game (thread ended by itself)
-                        Log.d(THIRD_GAME, "Thread finished, moving on to the next activity.");
+                        Log.d(SPELL_THE_WORD_GAME, "Thread finished, moving on to the next activity.");
 
                         // Update lesson progress in user database.
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -271,31 +271,31 @@ public class ThirdGame extends DetectorActivity {
 
                         // We go to the next stage screen of the lesson (the between games activity), passing necessary information.
                         Intent intent = new Intent(context, BetweenGamesActivity.class);
-                        intent.putExtra("previousActivity", THIRD_GAME);
+                        intent.putExtra("previousActivity", SPELL_THE_WORD_GAME);
                         intent.putExtra("state", "SUCCESS");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
 
                         timer.cancel();
                     } else {
-                        Log.d(THIRD_GAME, "Thread interrupted, closing activity.");
+                        Log.d(SPELL_THE_WORD_GAME, "Thread interrupted, closing activity.");
 
                         timer.cancel();
                     }
                 } else if (isTimesOut) {
                     // Case when user ran out of time for guessing the letter.
-                    Log.d(THIRD_GAME, "Time's out.");
+                    Log.d(SPELL_THE_WORD_GAME, "Time's out.");
                     mpWrong.start();
 
                     Intent intent = new Intent(context, BetweenGamesActivity.class);
-                    intent.putExtra("previousActivity", THIRD_GAME);
+                    intent.putExtra("previousActivity", SPELL_THE_WORD_GAME);
                     intent.putExtra("state", "FAIL");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
 
                     timer.cancel();
                 } else {
-                    Log.d(THIRD_GAME, "I'm still waiting for the thread to end.");
+                    Log.d(SPELL_THE_WORD_GAME, "I'm still waiting for the thread to end.");
                 }
             }
         }, 500, 500);  // first is delay, second is period
@@ -349,11 +349,10 @@ public class ThirdGame extends DetectorActivity {
             mappedRecognitions = new ArrayList<>();
             return false;
         } else {
-            // Log.d(THIRD_GAME, "Cargado Mapped Recognition: " + mappedRecognitions);
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
                     // Detected letter matches the one shown in screen. User is correct.
-                    Log.d(THIRD_GAME, "Recognized the letter: " + result.getTitle());
+                    Log.d(SPELL_THE_WORD_GAME, "Recognized the letter: " + result.getTitle());
                     return true;
                 }
             }
@@ -372,7 +371,6 @@ public class ThirdGame extends DetectorActivity {
     private TextView[] setRandomWord(RelativeLayout cardWord, boolean refreshCard) {
         String[] words = new String[]{"SIGNOS", "LENGUAJE", "APRENDER", "ANDROID", "VERANO",
                 "PLAYA", "PISCINA", "MOJACAR"};
-        //String[] words = new String[]{"AB"};
 
         int wordPosition = (int) (Math.random() * (words.length));
 
@@ -384,7 +382,7 @@ public class ThirdGame extends DetectorActivity {
         // For each of the letters composing the word, we update the text views.
         for (int j = 0; j < words[wordPosition].length(); j ++) {
             TextView newLetter = new TextView(this);
-            Log.d(THIRD_GAME, "New letter: " + words[wordPosition].charAt(j));
+            Log.d(SPELL_THE_WORD_GAME, "New letter: " + words[wordPosition].charAt(j));
             newLetter.setText(words[wordPosition].charAt(j) + "");
             arrLetter[j] = newLetter;
         }

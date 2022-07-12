@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetectionGames.Practice.ThirdGame"
+    tools:context=".DetectionGames.Practice.SpellTheWordGame"
     android:background="@color/dark_gray_blue">
 
     <TextView
         android:id="@+id/countdown_timer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="617dp"
-        android:gravity="center|start"
+        android:layout_height="match_parent"
+        android:gravity="top|start"
         android:padding="30dp"
         android:text="10"
         android:textColor="@color/white"

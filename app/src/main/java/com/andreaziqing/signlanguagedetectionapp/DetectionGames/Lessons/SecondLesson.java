@@ -48,9 +48,9 @@ import java.util.TimerTask;
  *     This lesson has extra difficulty as the user is not shown the sign to perform but instead only
  *     the letter. Optionally, users can click on "hint" and a brief 3 second hint image will appear.
  */
-public class SecondGame extends DetectorActivity {
+public class SecondLesson extends DetectorActivity {
 
-    private static final String SECOND_GAME = "SecondGame";
+    private static final String SECOND_LESSON = "SecondLesson";
 
     Context context;
 
@@ -97,7 +97,7 @@ public class SecondGame extends DetectorActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second_game);
+        setContentView(R.layout.activity_second_lesson);
 
         context = getApplicationContext();
 
@@ -153,10 +153,10 @@ public class SecondGame extends DetectorActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Log.d(SECOND_GAME, "Thread in background: "+ Thread.currentThread().getName());
+                Log.d(SECOND_LESSON, "Thread in background: "+ Thread.currentThread().getName());
                 synchronized (this) {
                     for (int cycle = 0; cycle < 4; cycle++) {
-                        Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Cycle #"+ cycle + 1);
+                        Log.d(SECOND_LESSON, "["+ Thread.currentThread()+ "]" + "Cycle #"+ cycle + 1);
                         int letterIdx = 0;
                         // For this group of 3 letters, we go 1 by 1 checking the guesses.
                         for (TextView letter: arrLetter) {
@@ -179,7 +179,7 @@ public class SecondGame extends DetectorActivity {
                                 UpdateCardColorRunnable(int idx) { letterIndex = idx; }
 
                                 public void run() {
-                                    Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Updating letter card to green.");
+                                    Log.d(SECOND_LESSON, "["+ Thread.currentThread()+ "]" + "Updating letter card to green.");
                                     // Card color updated to green
                                     arrCardLetter[letterIndex].setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8CF5C1")));
                                 }
@@ -192,7 +192,7 @@ public class SecondGame extends DetectorActivity {
                             // 3. We go for the next card letter to check
                             letterIdx++;
                         }
-                        Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Guessed group of 3 letters; generating next...");
+                        Log.d(SECOND_LESSON, "["+ Thread.currentThread()+ "]" + "Guessed group of 3 letters; generating next...");
 
                         try {
                             wait(500);
@@ -204,7 +204,7 @@ public class SecondGame extends DetectorActivity {
                         class UpdateLetterCardsRunnable implements Runnable {
                             UpdateLetterCardsRunnable() {}
                             public void run() {
-                                Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Regenerating group of 3 letters.");
+                                Log.d(SECOND_LESSON, "["+ Thread.currentThread()+ "]" + "Regenerating group of 3 letters.");
                                 setThreeRandomLetters(arrCardLetter, true);
                             }
                         }
@@ -213,7 +213,7 @@ public class SecondGame extends DetectorActivity {
                         } // cycle == 3 would be the last cycle so we would not need to update more cards.
                     }
                 }
-                Log.i(SECOND_GAME, "Sub-process completed");
+                Log.i(SECOND_LESSON, "Sub-process completed");
             }
         };
 
@@ -226,11 +226,11 @@ public class SecondGame extends DetectorActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.d(SECOND_GAME, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
+                Log.d(SECOND_LESSON, "State: " + cardDetectionThread.getState() + "isAlive: " + cardDetectionThread.isAlive());
                 if (!cardDetectionThread.isAlive()) {
                     if (!threadIsInterrupted) {
                         // Case where user finished the first game (thread ended by itself)
-                        Log.d(SECOND_GAME, "Thread finished, moving on to the next activity.");
+                        Log.d(SECOND_LESSON, "Thread finished, moving on to the next activity.");
 
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                         Map<String, Object> dataToUpdate = new HashMap<>();
@@ -254,7 +254,7 @@ public class SecondGame extends DetectorActivity {
 
                         // We go to the next stage screen of the lesson (the between games activity), passing necessary information.
                         Intent intent = new Intent(context, BetweenGamesActivity.class);
-                        intent.putExtra("previousActivity", SECOND_GAME);
+                        intent.putExtra("previousActivity", SECOND_LESSON);
                         intent.putExtra("state", "SUCCESS");
                         intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
                         intent.putExtra("position", mPositionGroup);
@@ -263,13 +263,13 @@ public class SecondGame extends DetectorActivity {
 
                         timer.cancel();
                     } else {
-                        Log.d(SECOND_GAME, "Thread interrupted, closing activity.");
+                        Log.d(SECOND_LESSON, "Thread interrupted, closing activity.");
 
                         timer.cancel();
                     }
                 } else {
                     // Case when thread was interrupted due to external reasons.
-                    Log.d(SECOND_GAME, "I'm still waiting for the thread to end.");
+                    Log.d(SECOND_LESSON, "I'm still waiting for the thread to end.");
                 }
             }
         }, 500, 500);  // first is delay, second is period
@@ -299,7 +299,7 @@ public class SecondGame extends DetectorActivity {
                     }
 
                     public void run() {
-                        Log.d(SECOND_GAME, "["+ Thread.currentThread()+ "]" + "Showing the hint image.");
+                        Log.d(SECOND_LESSON, "["+ Thread.currentThread()+ "]" + "Showing the hint image.");
                         // Showing in screen
                         arrLetter[finalLetterIdx].setVisibility(View.VISIBLE);
                         buttonHint.setVisibility(View.VISIBLE);
@@ -359,7 +359,7 @@ public class SecondGame extends DetectorActivity {
             for (Detector.Recognition result : mappedRecognitions) {
                 if (result.getTitle().contentEquals(letter.getText())) {
                     // Detected letter matches the one shown in screen. User is correct.
-                    Log.d(SECOND_GAME, "Recognized the letter: " + result.getTitle());
+                    Log.d(SECOND_LESSON, "Recognized the letter: " + result.getTitle());
                     return true;
                 }
             }

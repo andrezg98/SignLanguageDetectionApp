@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.andreaziqing.signlanguagedetectionapp">
 
+    <!-- Permissions -->
     <uses-sdk />
-
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -23,19 +22,19 @@
             android:name=".Tabs.GlossarySlider"
             android:exported="false" />
         <activity
-            android:name=".DetectionGames.Practice.FullSecondGame"
+            android:name=".DetectionGames.Practice.SignTheLetterGame"
             android:exported="false" />
         <activity
             android:name=".DetectionGames.BetweenGamesActivity"
             android:exported="false" />
         <activity
-            android:name=".DetectionGames.Practice.ThirdGame"
+            android:name=".DetectionGames.Practice.SpellTheWordGame"
             android:exported="false" />
         <activity
-            android:name=".DetectionGames.Lessons.SecondGame"
+            android:name=".DetectionGames.Lessons.SecondLesson"
             android:exported="false" />
         <activity
-            android:name=".DetectionGames.Lessons.FirstGame"
+            android:name=".DetectionGames.Lessons.FirstLesson"
             android:exported="false" />
         <activity
             android:name=".Detector.DetectorActivity"

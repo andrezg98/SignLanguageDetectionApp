@@ -3,18 +3,17 @@ package com.andreaziqing.signlanguagedetectionapp.DetectionGames;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.FirstGame;
-import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.SecondGame;
-import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.FullSecondGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.FirstLesson;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.SecondLesson;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.SignTheLetterGame;
 import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.MatchGame;
-import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.ThirdGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Practice.SpellTheWordGame;
 import com.andreaziqing.signlanguagedetectionapp.R;
 import com.andreaziqing.signlanguagedetectionapp.Navigation.NavigationTabsController;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.service.autofill.FieldClassification;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -85,11 +84,11 @@ public class BetweenGamesActivity extends AppCompatActivity {
                         repeatActivity(intent);
                     } else {
                         switch (mPreviousActivity) {
-                            case "SecondGame":
+                            case "SecondLesson":
                                 intent = new Intent(getApplicationContext(), NavigationTabsController.class);
                                 intent.putExtra("nextFragment", "HomeFragment");
-                            case "FullSecondGame":
-                            case "ThirdGame":
+                            case "SignTheLetterGame":
+                            case "SpellTheWordGame":
                             case "MatchGame":
                                 intent = new Intent(getApplicationContext(), NavigationTabsController.class);
                                 intent.putExtra("nextFragment", "PracticeFragment");
@@ -123,20 +122,20 @@ public class BetweenGamesActivity extends AppCompatActivity {
      */
     private void repeatActivity(Intent intent) {
         switch (mPreviousActivity) {
-            case "FirstGame":
-                intent = new Intent(getApplicationContext(), FirstGame.class);
+            case "FirstLesson":
+                intent = new Intent(getApplicationContext(), FirstLesson.class);
                 intent.putExtra("position", mPositionGroup);
                 break;
-            case "SecondGame":
-                intent = new Intent(getApplicationContext(), SecondGame.class);
+            case "SecondLesson":
+                intent = new Intent(getApplicationContext(), SecondLesson.class);
                 intent.putExtra("position", mPositionGroup);
                 intent.putExtra("arrGroupOfLetters", arrGroupOfLetters);
                 break;
-            case "ThirdGame":
-                intent = new Intent(getApplicationContext(), ThirdGame.class);
+            case "SpellTheWordGame":
+                intent = new Intent(getApplicationContext(), SpellTheWordGame.class);
                 break;
-            case "FullSecondGame":
-                intent = new Intent(getApplicationContext(), FullSecondGame.class);
+            case "SignTheLetterGame":
+                intent = new Intent(getApplicationContext(), SignTheLetterGame.class);
                 break;
             case "MatchGame":
                 intent = new Intent(getApplicationContext(), MatchGame.class);
@@ -158,8 +157,8 @@ public class BetweenGamesActivity extends AppCompatActivity {
     public void close(View view) {
         Intent intent;
         switch (mPreviousActivity) {
-            case "ThirdGame":
-            case "FullSecondGame":
+            case "SpellTheWordGame":
+            case "SignTheLetterGame":
             case "MatchGame":
                 intent = new Intent(getApplicationContext(), NavigationTabsController.class);
                 intent.putExtra("nextFragment", "PracticeFragment");

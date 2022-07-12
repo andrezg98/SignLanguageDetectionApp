@@ -43,7 +43,7 @@ public class OnBoarding extends AppCompatActivity {
         // Hooks
         viewPager = findViewById(R.id.slider);
         dotsLayout = findViewById(R.id.dots);
-        letsGetStarted =findViewById(R.id.lets_start_button);
+        letsGetStarted = findViewById(R.id.lets_start_button);
 
         // Call adapter
         sliderAdapter = new SliderAdapter(this);

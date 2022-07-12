@@ -1,6 +1,6 @@
 package com.andreaziqing.signlanguagedetectionapp.HelperClasses.Adapters.HomeAdapter;
 
-import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.FirstGame;
+import com.andreaziqing.signlanguagedetectionapp.DetectionGames.Lessons.FirstLesson;
 import com.andreaziqing.signlanguagedetectionapp.R;
 
 import android.content.Context;
@@ -54,7 +54,7 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.LessonsV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, FirstGame.class);
+                Intent intent = new Intent(context, FirstLesson.class);
                 intent.putExtra("position", holder.getAdapterPosition());
                 context.startActivity(intent);
             }
