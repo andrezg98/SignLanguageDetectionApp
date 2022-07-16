@@ -5,8 +5,9 @@
 
 This repository present the contents developed for my Master Thesis, titled: ***"Aplicación móvil didáctica para el aprendizaje del lenguaje de signos mediante la integración de un modelo de IA"***. Mainly, the project code for the Android application developed.
 
-TODO Application Video 
-***
+Application Video 
+
+https://user-images.githubusercontent.com/47974850/179364214-5ced89b9-ec24-4eaa-8b7c-8ab4575a6726.mov
 
 ## Table of Contents
 
